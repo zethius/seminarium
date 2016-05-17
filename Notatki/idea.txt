@@ -1,35 +1,48 @@
-Menu g³ówne:
-             SETS (zarz¹dzanie zestawami fiszek)
+Menu gÅ‚Ã³wne:
+             SETS (zarzÄ…dzanie zestawami fiszek)
              TESTS(sprawdzanie swojej wiedzy)
-             CALENDAR (obiekt kalendarza w menu g³ównym z zaznaczonymi zbli¿aj¹cymi siê testami powtórkowymi - koniecznymi lub sugestia ich powtórzenia?)
+             CALENDAR (obiekt kalendarza w menu gÅ‚Ã³wnym z zaznaczonymi zbliÅ¼ajÄ…cymi siÄ™ testami powtÃ³rkowymi - koniecznymi lub sugestia ich powtÃ³rzenia?)
 
-SETS (zestawy fiszek bêd¹ mieæ strukturê folder/fiszka)
+SETS (zestawy fiszek bÄ™dÄ… mieÄ‡ strukturÄ™ folder/fiszka)
               CREATE NEW
-              UPDATE (zmiana nazwy albo zarz¹dzanie fiszkami w zestawie)
+              UPDATE (zmiana nazwy albo zarzÄ…dzanie fiszkami w zestawie)
               DELETE
     
 TESTS
-              QUIZ (W stylu Milionerów: jako pytanie losuje siê front fiszki, jako odpowiedzi cztery ty³y innych)
+              QUIZ (W stylu MilionerÃ³w: jako pytanie losuje siÄ™ front fiszki, jako odpowiedzi cztery tyÅ‚y innych)
+              TRUTH OR FALSE ( losowana para stron fiszek - uÅ¼ytkownik odpowiada czy to jedna fiszka)
+              
+              
+              przy bÅ‚Ä™dnych odpowiedziach:  roÅ›nie trudnoÅ›Ä‡ fiszek zawartych w zadaniu,
+              zmniejsza siÄ™ ocena koÅ„cowa za test -> im mniejsza tym szybciej pojawi siÄ™ w kalendarzu
+              
 
 CALENDAR 
-              Wyœwietlony aktualny miesi¹c (albo tydzieñ) z zaznaczonymi ikonami zestawów 
-              kiedy nale¿y (albo bêdzie koniecznoœæ) rozwi¹zania ponownie testu danego zestawu fiszek
-              Ikony bêd¹ mieæ kolory przeliczane z trudnoœci zestawu
+              WyÅ›wietlony aktualny miesiÄ…c (albo tydzieÅ„) z zaznaczonymi ikonami zestawÃ³w 
+              kiedy naleÅ¼y (albo bÄ™dzie koniecznoÅ›Ä‡) rozwiÄ…zania ponownie testu danego zestawu fiszek
+              Ikony bÄ™dÄ… mieÄ‡ kolory przeliczane z trudnoÅ›ci zestawu
 
 Obiekt fiszki:
-       Id    (zniknie jeœli oka¿e siê niepotrzebne)
-       Color (kolor u³atwia skojarzenia wzrokowe i dodatkowo wspomaga pamiêæ, przy tworzeniu fiszki pozwalamy na wybór jej koloru)
-       Front (mo¿e byæ tekst lub obrazek*, ale trzeba przemyœleæ reprezentacjê plikow¹ -> pdf?)
-       Back  (jak wy¿ej)
-       Difficulty (przeliczane na podstawie wyników w testach, mo¿e byæ procentowe)
+       Id    (zniknie jeÅ›li okaÅ¼e siÄ™ niepotrzebne)
+       Color (kolor uÅ‚atwia skojarzenia wzrokowe i dodatkowo wspomaga pamiÄ™Ä‡, przy tworzeniu fiszki pozwalamy na wybÃ³r jej koloru)
+       Front (moÅ¼e byÄ‡ tekst lub obrazek*, ale trzeba przemyÅ›leÄ‡ reprezentacjÄ™ plikowÄ… -> pdf?)
+       Back  (jak wyÅ¼ej)
+       Difficulty (przeliczane na podstawie wynikÃ³w w testach, moÅ¼e byÄ‡ procentowe)
 
 
-                  w przypadku dodawania obrazków: w jakiej postaci przechowywaæ fiszkê na urz¹dzeniu,
+                  w przypadku dodawania obrazkÃ³w: w jakiej postaci przechowywaÄ‡ fiszkÄ™ na urzÄ…dzeniu,
                                                   jakie pliki graficzne dozwolone - algorytm kompresji obrazu?
                                                   
 Obiekt zestawu: (reprezentacja w systemie: folder)
        Name
-       Icon*
-       CardSet(pliki)
-       Difficulty(przeliczana œrednia ze wszystkich fiszek w zestawie)
+       Icon    (wybrana przy tworzeniu zestawu z gotowej kolekcji ikon)
+       CardSet (pliki)
+       Difficulty(przeliczana Å›rednia ze wszystkich fiszek w zestawie)
 
+Obiekt testu:
+      Id
+      Zestaw
+      Data ostatniego rozwiÄ…zania
+      Ocena
+      Przeliczana data kolejnego rozwiÄ…zania (ikona zestawu pojawia siÄ™ w kalendarzu)
+      (SposÃ³b rozwiÄ…zania dowolny?)
