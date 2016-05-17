@@ -11,10 +11,10 @@ SETS (zestawy fiszek będą mieć strukturę folder/fiszka)
 TESTS
               QUIZ (W stylu Milionerów: jako pytanie losuje się front fiszki, jako odpowiedzi cztery tyły innych)
               TRUTH OR FALSE ( losowana para stron fiszek - użytkownik odpowiada czy to jedna fiszka)
+              ??????
               
-              
-              przy błędnych odpowiedziach:  rośnie trudność fiszek zawartych w zadaniu,
-              zmniejsza się ocena końcowa za test -> im mniejsza tym szybciej pojawi się w kalendarzu
+                    przy błędnych odpowiedziach:  rośnie trudność fiszek zawartych w zadaniu,
+                    zmniejsza się ocena końcowa za test -> im mniejsza tym szybciej pojawi się w kalendarzu
               
 
 CALENDAR 
@@ -29,10 +29,10 @@ Obiekt fiszki:
        Back  (jak wyżej)
        Difficulty (przeliczane na podstawie wyników w testach, może być procentowe)
 
-
                   w przypadku dodawania obrazków: w jakiej postaci przechowywać fiszkę na urządzeniu,
                                                   jakie pliki graficzne dozwolone - algorytm kompresji obrazu?
-                                                  
+  
+  
 Obiekt zestawu: (reprezentacja w systemie: folder)
        Name
        Icon    (wybrana przy tworzeniu zestawu z gotowej kolekcji ikon)
@@ -41,8 +41,16 @@ Obiekt zestawu: (reprezentacja w systemie: folder)
 
 Obiekt testu:
       Id
-      Zestaw
-      Data ostatniego rozwiązania
-      Ocena
-      Przeliczana data kolejnego rozwiązania (ikona zestawu pojawia się w kalendarzu)
+      Set
+      LastDate (data ostatniego rozwiązania)
+      Result (%)
+      NextDate (Przeliczana data kolejnego rozwiązania [ikona zestawu pojawia się w kalendarzu])
       (Sposób rozwiązania dowolny?)
+
+
+
+
+Ikony:
+      proste, żeby nie robić śmietnika w kalendarzu
+      czarnobiałe, żeby móc zmieniać kolor 
+      przykładowe: liść, globus, kropla, samochód, nuta, serce
