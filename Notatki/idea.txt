@@ -1,0 +1,35 @@
+Menu g³ówne:
+             SETS (zarz¹dzanie zestawami fiszek)
+             TESTS(sprawdzanie swojej wiedzy)
+             CALENDAR (obiekt kalendarza w menu g³ównym z zaznaczonymi zbli¿aj¹cymi siê testami powtórkowymi - koniecznymi lub sugestia ich powtórzenia?)
+
+SETS (zestawy fiszek bêd¹ mieæ strukturê folder/fiszka)
+              CREATE NEW
+              UPDATE (zmiana nazwy albo zarz¹dzanie fiszkami w zestawie)
+              DELETE
+    
+TESTS
+              QUIZ (W stylu Milionerów: jako pytanie losuje siê front fiszki, jako odpowiedzi cztery ty³y innych)
+
+CALENDAR 
+              Wyœwietlony aktualny miesi¹c (albo tydzieñ) z zaznaczonymi ikonami zestawów 
+              kiedy nale¿y (albo bêdzie koniecznoœæ) rozwi¹zania ponownie testu danego zestawu fiszek
+              Ikony bêd¹ mieæ kolory przeliczane z trudnoœci zestawu
+
+Obiekt fiszki:
+       Id    (zniknie jeœli oka¿e siê niepotrzebne)
+       Color (kolor u³atwia skojarzenia wzrokowe i dodatkowo wspomaga pamiêæ, przy tworzeniu fiszki pozwalamy na wybór jej koloru)
+       Front (mo¿e byæ tekst lub obrazek*, ale trzeba przemyœleæ reprezentacjê plikow¹ -> pdf?)
+       Back  (jak wy¿ej)
+       Difficulty (przeliczane na podstawie wyników w testach, mo¿e byæ procentowe)
+
+
+                  w przypadku dodawania obrazków: w jakiej postaci przechowywaæ fiszkê na urz¹dzeniu,
+                                                  jakie pliki graficzne dozwolone - algorytm kompresji obrazu?
+                                                  
+Obiekt zestawu: (reprezentacja w systemie: folder)
+       Name
+       Icon*
+       CardSet(pliki)
+       Difficulty(przeliczana œrednia ze wszystkich fiszek w zestawie)
+
