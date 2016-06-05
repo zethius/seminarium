@@ -1,6 +1,2 @@
-<<<<<<< HEAD
 Utworzenie repozytorium git
-=======
-Utworzenie repozytorium git
->>>>>>> 057ec78df1b5ed483f09d02c1383c8ae78211bdf
-Zapisanie wstêpnych pomys³ów
+Zapisanie wstepnych pomyslow

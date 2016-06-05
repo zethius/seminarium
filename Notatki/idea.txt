@@ -7,6 +7,9 @@ SETS (zestawy fiszek będą mieć strukturę folder/fiszka)
               CREATE NEW
               UPDATE (zmiana nazwy albo zarządzanie fiszkami w zestawie)
               DELETE
+
+      //powyzsze menu raczej zostanie zastapione lista zeskanowanych zestawow w formie tabeli, przy kazdej pozycji przycisk do usuwania i edycji
+      //dodatkowo gdzies na boku przycisk do tworzenia nowego zestawu
     
 TESTS
               QUIZ (W stylu Milionerów: jako pytanie losuje się front fiszki, jako odpowiedzi cztery tyły innych)
@@ -23,71 +26,15 @@ CALENDAR
               Ikony będą mieć kolory przeliczane z trudności zestawu
 
 Obiekt fiszki:
-       Id    (zniknie jeśli okaże się niepotrzebne)
+       Id    (zniknie jeśli okaże się niepotrzebne) (w Set.cardSet moge odwolywac sie po indeksie tablicy - > raczej niepotrzebne)
        Color (kolor ułatwia skojarzenia wzrokowe i dodatkowo wspomaga pamięć, przy tworzeniu fiszki pozwalamy na wybór jej koloru)
-       Front (może być tekst lub obrazek*, ale trzeba przemyśleć reprezentację plikową -> pdf?)
+       Front (może być tekst lub obrazek*, ale trzeba przemyśleć reprezentację plikową -> xml, pdf?)
        Back  (jak wyżej)
        Difficulty (przeliczane na podstawie wyników w testach, może być procentowe)
 
                   w przypadku dodawania obrazków: w jakiej postaci przechowywać fiszkę na urządzeniu,
                                                   jakie pliki graficzne dozwolone - algorytm kompresji obrazu?
-  
-  
-Obiekt zestawu: (reprezentacja w systemie: folder)
-       Name
-       Icon    (wybrana przy tworzeniu zestawu z gotowej kolekcji ikon)
-       CardSet (pliki)
-       Difficulty(przeliczana średnia ze wszystkich fiszek w zestawie)
-
-Obiekt testu:
-      Id
-      Set
-      LastDate (data ostatniego rozwiązania)
-      Result (%)
-      NextDate (Przeliczana data kolejnego rozwiązania [ikona zestawu pojawia się w kalendarzu])
-      (Sposób rozwiązania dowolny?)
-
-
-
-
-Ikony:
-      proste, żeby nie robić śmietnika w kalendarzu
-      czarnobiałe, żeby móc zmieniać kolor 
-      przykładowe: liść, globus, kropla, samochód, nuta, serce
-=======
-Menu główne:
-             SETS (zarządzanie zestawami fiszek)
-             TESTS(sprawdzanie swojej wiedzy)
-             CALENDAR (obiekt kalendarza w menu głównym z zaznaczonymi zbliżającymi się testami powtórkowymi - koniecznymi lub sugestia ich powtórzenia?)
-
-SETS (zestawy fiszek będą mieć strukturę folder/fiszka)
-              CREATE NEW
-              UPDATE (zmiana nazwy albo zarządzanie fiszkami w zestawie)
-              DELETE
-    
-TESTS
-              QUIZ (W stylu Milionerów: jako pytanie losuje się front fiszki, jako odpowiedzi cztery tyły innych)
-              TRUTH OR FALSE ( losowana para stron fiszek - użytkownik odpowiada czy to jedna fiszka)
-              ??????
-              
-                    przy błędnych odpowiedziach:  rośnie trudność fiszek zawartych w zadaniu,
-                    zmniejsza się ocena końcowa za test -> im mniejsza tym szybciej pojawi się w kalendarzu
-              
-
-CALENDAR 
-              Wyświetlony aktualny miesiąc (albo tydzień) z zaznaczonymi ikonami zestawów 
-              kiedy należy (albo będzie konieczność) rozwiązania ponownie testu danego zestawu fiszek
-              Ikony będą mieć kolory przeliczane z trudności zestawu
-
-Obiekt fiszki:
-       Id    (zniknie jeśli okaże się niepotrzebne)
-       Color (kolor ułatwia skojarzenia wzrokowe i dodatkowo wspomaga pamięć, przy tworzeniu fiszki pozwalamy na wybór jej koloru)
-       Front (może być tekst lub obrazek*, ale trzeba przemyśleć reprezentację plikową -> pdf?)
-       Back  (jak wyżej)
-       Difficulty (przeliczane na podstawie wyników w testach, może być procentowe)
-
-                  w przypadku dodawania obrazków: w jakiej postaci przechowywać fiszkę na urządzeniu,
-                                                  jakie pliki graficzne dozwolone - algorytm kompresji obrazu?
+                  przechowywane jako JSON, jesli front/back ma miec zdjecie -> dodatkowe pole boolean i sciezka do pliku jako tresc
   
   
 Obiekt zestawu: (reprezentacja w systemie: folder)

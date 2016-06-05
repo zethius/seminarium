@@ -1,0 +1,3 @@
+Wstepne implementacje obiektow fiszki i zestawu
+Skanowanie folderow w projekcie za plikami fiszek i utworzenie ich obiektowych reprezentacji w programie
+Budowa okna z lista zestawow

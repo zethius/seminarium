@@ -1,0 +1,102 @@
+#:import label kivy.uix.label
+#:import sla kivy.adapters.simplelistadapter
+#:import FadeTransition kivy.uix.screenmanager.FadeTransition
+
+ScreenManagement:
+    transition: FadeTransition()
+    MainScreen:
+    SetsScreen:
+    TestsScreen:
+<Label>
+    font_size:30
+<MainScreen>:
+    name: "main"
+
+    canvas.before:
+        Color:
+            rgba: 0, 0.49, 0.404, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: [100,10,100,100]
+        spacing: 10
+
+        Label:
+            text: 'Where is Mnemo?'
+
+        Button:
+            text: 'SETS'
+            background_normal: ''
+            background_color: [0, 0.396, 0.325, 1]
+            on_press: root.manager.current = 'sets'
+
+        Button:
+            text: 'TESTS'
+            background_normal: ''
+            background_color:[0.392, 0.675, 0.588, 1]
+            on_press: root.manager.current = 'tests'
+
+<SetsScreen>:
+    name: "sets"
+
+    canvas.before:
+        Color:
+            rgba: 0, 0.49, 0.404, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: [100,10,100,10]
+        spacing: 20
+        Label:
+            size_hint:1, 0.2
+            text: 'Sets'
+
+        ListView:
+            size_hint: 1, 1
+            adapter:
+                sla.SimpleListAdapter(
+                data=root.setsNames,
+                cls = label.Label)
+
+        Button:
+            size_hint: 1, 0.2
+            background_normal: ''
+            background_color: [0, 0.396, 0.325, 1]
+            text: 'Back'
+            on_press: root.manager.current = 'main'
+
+<TestsScreen>:
+    name: "tests"
+
+    canvas.before:
+        Color:
+            rgba: 0, 0.49, 0.404, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: [100,10,100,100]
+        spacing: 10
+
+        Label:
+            text: 'Tests'
+
+        Button:
+            text: 'Add'
+            background_color: [0, 0.8, 0, 1]
+
+        Button:
+            text: 'Remove'
+            background_color: [0.75, 0, 0, 1]
+
+        Button:
+            text: 'Back'
+            on_press: root.manager.current = 'main'
