@@ -1,0 +1,2 @@
+Poprawa skanowania folderow i dorzucenie ikony do tabeli
+Poprawa kolorystyki menu

@@ -1,16 +1,16 @@
 {
     "cardSet": [
         {
-            "back": "back",
+            "back": "Kulszowa",
             "color": "#92031",
             "difficulty": 0.7,
-            "front": "front",
+            "front": "Rwa",
             "id": 0
         }
     ],
     "description": "",
     "difficulty": 0.7,
-    "icon": 0,
-    "name": "zestaw",
-    "path": "D:/SEMINARIUM/Kod/resources/sets/zestaw"
+    "icon": "/resources/gui/icons/dna.png",
+    "name": "przyroda",
+    "path": "/resources/sets/przyroda"
 }

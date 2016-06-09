@@ -52,7 +52,7 @@
     ],
     "description": "",
     "difficulty": 0.27142857142857146,
-    "icon": 0,
+    "icon": "/resources/gui/icons/rat.png",
     "name": "zwierzaki",
-    "path": "D:/SEMINARIUM/Kod/resources/sets/zwierzaki"
+    "path": "/resources/sets/zwierzaki"
 }

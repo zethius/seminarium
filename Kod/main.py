@@ -1,4 +1,5 @@
 import Objects
+import os
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
@@ -10,9 +11,16 @@ class MainScreen(Screen):
 
 
 class SetsScreen(Screen):
-    setsNames = []
+    sets = []
     for set in setsArray:
-        setsNames.append(set.name)
+        sets.append({'name': set.name, 'icon': os.getcwd().replace("\\", "/") + set.icon})
+    print(sets[0])
+
+    def sets_converter(self, row_index, sets):
+        return {'text': sets['name'],
+                'icon': sets['icon'],
+                'size_hint_y': None,
+                'height': 50}
     pass
 
 
@@ -32,7 +40,7 @@ class MainApp(App):
 
 
 if __name__ == '__main__':
-    setsArray[1].export()
+    #setsArray[1].export()
     # setsArray = Objects.rescan()
     # print(setsArray[1].to_json())
     MainApp().run()

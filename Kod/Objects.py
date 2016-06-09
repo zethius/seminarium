@@ -2,6 +2,8 @@ import io
 import json
 import os
 
+pathOuter = os.getcwd().replace("\\", "/")
+
 
 class Card:
     """fiszka"""
@@ -28,10 +30,10 @@ class Set:
         self.description = description
         self.cardSet = []
         self.difficulty = 0.5
-        self.path = os.getcwd().replace("\\", "/")+"/resources/sets/"+self.name
-        if not os.path.exists(self.path):
-            os.mkdir(os.getcwd().replace("\\", "/")+"/resources/sets/"+self.name)
-        self.refreshinfo()
+        self.path = "/resources/sets/"+self.name
+        if not os.path.exists(pathOuter+self.path):
+            os.mkdir(pathOuter+"/resources/sets/"+self.name)
+       #self.refreshinfo()
 
     def to_json(self):
         return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)
@@ -42,7 +44,7 @@ class Set:
 
     def export(self):
         for card in self.cardSet:
-            card.to_file(self.path)
+            card.to_file(os.getcwd().replace("\\", "/")+self.path)
 
     def refreshinfo(self):
         diffsum = 0
@@ -50,13 +52,13 @@ class Set:
             for card in self.cardSet:
                 diffsum += card.difficulty
             self.difficulty = diffsum/len(self.cardSet)
-        with io.open(self.path+'/info.json', 'w+', encoding='utf-8') as f:
+        with io.open(pathOuter+self.path+'/.info.json', 'w+', encoding='utf-8') as f:
             f.write(self.to_json())
 
 
 def rescan():
     sets_array = []
-    path = os.getcwd().replace("\\", "/")+"/resources/sets/"
+    path = pathOuter+"/resources/sets/"
     for setdir in os.listdir(path):
         tmpset = Set(setdir, 0, "")
         pathinner = path+"/"+setdir
@@ -65,13 +67,12 @@ def rescan():
                 if os.path.isfile(pathinner+"/"+card):
                     with io.open(pathinner+"/"+card, 'r', encoding='utf-8') as f:
                         info = json.load(f)
-                        if card == "info.json":
+                        if card == ".info.json":
                                 tmpset.name = info['name']
                                 tmpset.icon = info['icon']
                                 tmpset.description = info['description']
                                 tmpset.difficulty = info['difficulty']
                                 tmpset.refreshinfo()
-                                print(tmpset.name)
                         else:
                             card = Card(info['front'], info['back'], info['color'])
                             card.difficulty = info['difficulty']

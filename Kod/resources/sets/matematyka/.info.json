@@ -10,7 +10,7 @@
     ],
     "description": "",
     "difficulty": 0.2,
-    "icon": 0,
+    "icon": "/resources/gui/icons/brain.png",
     "name": "matematyka",
-    "path": "D:/SEMINARIUM/Kod/resources/sets/matematyka"
+    "path": "/resources/sets/matematyka"
 }

@@ -10,7 +10,7 @@
     ],
     "description": "",
     "difficulty": 0.7,
-    "icon": 0,
+    "icon": "/resources/gui/icons/pulse.png",
     "name": "polski",
-    "path": "D:/SEMINARIUM/Kod/resources/sets/polski"
+    "path": "/resources/sets/polski"
 }
