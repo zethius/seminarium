@@ -44,7 +44,7 @@ ScreenManagement:
             on_press: root.manager.current = 'tests'
 
 
-[CustomListItem@SelectableView+GridLayout]:
+[CustomListItem@SetsListItem]:
     cols: 3
     size_hint_y: ctx.size_hint_y
     height:ctx.height
@@ -60,13 +60,15 @@ ScreenManagement:
     Image:
         source:ctx.icon
         size_hint_x: None
+        size_hint_y: None
         width: 50
+        height: 10
 
     ListItemLabel:
         text: ctx.text
         font_size: 30
-        borders: 5, 'solid', (1,1,1,1.)
-
+        text_size: self.size
+        halign: 'left'
         canvas.before:
             Color:
                 rgba: 0.839, 0.937, 0.957,1.
@@ -78,9 +80,10 @@ ScreenManagement:
         size_hint_x: None
         width: 25
         font_size:30
+        color: [1,0,0,1]
         text: "x"
-        on_press: print(ctx)
-        background_color: [1, 0, 0, 1]
+        on_press: root.remove_press(ctx.text)
+        background_color: [1, 0, 0, 0]
 
 
 <SetsScreen>:

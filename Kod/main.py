@@ -1,20 +1,26 @@
 import Objects
 import os
-from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
+from kivy.app import App
+from kivy.uix.selectableview import SelectableView
+from kivy.uix.gridlayout import GridLayout
+
 
 setsArray = Objects.rescan()
 
-class MainScreen(Screen):
+class SetsListItem(SelectableView, GridLayout):
+    def remove_press(self, setName):
+        print(setName)
     pass
 
+class MainScreen(Screen):
+    pass
 
 class SetsScreen(Screen):
     sets = []
     for set in setsArray:
         sets.append({'name': set.name, 'icon': os.getcwd().replace("\\", "/") + set.icon})
-    print(sets[0])
 
     def sets_converter(self, row_index, sets):
         return {'text': sets['name'],
