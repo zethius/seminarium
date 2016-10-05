@@ -53,7 +53,7 @@ class Set:
                 diffsum += card.difficulty
             self.difficulty = diffsum/len(self.cardSet)
         with io.open(pathOuter+self.path+'/.info.json', 'w+', encoding='utf-8') as f:
-            f.write(unicode(self.to_json()))
+            f.write(self.to_json())
 
 
 def rescan():
@@ -68,11 +68,15 @@ def rescan():
                     with io.open(pathinner+"/"+card, 'r', encoding='utf-8') as f:
                         if card == ".DS_Store":
                             continue    
-                        print f           
+                        print (f)
                         info = json.load(f)
                         if card == ".info.json":
                                 tmpset.name = info['name']
-                                tmpset.icon = info['icon']
+
+                                if info['icon'] == 0:
+                                    tmpset.icon = "/resources/gui/icons/gears.png" #default icon
+                                else:
+                                    tmpset.icon = info['icon']
                                 tmpset.description = info['description']
                                 tmpset.difficulty = info['difficulty']
                                 tmpset.refreshinfo()
