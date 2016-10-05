@@ -13,8 +13,7 @@ class MainScreen(Screen):
 class SetsScreen(Screen):
     sets = []
     for set in setsArray:
-        sets.append({'name': set.name, 'icon': os.getcwd().replace("\\", "/") + set.icon})
-    print(sets[0])
+        sets.append({'name': set.name, 'icon': os.getcwd().replace("\\", "/") + str(set.icon)})
 
     def sets_converter(self, row_index, sets):
         return {'text': sets['name'],

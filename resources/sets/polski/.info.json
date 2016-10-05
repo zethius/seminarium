@@ -1,0 +1,16 @@
+{
+    "cardSet": [
+        {
+            "back": "Adam", 
+            "color": "#92031", 
+            "difficulty": 0.7, 
+            "front": "Mickiewicz", 
+            "id": 0
+        }
+    ], 
+    "description": "", 
+    "difficulty": 0.7, 
+    "icon": "/resources/gui/icons/pulse.png", 
+    "name": "polski", 
+    "path": "/resources/sets/polski"
+}
