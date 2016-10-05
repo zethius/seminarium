@@ -53,7 +53,7 @@ class Set:
                 diffsum += card.difficulty
             self.difficulty = diffsum/len(self.cardSet)
         with io.open(pathOuter+self.path+'/.info.json', 'w+', encoding='utf-8') as f:
-            f.write(self.to_json())
+            f.write(unicode(self.to_json()))
 
 
 def rescan():
@@ -66,6 +66,9 @@ def rescan():
             for card in os.listdir(pathinner):
                 if os.path.isfile(pathinner+"/"+card):
                     with io.open(pathinner+"/"+card, 'r', encoding='utf-8') as f:
+                        if card == ".DS_Store":
+                            continue    
+                        print f           
                         info = json.load(f)
                         if card == ".info.json":
                                 tmpset.name = info['name']
