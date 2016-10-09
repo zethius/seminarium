@@ -1,33 +1,23 @@
-/*
- * Licensed to the Apache Software Foundation (ASF) under one
- * or more contributor license agreements.  See the NOTICE file
- * distributed with this work for additional information
- * regarding copyright ownership.  The ASF licenses this file
- * to you under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance
- * with the License.  You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
- */
 var app = {
     // Application Constructor
     initialize: function() {
         this.bindEvents();
     },
+
     // Bind Event Listeners
     //
     // Bind any events that are required on startup. Common events are:
     // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function() {
         document.addEventListener('deviceready', this.onDeviceReady, false);
+        document.getElementById('MainMenuSetsButton').addEventListener('click', setList.SetsMenu);
+        
     },
+
+    
+
+   
+
     // deviceready Event Handler
     //
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
@@ -35,6 +25,7 @@ var app = {
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
     },
+
     // Update DOM on a Received Event
     receivedEvent: function(id) {
         var parentElement = document.getElementById(id);
@@ -48,4 +39,54 @@ var app = {
     }
 };
 
+
+var setList = {
+
+    initialize: function() {
+        setList.renderTable();
+    },
+
+    renderTable: function () {
+        var body = document.getElementById('SetsMenuScreen');
+        console.log(body);
+        var tbl = document.getElementById('SetsTable');
+        tbl.className="SetsTable"
+        var tbdy = document.createElement('tbody');
+        //sets = skanowanie folderu /resources/sets
+        //foreach set
+
+        for (var i = 0; i < 3; i++) {
+            var tr = document.createElement('tr');
+            var icon = document.createElement('td');
+            icon.className="icon";
+            icon.innerHTML="icona";
+            icon.appendChild(document.createTextNode('\u0020'))
+
+            var label = document.createElement('td');
+            label.className="label";
+            label.innerHTML="nazwa zestawu";
+            label.appendChild(document.createTextNode('\u0020'))
+            var button = document.createElement('td');
+            button.className="button";
+            button.innerHTML="X";
+            button.appendChild(document.createTextNode('\u0020'))
+
+            tr.appendChild(icon);
+            tr.appendChild(label);
+            tr.appendChild(button);
+            tbdy.appendChild(tr);
+        }
+        tbl.appendChild(tbdy);
+        body.appendChild(tbl)
+    },
+
+    SetsMenu: function(event){
+        document.getElementById('MainMenuScreen').style.display='none';
+        document.getElementById('SetsMenuScreen').style.display='block';
+        setList.initialize();
+    },
+};
+
 app.initialize();
+
+
