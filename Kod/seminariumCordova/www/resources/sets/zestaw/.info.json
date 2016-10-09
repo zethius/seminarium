@@ -10,7 +10,7 @@
     ], 
     "description": "", 
     "difficulty": 0.7, 
-    "icon": "/resources/gui/icons/light-bulb.png", 
+    "icon": "resources/gui/icons/light-bulb.png", 
     "name": "zestaw", 
-    "path": "/resources/sets/zestaw"
+    "path": "resources/sets/zestaw"
 }

@@ -10,7 +10,7 @@
     ], 
     "description": "", 
     "difficulty": 0.2, 
-    "icon": "/resources/gui/icons/brain.png", 
+    "icon": "resources/gui/icons/brain.png", 
     "name": "matematyka", 
-    "path": "/resources/sets/matematyka"
+    "path": "resources/sets/matematyka"
 }

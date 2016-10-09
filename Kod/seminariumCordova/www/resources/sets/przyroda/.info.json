@@ -10,7 +10,7 @@
     ], 
     "description": "", 
     "difficulty": 0.7, 
-    "icon": "/resources/gui/icons/dna.png", 
+    "icon": "resources/gui/icons/dna.png", 
     "name": "przyroda", 
-    "path": "/resources/sets/przyroda"
+    "path": "resources/sets/przyroda"
 }

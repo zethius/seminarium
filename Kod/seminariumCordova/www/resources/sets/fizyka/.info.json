@@ -10,7 +10,7 @@
     ], 
     "description": "", 
     "difficulty": 0.2, 
-    "icon": "/resources/gui/icons/atom.png", 
+    "icon": "resources/gui/icons/atom.png", 
     "name": "fizyka", 
-    "path": "/resources/sets/fizyka"
+    "path": "resources/sets/fizyka"
 }

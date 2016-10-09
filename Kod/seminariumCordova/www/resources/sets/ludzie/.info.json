@@ -52,7 +52,7 @@
     ], 
     "description": "", 
     "difficulty": 0.27142857142857146, 
-    "icon": "/resources/gui/icons/scientist.png", 
+    "icon": "resources/gui/icons/scientist.png", 
     "name": "ludzie", 
-    "path": "/resources/sets/ludzie"
+    "path": "resources/sets/ludzie"
 }
