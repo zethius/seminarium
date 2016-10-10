@@ -1,3 +1,7 @@
 # seminarium
 Patryk Stalewski - Mnemotechniki, program do nauki
-test
+Program pisany za pomocą technologii Cordova 
+Javascript
+HTML
+CSS / LESS
+jQuery
