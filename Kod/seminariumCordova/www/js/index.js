@@ -1,15 +1,18 @@
 var app = {
     // Application Constructor
     initialize: function() {
+        var self = this;
         this.bindEvents();
-    },
 
+       
+    },
     // Bind Event Listeners
     //
     // Bind any events that are required on startup. Common events are:
     // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function() {
-        document.addEventListener('deviceready', this.onDeviceReady, false);
+        window.addEventListener('filePluginIsReady',  this.onDeviceReady, false);
+        // document.addEventListener('deviceready', this.onDeviceReady, false);
         document.getElementById('MainMenuSetsButton').addEventListener('click', setList.initialize);
         
     },
@@ -19,7 +22,35 @@ var app = {
         document.getElementById('SetsMenuScreen').style.display='none';
     },
 
+    
+    fail: function(e) {
+        console.log("FileSystem Error");
+        console.dir(e);
+    },
+
+    gotFile: function(fileEntry) {
+
+        fileEntry.file(function(file) {
+            var reader = new FileReader();
+
+            reader.onloadend = function(e) {
+                console.log("Text is: "+this.result);
+                document.querySelector("#textArea").innerHTML = this.result;
+            }
+
+            reader.readAsText(file);
+        });
+    },
+
     onDeviceReady: function() {
+     
+        //  //This alias is a read-only pointer to the app itself
+        window.resolveLocalFileSystemURL(cordova.file.dataDirectory,app.gotFile.bind(this), app.fail.bind(this));
+        // // Yes, this works too for our specific example...
+        // $.get("res/sets/fizyka/", function(res) {
+        //     console.log(res);
+        // });
+        
     },
 };
 
@@ -97,15 +128,33 @@ var setList = {
 
     iterateFolders: function(){
         var set= [];
-        var xhttp = new XMLHttpRequest();
-          xhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                var obj = JSON.parse(this.response);
-                set.push(obj);
+        // var xhttp = new XMLHttpRequest();
+        //   xhttp.onreadystatechange = function() {
+        //     if (this.readyState == 4 && this.status == 200) {
+        //         var obj = JSON.parse(this.response);
+        //         set.push(obj);
+        //     }
+        //   };
+        //   xhttp.open("GET", "resources/sets/fizyka/.info.json", true);
+        //   xhttp.send();
+        var dir = "file://res/sets/fizyka/";
+        var fileextension = ".json";
+        $.ajax({
+            //This will retrieve the contents of the folder if the folder is configured as 'browsable'
+            url: dir,
+            success: function (data) {
+                console.log(data);
+                //List all .png file names in the page
+                // $(data).find("a:contains(" + fileextension + ")").each(function () {
+                //     var filename = this.href.replace(window.location.host, "").replace("http://", "");
+                //     $("body").append("<img src='" + dir + filename + "'>");
+                // });
             }
-          };
-          xhttp.open("GET", "resources/sets/fizyka/.info.json", true);
-          xhttp.send();
+        });
+
+
+
+
           return set;
     } 
 

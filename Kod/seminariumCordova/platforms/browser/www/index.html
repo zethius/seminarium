@@ -11,30 +11,28 @@
                 * Enable inline JS: add 'unsafe-inline' to default-src
             -->
             
-            <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
+            <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *"> -->
             <meta name="format-detection" content="telephone=no">
             <meta name="msapplication-tap-highlight" content="no">
             <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
             <link rel="stylesheet/less" type="text/css" href="css/index.less">
             <!-- <link rel="stylesheet" type="text/css" href="css/index.css"> -->
             <script src="js/less.js" type="text/javascript"></script>
-
-            <title>Hello World</title>
+            <script src="js/jquery.js" type="text/javascript"></script>
+            <title>Mnemo</title>
         </head>
         <body>
             <div class="app">
 
                 <div id="MainMenuScreen">
                     <h1>Where is Mnemo?</h1>
-                    <div class="Menubutton lightBlue" id="MainMenuSetsButton">SETS</div>
-                    <div class="Menubutton darkBlue" id="MainMenuTestsButton">TESTS</div>
+                    <div class="Menubutton lightBlue" id="MainMenuSetsButton">Zestawy</div>
+                    <div class="Menubutton darkBlue" id="MainMenuTestsButton">Testy</div>
                 </div>
                 <div id="SetsMenuScreen" style="display:none">
-                    <h1>SETS TABLE</h1>
-                    <div id="deviceready" class="blink">
-                        <p class="event listening">Connecting to Device</p>
-                        <p class="event received">Device is Ready</p>
-                    </div>
+                    <h1>Zestawy</h1>
+                    <table id="SetsTable"></table>
+                     <div class="Menubutton darkBlue" id="SetsMenuBack">Wstecz</div>
                 </div>
 
 
