@@ -177,13 +177,13 @@ var setList = {
         var tbdy = document.createElement('tbody');
 
         tempData.forEach(function(entry) {
-            console.log(entry);
             setList.sets.push(entry.object);
         });
 
 
         setList.sets.forEach(function(el){
             var tr = document.createElement('tr');
+            tr.id=el.name;
             tr.className = "setRow";
             var icon = document.createElement('td');
             icon.className="icon";
@@ -202,6 +202,7 @@ var setList = {
             tr.appendChild(icon);
             tr.appendChild(label);
             tr.appendChild(button);
+            tr.addEventListener('click',function(event){console.log(el.name);}, false);
             tbdy.appendChild(tr);
         });
         tbl.appendChild(tbdy);
