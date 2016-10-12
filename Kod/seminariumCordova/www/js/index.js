@@ -184,6 +184,7 @@ var setList = {
 
         setList.sets.forEach(function(el){
             var tr = document.createElement('tr');
+            tr.className = "setRow";
             var icon = document.createElement('td');
             icon.className="icon";
             icon.innerHTML = '<img src=\''+el.icon+'\'height="32" width="32">';
