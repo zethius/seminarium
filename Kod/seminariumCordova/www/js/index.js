@@ -96,22 +96,21 @@ var tempData= [
 
 
 var app = {
-    // Application Constructor
     initialize: function() {
         var self = this;
         this.bindEvents();
+        this.db=null;
         this.fs=null;
         this.fsroot=null;
         console.log(tempData);
        
     },
-    // Bind Event Listeners
-    //
+
     // Bind any events that are required on startup. Common events are:
     // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function() {
-        window.addEventListener('filePluginIsReady',  this.onDeviceReady, false);
-        // document.addEventListener('deviceready', this.onDeviceReady, false);
+        // window.addEventListener('filePluginIsReady',  this.onDeviceReady, false);
+        document.addEventListener('deviceready', this.onDeviceReady, false);
         document.getElementById('MainMenuSetsButton').addEventListener('click', setList.initialize);
         
     },
@@ -121,116 +120,43 @@ var app = {
         document.getElementById('SetsMenuScreen').style.display='none';
     },
 
-    
-    errorHandler: function (fileName, e) {  
-        var msg = '';
-
-        switch (e.code) {
-            case FileError.QUOTA_EXCEEDED_ERR:
-                msg = 'Storage quota exceeded';
-                break;
-            case FileError.NOT_FOUND_ERR:
-                msg = 'File not found';
-                break;
-            case FileError.SECURITY_ERR:
-                msg = 'Security error';
-                break;
-            case FileError.INVALID_MODIFICATION_ERR:
-                msg = 'Invalid modification';
-                break;
-            case FileError.INVALID_STATE_ERR:
-                msg = 'Invalid state';
-                break;
-            default:
-                msg = 'Unknown error';
-                break;
-        };
-
-        console.log('Error (' + fileName + '): ' + msg);
-    },
-
-    gotFile: function(fileEntry) {
-        console.log(fileEntry);
-        this.fs=fileEntry;
-        this.fsroot=fileEntry.root;
-        app.createFile("1.txt");
-        app.getFiles();
-
-        // console.log(this);
-        // fileEntry.file(function(file) {
-        //     var reader = new FileReader();
-
-        //     reader.onloadend = function(e) {
-        //         console.log("Text is: "+this.result);
-        //         document.querySelector("#textArea").innerHTML = this.result;
-        //     }
-
-        //     reader.readAsText(file);
-        // });
-    },
-    getFile: function(name) { 
-       this.fsroot.getFile(name, null, function(fileEntry) { 
-           fileEntry.file(function(file) { 
-                console.log(file);
-              
-                
-           }, app.fail); 
-       }, app.fail ); 
-    }.bind(this),
-    getFiles: function() { 
-       var dirReader = this.fsroot.createReader(); 
-                console.log(dirReader);
-       dirReader.readEntries(function(files) { 
-            console.log("readEntries");
-            console.log(files);
-           for (var i = 0, len = files.length; i < len; i++) { 
-               if(files[i].isFile) { 
-                   app.getFile(files[i].name); 
-                   console.log(files[i]);
-               } 
-           } 
-       }, app.fail); 
-    }.bind(this),
-
-    createFile: function(path) { 
-    this.fsroot.getFile(path, 
-        { create:true, exclusive:true }, 
-        function() { 
-            console.log(path+ " file created"); 
-        }, 
-        app.fail ); 
-    }.bind(this),
-
-    readFromFile: function(fileName, cb) {
-        var pathToFile = cordova.file.dataDirectory + fileName;
-        window.resolveLocalFileSystemURL(pathToFile, function (fileEntry) {
-            fileEntry.file(function (file) {
-                var reader = new FileReader();
-
-                reader.onloadend = function (e) {
-                    cb(JSON.parse(this.result));
-                };
-
-                reader.readAsText(file);
-            }, app.errorHandler.bind(null, fileName));
-        }, app.errorHandler.bind(null, fileName));
-    },
-
     onDeviceReady: function() {
-         cordova.file.options={  
-            basePath: cordova.file.dataDirectory, // working directory
-            create: true, // always create files
-            type: 'text/plain' // read/write all files as plain text
-        };   
-        var fileData;
-        app.readFromFile('/res', function (data) {
-            fileData = data;
-            console.log(fileData);
-        });
+            this.db = window.openDatabase("mnemo", "2.0", "Mnemo DB", 1000000);
+
+            this.db.transaction(function(tx) {
+                //create table
+                tx.executeSql("CREATE TABLE IF NOT EXISTS demo (id integer primary key, data text, data_num integer)", [], function(tx, res){
+
+                    //insert data
+                    tx.executeSql("REPLACE INTO demo (id, data, data_num) VALUES (?,?,?)", [1, "test", 100], function(tx,res){
+
+                        //retrieve data
+                        tx.executeSql("SELECT * FROM demo WHERE id = ?", [1], function(tx, res){
+                            for(var iii = 0; iii < res.rows.length; iii++)
+                            {
+                                console.log(res);
+                                // alert(res.rows.item(iii).id);
+                                // alert(res.rows.item(iii).data);
+                                // alert(res.rows.item(iii).data_num);
+                            }
+                        })
+
+                    });
+
+                });
+
+            }, function(err){
+                console.log("Error: " + err.message)
+
+            });
         
     }.bind(this),
 };
 
+function onDeviceReady()
+{
+   
+}
 
 var setList = {
     sets: [],
