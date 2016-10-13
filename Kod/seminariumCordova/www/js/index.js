@@ -3,7 +3,7 @@ var tempData= [
                                                 "cardSet": [
                                                     {
                                                         "back": "mc^2", 
-                                                        "color": "#92031", 
+                                                        "color": "#fff", 
                                                         "difficulty": 0.2, 
                                                         "front": "e=", 
                                                         "id": 0
@@ -20,49 +20,49 @@ var tempData= [
                                                 "cardSet": [
                                                     {
                                                         "back": "Parzych", 
-                                                        "color": "#92031", 
+                                                        "color": "#99f", 
                                                         "difficulty": 0.3, 
                                                         "front": "Patrycja", 
                                                         "id": 0
                                                     }, 
                                                     {
                                                         "back": "Stalewski", 
-                                                        "color": "#92031", 
+                                                        "color": "#99f", 
                                                         "difficulty": 0.3, 
                                                         "front": "Patryk", 
                                                         "id": 0
                                                     }, 
                                                     {
                                                         "back": "Eli\u0144ski", 
-                                                        "color": "#92031", 
+                                                        "color": "#99f", 
                                                         "difficulty": 0.4, 
                                                         "front": "Remek", 
                                                         "id": 0
                                                     }, 
                                                     {
                                                         "back": "Stalewska", 
-                                                        "color": "#92031", 
+                                                        "color": "#aff", 
                                                         "difficulty": 0.3, 
                                                         "front": "Julia", 
                                                         "id": 0
                                                     }, 
                                                     {
                                                         "back": "Stalewski K.", 
-                                                        "color": "#92031", 
+                                                        "color": "#f9a", 
                                                         "difficulty": 0.1, 
                                                         "front": "Kacper", 
                                                         "id": 0
                                                     }, 
                                                     {
                                                         "back": "Stalewski M.", 
-                                                        "color": "#92031", 
+                                                        "color": "#fa9", 
                                                         "difficulty": 0.2, 
                                                         "front": "Mariusz", 
                                                         "id": 0
                                                     }, 
                                                     {
                                                         "back": "Parzych", 
-                                                        "color": "#92031", 
+                                                        "color": "#fa9", 
                                                         "difficulty": 0.3, 
                                                         "front": "Patrycja", 
                                                         "id": 0
@@ -79,7 +79,7 @@ var tempData= [
                                                 "cardSet": [
                                                     {
                                                         "back": "a^2+b^2 = c^2", 
-                                                        "color": "#92031", 
+                                                        "color": "#ffa", 
                                                         "difficulty": 0.2, 
                                                         "front": "Wz\u00f3r pitagorasa", 
                                                         "id": 0
@@ -97,7 +97,7 @@ var tempData= [
 
 var app = {
     initialize: function() {
-        var self = this;
+        // var self = this;
         this.bindEvents();
         this.db=null;
         this.fs=null;
@@ -111,7 +111,7 @@ var app = {
     bindEvents: function() {
         // window.addEventListener('filePluginIsReady',  this.onDeviceReady, false);
         document.addEventListener('deviceready', this.onDeviceReady, false);
-        document.getElementById('MainMenuSetsButton').addEventListener('click', setList.initialize);
+        document.getElementById('MainMenuSetsButton').addEventListener('click', setList.initialize.bind(setList));
         
     },
  
@@ -153,35 +153,39 @@ var app = {
     }.bind(this),
 };
 
-function onDeviceReady()
-{
-   
-}
-
 var setList = {
     sets: [],
+    setsFilled: false,
     initialize: function() {
-        var self = this;
-        document.getElementById('MainMenuScreen').style.display='none';
-        document.getElementById('SetsMenuScreen').style.display='block';
         document.getElementById('SetsMenuBack').addEventListener('click', app.showMain);
+        setTimeout(this.renderTable.bind(this), 10);
+        this.show();
+    },
 
-        setTimeout(function(){  setList.renderTable();}, 10);
+    show: function(){
+        document.getElementById('MainMenuScreen').style.display='none';
+        document.getElementById('CardsMenuScreen').style.display='none';
+        document.getElementById('SetsMenuScreen').style.display='block';
     },
 
     renderTable: function () {
+
         var body = document.getElementById('SetsMenuScreen');
         var tbl = document.getElementById('SetsTable');
-        tbl.innerHTML="";
+        while (tbl.firstChild) {
+            tbl.removeChild(tbl.firstChild);
+        }
         tbl.className="SetsTable"
+
         var tbdy = document.createElement('tbody');
+        if(!this.setsFilled){  //pozniej dodawac tylko nowe sety
+            tempData.forEach(function(entry) {
+                this.sets.push(entry.object);
+            }.bind(this));
+            this.setsFilled=true;
+        }
 
-        tempData.forEach(function(entry) {
-            setList.sets.push(entry.object);
-        });
-
-
-        setList.sets.forEach(function(el){
+        this.sets.forEach(function(el){
             var tr = document.createElement('tr');
             tr.id=el.name;
             tr.className = "setRow";
@@ -202,11 +206,13 @@ var setList = {
             tr.appendChild(icon);
             tr.appendChild(label);
             tr.appendChild(button);
-            tr.addEventListener('click',function(event){console.log(el.name);}, false);
+            tr.addEventListener('click',cardList.initialize.bind(el), false);
+            tr.Set = el;
+            console.log(tr);
             tbdy.appendChild(tr);
-        });
+        }.bind(this));
         tbl.appendChild(tbdy);
-        body.appendChild(tbl)
+        // body.appendChild(tbl)
     },
 
     iterateFolders: function(){
@@ -234,15 +240,74 @@ var setList = {
                 // });
             }
         });
-
-
-
-
           return set;
     } 
+};
+
+
+var cardList={
+    initialize: function() {
+        $.extend(this,cardList);
+        document.getElementById('SetIcon').innerHTML ='<img src=\''+this.icon+'\'height="128" width="128">'
+        document.getElementById('SetName').innerHTML=this.name;
+        document.getElementById('MainMenuScreen').style.display='none';
+        document.getElementById('SetsMenuScreen').style.display='none';
+        document.getElementById('CardsMenuScreen').style.display='block';
+        document.getElementById('CardsMenuBack').addEventListener('click', setList.show);
+        setTimeout(this.renderTable.bind(this), 10);
+    },
+
+    renderTable: function () {
+
+        var body = document.getElementById('CardsMenuScreen');
+        var tbl = document.getElementById('CardsTable');
+        while (tbl.firstChild) {
+            tbl.removeChild(tbl.firstChild);
+        }
+        tbl.className="SetsTable"
+        var tbdy = document.createElement('tbody');
+
+
+        this.cardSet.forEach(function(el){
+            var tr = document.createElement('tr');
+            tr.style.background = el.color;
+            tr.id=el.front;
+            tr.className = "setRow";
+
+            var front = document.createElement('td');
+            front.className="front";
+            front.innerHTML = el.front;
+            front.appendChild(document.createTextNode('\u0020'));
+
+            var back = document.createElement('td');
+            back.className="back";
+            back.innerHTML=el.back;
+            back.appendChild(document.createTextNode('\u0020'));
+
+            var difficulty = document.createElement('td');
+            difficulty.className="difficulty";
+            difficulty.innerHTML=el.difficulty;
+            difficulty.appendChild(document.createTextNode('\u0020'));
+
+            var button = document.createElement('td');
+            button.className="button";
+            button.innerHTML="X";
+            button.appendChild(document.createTextNode('\u0020'));
+            tr.appendChild(front);
+            tr.appendChild(back);
+            tr.appendChild(difficulty);
+            tr.appendChild(button);
+            // tr.addEventListener('click',cardList.initialize.bind(el), false);
+            tbdy.appendChild(tr);
+        }.bind(this));
+        tbl.appendChild(tbdy);
+        // body.appendChild(tbl)
+    },
 
 
 };
+
+
 
 app.initialize();
 
