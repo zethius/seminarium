@@ -45,7 +45,7 @@ body {
     width:100%;                   /* text area width */
     text-align:center;
     // padding:180px 0px 0px 0px;     /* image height is 200px (bottom 20px are overlapped with text) */
-    margin:-115px 0px 0px -112px;  /* offset vertical: half of image height and text area height */
+    // margin:-115px 0px 0px -112px;  /* offset vertical: half of image height and text area height */
     font-family: 'Raleway';                   /* offset horizontal: half of text area width */
     margin-left: auto;
     margin-right: auto;                            
@@ -108,13 +108,16 @@ h1 {
 
 #MainMenuScreen{
     color: rgb(39,145,167);
-    position: relative;
-    top: 46em;
+    // position: relative;
+    // top: 46em;
+    position:absolute;
+    width:100%;
+    top:40%;
 }
 .Menubutton{
     border-radius: 5px;
     padding: 15px;
-    width: 50%;
+    width: 40%;
     margin-left: auto ;
     margin-right: auto ;
     margin-bottom: 0.5em;
@@ -131,8 +134,9 @@ h1 {
     }
 }
 #SetsMenuScreen, #CardsMenuScreen{
-    position: relative;
-    top: 40em;
+    position:absolute;
+    width:100%;
+    top:40%;
     .SetsTable{
         background-color: #D6EFF4;
         width:70%;
@@ -173,12 +177,12 @@ h1 {
         // position:absolute;
         // bottom:30%;
         // left:25%;
-
     }
 }
 
 #CardsMenuScreen{
-    top: 29.1em;
+    top: ~"-webkit-calc(40% - 131px)";
+    top: ~"calc(40% - 131px)";
 
 }
 
