@@ -1,23 +1,43 @@
 define(function(require) {
     var cardList={
+        cardSet: [],
+        cardsFilled: false,
         initialize: function() {
-            $.extend(this,cardList);
+            console.log(this);
+            $.extend(this,cardList);           
             document.getElementById('SetIcon').innerHTML ='<img src=\''+this.icon+'\'height="128" width="128">'
             document.getElementById('SetName').innerHTML=this.name;
             document.getElementById('MainMenuScreen').style.display='none';
             document.getElementById('SetsMenuScreen').style.display='none';
             document.getElementById('CardsMenuScreen').style.display='block';
             document.getElementById('CardsMenuBack').addEventListener('click', this.back);
-            setTimeout(this.renderTable.bind(this), 10);
+            this.cardSet=[];
+            if(!this.cardsFilled){
+                this.fill();
+            }
+            // setTimeout(this.renderTable.bind(this), 10);
         },
-        
+
+        fill: function(){
+            window.App.dbObject.getCards(this.set_id,function(cards){
+                for(var i = 0; i < cards.rows.length; i++)
+                {
+                    this.cardSet.push(cards.rows.item(i));
+                }
+                setTimeout(function(){  
+                        this.renderTable();
+                        this.cardsFilled=true;
+                }.bind(this),0);
+            }.bind(this));      
+        },
+
         back: function(){
             document.getElementById('MainMenuScreen').style.display='none';
             document.getElementById('CardsMenuScreen').style.display='none';
             document.getElementById('SetsMenuScreen').style.display='block';
         },
         renderTable: function () {
-
+            console.log(this.cardSet);
             var body = document.getElementById('CardsMenuScreen');
             var tbl = document.getElementById('CardsTable');
             while (tbl.firstChild) {
