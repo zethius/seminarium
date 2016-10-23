@@ -12,7 +12,7 @@ define(function(require) {
             window.App.cardList = cardList;     
             window.App.dbObject = dbObject;
             window.App.setList = setList;
-
+            window.App.cardObject= cardObject;
             this.bindEvents();
         },
 

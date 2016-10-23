@@ -3,19 +3,21 @@ define(function(require) {
         cardSet: [],
         cardsFilled: false,
         initialize: function() {
-            console.log(this);
             $.extend(this,cardList);           
             document.getElementById('SetIcon').innerHTML ='<img src=\''+this.icon+'\'height="128" width="128">'
             document.getElementById('SetName').innerHTML=this.name;
-            document.getElementById('MainMenuScreen').style.display='none';
-            document.getElementById('SetsMenuScreen').style.display='none';
-            document.getElementById('CardsMenuScreen').style.display='block';
+            this.show();
             document.getElementById('CardsMenuBack').addEventListener('click', this.back);
             this.cardSet=[];
             if(!this.cardsFilled){
                 this.fill();
             }
             // setTimeout(this.renderTable.bind(this), 10);
+        },
+
+        show: function(){
+            document.getElementById('SetsMenuScreen').style.display='none';
+            document.getElementById('CardsMenuScreen').style.display='block';
         },
 
         fill: function(){
@@ -32,12 +34,10 @@ define(function(require) {
         },
 
         back: function(){
-            document.getElementById('MainMenuScreen').style.display='none';
             document.getElementById('CardsMenuScreen').style.display='none';
             document.getElementById('SetsMenuScreen').style.display='block';
         },
         renderTable: function () {
-            console.log(this.cardSet);
             var body = document.getElementById('CardsMenuScreen');
             var tbl = document.getElementById('CardsTable');
             while (tbl.firstChild) {
@@ -45,7 +45,6 @@ define(function(require) {
             }
             tbl.className="SetsTable"
             var tbdy = document.createElement('tbody');
-
 
             this.cardSet.forEach(function(el){
                 var tr = document.createElement('tr');
@@ -76,7 +75,9 @@ define(function(require) {
                 tr.appendChild(back);
                 tr.appendChild(difficulty);
                 tr.appendChild(button);
-                // tr.addEventListener('click',cardList.initialize.bind(el), false);
+                tr.addEventListener('click',function(){
+                    window.App.cardObject.initialize(el);
+                }.bind(el), false);
                 tbdy.appendChild(tr);
             }.bind(this));
             tbl.appendChild(tbdy);

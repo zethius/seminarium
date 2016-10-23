@@ -4,13 +4,11 @@ define(function(require) {
 	    sets: [],
 	    setsFilled: false,
 	    initialize: function() {
-
 	        document.getElementById('SetsMenuBack').addEventListener('click', this.back);
 	        if(!this.setsFilled){
 	       	 	this.fill();	               
 	        }
 			this.show();
-
 	    },
 
 	    fill: function(){
@@ -33,7 +31,6 @@ define(function(require) {
 
 	    show: function(){
 	        document.getElementById('MainMenuScreen').style.display='none';
-	        document.getElementById('CardsMenuScreen').style.display='none';
 	        document.getElementById('SetsMenuScreen').style.display='block';
 	    },
 
@@ -60,17 +57,13 @@ define(function(require) {
 	            var icon = document.createElement('td');
 	            icon.className="icon";
 	            icon.innerHTML = '<img src=\''+el.icon+'\'height="32" width="32">';
-	            // icon.innerHTML=el.icon;
-	            icon.appendChild(document.createTextNode('\u0020'));
 
 	            var label = document.createElement('td');
 	            label.className="label";
 	            label.innerHTML=el.name;
-	            label.appendChild(document.createTextNode('\u0020'));
 	            var button = document.createElement('td');
 	            button.className="button";
 	            button.innerHTML="X";
-	            button.appendChild(document.createTextNode('\u0020'));
 	            tr.appendChild(icon);
 	            tr.appendChild(label);
 	            tr.appendChild(button);
