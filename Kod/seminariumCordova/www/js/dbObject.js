@@ -18,7 +18,15 @@ define(function(require){
 		getCards:function(id,fn){
 			this.selectQuery("SELECT c.id as card_id, c.front, c.difficulty, c.back, cc.color_value AS color FROM cards c LEFT JOIN sets s ON c.set_id=s.id LEFT JOIN colors cc ON c.color_id = cc.id WHERE c.set_id=(?)",[id],fn);
 		},
+		deleteSet:function(id){
+			console.log(id);
+			// this.execQuery("DELETE FROM sets WHERE id=(?)",id);
+		},
 
+		deleteCard:function(id){
+			console.log(id);
+			// this.execQuery("DELETE FROM cards WHERE id=(?)",id);
+		},
 		saveSet:function(name,desc,icon){
 			this.db.transaction(function(tx){
 				tx.executeSql("INSERT INTO sets(name,difficulty,description,icon_id) VALUES (?,?,?,?)",[name,0.5,desc,icon]);
@@ -35,7 +43,19 @@ define(function(require){
 				console.log(err.message);
 			});
 		},
+		execQuery: function(str,arr){
+			this.db.transaction(
+				function(tx){
+					tx.executeSql(str,arr,
+						function(tx){
+						}.bind(this));
+				}.bind(this),
+				function(err){
+					console.log(err.message);
+				}
+			);
 
+		},
 		selectQuery: function(str,arr,callback){
 			this.result=null;
 			this.db.transaction(

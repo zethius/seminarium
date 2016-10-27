@@ -2,13 +2,12 @@ define(function(require) {
 	var tempData = require('tempData');
 	var setList = {
 	    sets: [],
-	    setsFilled: false,
 	    initialize: function() {
 	        document.getElementById('SetsMenuBack').addEventListener('click', this.back);
 	        if(!this.setsFilled){
 	       	 	this.fill();	               
 	        }
-			this.show();
+			// this.show();
 	    },
 
 	    fill: function(){
@@ -19,7 +18,6 @@ define(function(require) {
                 }
 	   			setTimeout(function(){  
 	       				this.renderTable();
-				   		this.setsFilled=true;
 				}.bind(this),0);
 	       	}.bind(this));		
 	    },
@@ -37,22 +35,13 @@ define(function(require) {
 	    renderTable: function () {
 	        var body = document.getElementById('SetsMenuScreen');
 	        var tbl = document.getElementById('SetsTable');
-	        while (tbl.firstChild) {
-	            tbl.removeChild(tbl.firstChild);
-	        }
 	        tbl.className="SetsTable"
 
 	        var tbdy = document.createElement('tbody');
-	        // if(!this.setsFilled){  //pozniej dodawac tylko nowe sety
-	        //     tempData.forEach(function(entry) {
-	        //         this.sets.push(entry.object);
-	        //     }.bind(this));
-	        //     this.setsFilled=true;
-	        // }
 
 	        this.sets.forEach(function(el){
 	            var tr = document.createElement('tr');
-	            tr.id=el.name;
+	            tr.id='set_'+el.set_id;
 	            tr.className = "setRow";
 	            var icon = document.createElement('td');
 	            icon.className="icon";
@@ -64,10 +53,20 @@ define(function(require) {
 	            var button = document.createElement('td');
 	            button.className="button";
 	            button.innerHTML="X";
+	            button.addEventListener('click',function(){
+								            		navigator.notification.confirm(
+													    'Czy na pewno chcesz usunąć zestaw "'+this.name+'"?' , 
+													  	window.App.setList.onRemoveConfirm.bind(this),     //  callback to invoke with index of button pressed
+													    'Usuwanie zestawu',    // title
+													    ['Usuń','Anuluj']     // buttonLabels
+													);	            	
+	            								}.bind(el)
+	            ,false);
 	            tr.appendChild(icon);
 	            tr.appendChild(label);
 	            tr.appendChild(button);
-	            tr.addEventListener('click', window.App.cardList.initialize.bind(el), false);
+	            icon.addEventListener('click', window.App.cardList.initialize.bind(el), false);
+	            label.addEventListener('click', window.App.cardList.initialize.bind(el), false);
 	            tr.Set = el;
 	            tbdy.appendChild(tr);
 	        }.bind(this));
@@ -75,6 +74,13 @@ define(function(require) {
 	        // body.appendChild(tbl)
 	    },
 
+	    onRemoveConfirm:function(buttonIndex){
+	    	if(buttonIndex==1){
+	    		window.App.dbObject.deleteSet(this.set_id);
+	    		var dom=document.getElementById('set_'+this.set_id);
+	    		dom.remove();
+	    	}
+	    },
 	};
 	return setList;
 });

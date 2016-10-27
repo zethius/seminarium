@@ -47,9 +47,10 @@ define(function(require) {
             var tbdy = document.createElement('tbody');
 
             this.cardSet.forEach(function(el){
+                console.log(el);
                 var tr = document.createElement('tr');
                 tr.style.background = el.color;
-                tr.id=el.front;
+                tr.id='card_'+el.card_id;
                 tr.className = "setRow";
 
                 var front = document.createElement('td');
@@ -75,13 +76,35 @@ define(function(require) {
                 tr.appendChild(back);
                 tr.appendChild(difficulty);
                 tr.appendChild(button);
-                tr.addEventListener('click',function(){
+                front.addEventListener('click',function(){
                     window.App.cardObject.initialize(el);
                 }.bind(el), false);
+                back.addEventListener('click',function(){
+                    window.App.cardObject.initialize(el);
+                }.bind(el), false);
+                difficulty.addEventListener('click',function(){
+                    window.App.cardObject.initialize(el);
+                }.bind(el), false);
+                button.addEventListener('click',function(){
+                                                    navigator.notification.confirm(
+                                                        'Czy na pewno chcesz usunąć fiszkę "'+this.front+ '/'+this.back+'"?' , 
+                                                        window.App.cardList.onRemoveConfirm.bind(this),     //  callback to invoke with index of button pressed
+                                                        'Usuwanie zestawu',    // title
+                                                        ['Usuń','Anuluj']     // buttonLabels
+                                                    );                  
+                                                }.bind(el), false);
+
                 tbdy.appendChild(tr);
             }.bind(this));
             tbl.appendChild(tbdy);
             // body.appendChild(tbl)
+        },
+        onRemoveConfirm:function(buttonIndex){
+            if(buttonIndex==1){
+                window.App.dbObject.deleteCard(this.card_id);
+                var dom=document.getElementById('card_'+this.card_id);
+                dom.remove();
+            }
         },
     };
     return cardList;

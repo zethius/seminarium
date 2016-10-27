@@ -13,6 +13,8 @@ define(function(require) {
             window.App.dbObject = dbObject;
             window.App.setList = setList;
             window.App.cardObject= cardObject;
+
+            window.App.setList.initialize();
             this.bindEvents();
         },
 
@@ -21,7 +23,7 @@ define(function(require) {
         bindEvents: function() {
             // window.addEventListener('filePluginIsReady',  this.onDeviceReady, false);
             document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
-            document.getElementById('MainMenuSetsButton').addEventListener('click', setList.initialize.bind(setList));
+            document.getElementById('MainMenuSetsButton').addEventListener('click', setList.show.bind(setList));
             
         },
 
