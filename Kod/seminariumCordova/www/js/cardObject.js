@@ -8,7 +8,6 @@ define(function(require) {
 			this.back = options.back;
 			this.difficulty = options.difficulty;
 			this.color = options.color;
-			console.log(this);
             document.getElementById('CardEditBack').addEventListener('click', this.goBack);
             this.build();
 			this.show();

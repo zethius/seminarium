@@ -183,12 +183,31 @@ h1 {
 #CardsMenuScreen{
     top: ~"-webkit-calc(40% - 131px)";
     top: ~"calc(40% - 131px)";
+    #IconList{
+        display:block;
+        overflow:hidden;
+        height: 0px;
+        -webkit-transition : height 0.5s;
+        transition : height 0.5s;  
+    }
 }
 #CardEditScreen{
-    textarea{
-        resize: none;
-        width:10%;
+    #CardEditForm{
+        table{
+            width: 100%; 
+            padding-left:20%; 
+            padding-right:20%
+
+        }
+        textarea{
+            resize: none;
+            width:10%;
+        }
+
     }
+
+
+    
 
 }
 

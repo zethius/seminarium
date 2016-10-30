@@ -12,20 +12,44 @@ define(function(require){
 			});
 		}.bind(this),
 
+		getFullSets:function(fn){
+			this.getSets(function(sets){
+				for(var i = 0; i < sets.rows.length; i++)
+				{
+					var set= sets.rows.item(i);
+					window.App.sets[set.set_id]=set;
+					window.App.sets[set.set_id].cards=[];
+				}});
+			setTimeout(function(){  
+				window.App.sets.forEach(function(el){
+					this.getCards(el.set_id, function(cards){
+						var cardsTmp=[];
+						for(var j = 0; j < cards.rows.length; j++)
+						{
+							cardsTmp[j] = cards.rows.item(j);
+						}
+						el.cards=cardsTmp;
+					});
+				}.bind(this));
+			}.bind(this),500);
+		},
+		getIcons:function(fn){
+			this.selectQuery("SELECT * FROM icons",[],fn);			
+		},
 		getSets:function(fn){
 			this.selectQuery("SELECT s.id as set_id, s.name, s.difficulty, s.description, i.icon_value AS icon FROM sets s LEFT JOIN icons i ON i.id = s.icon_id",[],fn);
 		},
 		getCards:function(id,fn){
-			this.selectQuery("SELECT c.id as card_id, c.front, c.difficulty, c.back, cc.color_value AS color FROM cards c LEFT JOIN sets s ON c.set_id=s.id LEFT JOIN colors cc ON c.color_id = cc.id WHERE c.set_id=(?)",[id],fn);
+			this.selectQuery("SELECT c.id as card_id, c.front, c.difficulty, c.back, cc.color_value AS color, c.set_id FROM cards c LEFT JOIN sets s ON c.set_id=s.id LEFT JOIN colors cc ON c.color_id = cc.id WHERE c.set_id=(?)",[id],fn);
 		},
-		deleteSet:function(id){
-			console.log(id);
-			// this.execQuery("DELETE FROM sets WHERE id=(?)",id);
+		deleteSet:function(setid){
+			console.log(setid);
+			// this.execQuery("DELETE FROM sets WHERE id=(?)",setid);
 		},
 
-		deleteCard:function(id){
-			console.log(id);
-			// this.execQuery("DELETE FROM cards WHERE id=(?)",id);
+		deleteCard:function(cardid){
+			console.log(cardid);
+			// this.execQuery("DELETE FROM cards WHERE id=(?)",cardid);
 		},
 		saveSet:function(name,desc,icon){
 			this.db.transaction(function(tx){
@@ -53,18 +77,15 @@ define(function(require){
 				function(err){
 					console.log(err.message);
 				}
-			);
+				);
 
 		},
 		selectQuery: function(str,arr,callback){
-			this.result=null;
 			this.db.transaction(
 				function(tx){
 					tx.executeSql(str,arr,
 						function(tx,res){
 							this.SQLResult=res.rows;
-							// console.log("SQLResult filled:");
-							// console.log(this.SQLResult);
 							if(callback){
 								callback(res);						
 							}
@@ -73,7 +94,7 @@ define(function(require){
 				function(err){
 					console.log(err.message);
 				}
-			);
+				);
 		},
 
 		prepareDb: function(){
@@ -84,19 +105,13 @@ define(function(require){
                     this.prepareTables(tx);
                     this.prepareIcons(tx);
                     this.prepareColors(tx); 
-                    // tx.executeSql("SELECT * FROM colors",[], function(tx, res){
-                    // 	// console.log(res);
-                    //                 // alert(res.rows.item(iii).id);
-                    //                 // alert(res.rows.item(iii).data);
-                    //                 // alert(res.rows.item(iii).data_num);
-                    //             });
+
                 }.bind(dbObject), function(err){
                 	console.log("Error: " + err.message);
                 });  
 		}.bind(this),
 
 		prepareTables:function(tx){
-			tx.executeSql("DROP TABLE icons");
 			tx.executeSql("CREATE TABLE IF NOT EXISTS icons(id INTEGER PRIMARY KEY AUTOINCREMENT, icon_value TEXT, icon_name TEXT)");
 			tx.executeSql("CREATE TABLE IF NOT EXISTS sets(id INTEGER PRIMARY KEY AUTOINCREMENT,description TEXT,difficulty FLOAT, name TEXT,icon_id INTEGER,FOREIGN KEY(icon_id) REFERENCES icons(id))");
 			tx.executeSql("CREATE TABLE IF NOT EXISTS colors(id INTEGER PRIMARY KEY AUTOINCREMENT,color_value TEXT)");

@@ -1,28 +1,21 @@
 define(function(require) {
 	var tempData = require('tempData');
 	var setList = {
-	    sets: [],
 	    initialize: function() {
-	        document.getElementById('SetsMenuBack').addEventListener('click', this.back);
+	    	console.log('setlist init');
+	        document.getElementById('SetsMenuBack').addEventListener('click', this.goBack);
 	        if(!this.setsFilled){
 	       	 	this.fill();	               
 	        }
-			// this.show();
 	    },
 
 	    fill: function(){
-	    	window.App.dbObject.getSets(function(sets){
-	        	for(var i = 0; i < sets.rows.length; i++)
-                {
-	        		this.sets.push(sets.rows.item(i));
-                }
-	   			setTimeout(function(){  
-	       				this.renderTable();
-				}.bind(this),0);
-	       	}.bind(this));		
+	    	document.getElementById('IconList').style.height='0px';
+            this.renderTable();
+
 	    },
 
-	    back: function(){
+	    goBack: function(){
 	    	document.getElementById('MainMenuScreen').style.display='block';
             document.getElementById('SetsMenuScreen').style.display='none';
 	    },
@@ -39,7 +32,7 @@ define(function(require) {
 
 	        var tbdy = document.createElement('tbody');
 
-	        this.sets.forEach(function(el){
+	        window.App.sets.forEach(function(el){
 	            var tr = document.createElement('tr');
 	            tr.id='set_'+el.set_id;
 	            tr.className = "setRow";
@@ -55,10 +48,10 @@ define(function(require) {
 	            button.innerHTML="X";
 	            button.addEventListener('click',function(){
 								            		navigator.notification.confirm(
-													    'Czy na pewno chcesz usunąć zestaw "'+this.name+'"?' , 
+													    'Do you really want to delete this set:"'+this.name+'"?' , 
 													  	window.App.setList.onRemoveConfirm.bind(this),     //  callback to invoke with index of button pressed
-													    'Usuwanie zestawu',    // title
-													    ['Usuń','Anuluj']     // buttonLabels
+													    'Deleting set',    // title
+													    ['Delete','Cancel']     // buttonLabels
 													);	            	
 	            								}.bind(el)
 	            ,false);
