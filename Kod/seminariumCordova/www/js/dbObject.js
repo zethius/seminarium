@@ -43,13 +43,14 @@ define(function(require){
 			this.selectQuery("SELECT c.id as card_id, c.front, c.difficulty, c.back, cc.color_value AS color, c.set_id FROM cards c LEFT JOIN sets s ON c.set_id=s.id LEFT JOIN colors cc ON c.color_id = cc.id WHERE c.set_id=(?)",[id],fn);
 		},
 		deleteSet:function(setid){
-			console.log(setid);
-			// this.execQuery("DELETE FROM sets WHERE id=(?)",setid);
+			this.execQuery("DELETE FROM sets WHERE id=(?)",[setid]);
 		},
 
+		updateSet:function(setName, setIcon, setId){
+			this.execQuery("UPDATE sets SET name=(?), icon_id=(?) WHERE id = (?)",[setName,setIcon,setId])
+		},
 		deleteCard:function(cardid){
-			console.log(cardid);
-			// this.execQuery("DELETE FROM cards WHERE id=(?)",cardid);
+			this.execQuery("DELETE FROM cards WHERE id=(?)",[cardid]);
 		},
 		saveSet:function(name,desc,icon){
 			this.db.transaction(function(tx){
@@ -62,7 +63,7 @@ define(function(require){
 		saveCard:function(front,back,color,set){
 			//card difficulty = (card.error / (card.success + card.error)) * 100%
 			this.db.transaction(function(tx){  
-				tx.executeSql("INSERT INTO cards(front,back,color_id,set_id) VALUES (?,?,?,?,?)",[front,back,color,set]);
+				tx.executeSql("INSERT INTO cards(front,back,color_id,set_id) VALUES (?,?,?,?)",[front,back,color,set]);
 			},function(err){
 				console.log(err.message);
 			});
@@ -143,12 +144,12 @@ define(function(require){
 
 		prepareColors:function(tx){
 			var colors = [	
-			{'id':1,'val':'#ff9'},
-			{'id':2,'val':'#fff'},
-			{'id':3,'val':'#99f'},
-			{'id':4,'val':'#aff'},
-			{'id':5,'val':'#f9a'},
-			{'id':6,'val':'#ffa'}
+			{'id':1,'val':'#ff9'}, //light yellow
+			{'id':2,'val':'#fff'}, //white
+			{'id':3,'val':'#99f'}, //light purple
+			{'id':4,'val':'#55ce53'}, // green
+			{'id':5,'val':'#f9a'}, //pink
+			{'id':6,'val':'#55f'}  //dark blue
 			];
 			tx.executeSql("DELETE FROM colors");
 			for(var i=0; i<colors.length; i++){

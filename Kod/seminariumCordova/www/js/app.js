@@ -17,6 +17,7 @@ define(function(require) {
             this.fill();
             setTimeout(function(){  
                 window.App.setList.initialize();
+                window.App.cardList.bindEvents();
             }.bind(this),500);
             this.bindEvents();
         },
