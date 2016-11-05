@@ -1,47 +1,31 @@
-define(function(require) {
+define(function(require) {  
 
-    var setList = require('setList');
-    var tempData = require('tempData');
-    var dbObject = require('dbObject');
-    var cardList = require('cardList');
-    var cardObject = require('cardObject');
     var app = {
         icons: [],
-        sets: [],
+        sets: ko.observableArray([]),
         initialize: function() {
             window.App = this;
-            window.App.cardList = cardList;     
-            window.App.dbObject = dbObject;
-            window.App.setList = setList;
-            window.App.cardObject= cardObject;
-            this.fill();
-            setTimeout(function(){  
-                window.App.setList.initialize();
-                window.App.cardList.bindEvents();
-            }.bind(this),500);
+            window.App.cardList = require('cardList');    
+            window.App.dbObject =  require('dbObject')
+            window.App.setList = require('setList');
+            window.App.cardObject = require('cardObject');
+
             this.bindEvents();
         },
 
         fill: function(){
-
             window.App.dbObject.getIcons(function(icons){
                 for(var i=0; i<icons.rows.length; i++){
                     this.icons.push(icons.rows.item(i));
                 }
             }.bind(this));
-            window.App.dbObject.getFullSets();
-            
-            // window.App.dbObject.getSets(function(res){
-            //     for(var i = 0; i < res.rows.length; i++)
-            //     {
-            //         this.sets.push(res.rows.item(i));
-            //     }        
-            // }.bind(this));      
+
+            window.App.dbObject.getFullSets();  
         },
 
         bindEvents: function() {
             document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
-            document.getElementById('MainMenuSetsButton').addEventListener('click', setList.show.bind(setList));
+            document.getElementById('MainMenuSetsButton').addEventListener('click', window.App.setList.show.bind(window.App.setList));
         },
 
         showMain: function(){
@@ -50,8 +34,14 @@ define(function(require) {
         },
 
         onDeviceReady: function() {
-         dbObject.prepareDb();
-     },
- };
+            window.App.dbObject.prepareDb();
+            this.fill();
+            window.App.setList.initialize();
+            setTimeout(window.App.cardList.fillIconList,200);
+            window.App.cardList.bindEvents();
+        },
+    };
+   ko.applyBindings(app, document.getElementById('SetsMenuScreen'));
+   // ko.applyBindings(window.App.cardList, document.getElementById('CardsMenuScreen'));
  return app;
 });

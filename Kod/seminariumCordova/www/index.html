@@ -18,10 +18,11 @@
             <link rel="stylesheet/less" type="text/css" href="css/index.less">
             <script src="lib/less.js" type="text/javascript"></script>
             <script src="lib/jquery.js" type="text/javascript"></script>
+             <script src="lib/knockout.js" type="text/javascript"></script>
             <title>Mnemo</title>
         </head>
         <body>
-            <div class="app">
+            <div class="app" id="APP">
 
                 <div id="MainMenuScreen">
                     <h1>Where is Mnemo?</h1>
@@ -31,21 +32,39 @@
 
                 <div id="SetsMenuScreen" style="display:none">
                     <h1>Sets</h1>
-                    <table id="SetsTable"></table>
+                    <table id="SetsTable" class="SetsTable">
+                            <tbody data-bind="foreach: sets">
+                                <tr class="setRow">
+                                    <td class="icon" data-bind="click: $parent.cardList.initialize"><img width="32px" height="32px" data-bind="attr : {src: icon}" /></td>
+                                    <td class="label" data-bind="text: name, click: $parent.cardList.initialize"></td>
+                                    <td class="button"><div data-bind="click: $parent.setList.removeSet">X</div></td>
+                                </tr>
+                            </tbody>
+                    </table>
                     <div class="Menubutton darkBlue" id="SetsMenuBack">Back</div>
-                    <div class="Menubutton darkGreen" id="AddNewSet">Add</div>
+                    <div class="Menubutton darkGreen" id="AddNewSet" >Add</div>
                     
                 </div>
 
                 <div id="CardsMenuScreen" style="display:none">
                     <div>
-                        <img id="SetIcon">
-                        <div id="IconList"></div>
+                        <img id="SetIcon" width="128px" height="128px" data-bind="attr : {src: setIcon}"  >
+                        <div id="IconList" style="height:0px"></div>
                     </div>
-                    <h1 id="SetName">__FISZKI__</h1>
-                    <table id="CardsTable"></table>
+                    <h1 id="SetName" data-bind="text: setName">__FISZKI__</h1>
+                    <table id="CardsTable" class="CardsTable">
+                          <tbody data-bind="foreach: cards">
+                                <tr class="setRow">
+                                    <td class="front" data-bind="text: front"></td>
+                                    <td class="back" data-bind="text: back"></td>
+                                    <td class="difficulty" data-bind="text: difficulty"></td>
+                                    <td class="button"><div data-bind="click: $parent.removeCard">X</div></td>
+                                </tr>
+                            </tbody>
+
+                    </table>
                     <div class="Menubutton darkBlue" id="CardsMenuBack">Back</div>
-                    <div class="Menubutton darkGreen" id="AddNewCard">New</div>
+                    <div class="Menubutton darkGreen" id="AddNewCard" data-bind="click: newCard">New</div>
                 </div>
 
                 <div id="CardEditScreen" style="display:none">

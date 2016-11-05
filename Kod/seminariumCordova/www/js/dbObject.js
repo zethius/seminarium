@@ -1,49 +1,60 @@
 define(function(require){
 	
 	var dbObject = {
-
+		lastInserted: 0,
 		db: window.openDatabase("mnemo", "2.0", "Mnemo DB", 1000000),
-
-		query: function(str,arr,res){
-			this.db.transaction(function(tx){
-				tx.executeSql(str,arr,res);
-			},function(err){
-				console.log(err.message);
-			});
-		}.bind(this),
 
 		getFullSets:function(fn){
 			this.getSets(function(sets){
 				for(var i = 0; i < sets.rows.length; i++)
 				{
 					var set= sets.rows.item(i);
-					window.App.sets[set.set_id]=set;
-					window.App.sets[set.set_id].cards=[];
-				}});
+					set.name = ko.observable(set.name);
+					set.icon = ko.observable(set.icon);
+					set.cards = ko.observableArray();
+					window.App.sets.push(set);
+				}
+			});
+
 			setTimeout(function(){  
-				window.App.sets.forEach(function(el){
-					this.getCards(el.set_id, function(cards){
+				this.getAllCards(0,window.App.sets().length);
+			}.bind(this),500);
+		},
+		 getAllCards: function (counter, totRecords){
+			   if(counter === undefined) 
+			     counter = 0;   
+			   if(counter >=totRecords) return;
+
+			   this.getCards(window.App.sets()[counter].set_id, function(cards){
 						var cardsTmp=[];
 						for(var j = 0; j < cards.rows.length; j++)
 						{
-							cardsTmp[j] = cards.rows.item(j);
+							console.log("Set:"+counter);
+							var card=  cards.rows.item(j);
+							card.front = ko.observable(card.front);
+							card.back = ko.observable(card.back);
+							card.color = ko.observable(card.color);
+							card.difficulty = ko.observable(card.difficulty);
+							window.App.sets()[counter].cards.push(card);
 						}
-						el.cards=cardsTmp;
-					});
-				}.bind(this));
-			}.bind(this),500);
+						counter++;
+						this.getAllCards(counter,totRecords);
+					}.bind(this));
 		},
+
+
 		getIcons:function(fn){
 			this.selectQuery("SELECT * FROM icons",[],fn);			
 		},
 		getSets:function(fn){
 			this.selectQuery("SELECT s.id as set_id, s.name, s.difficulty, s.description, i.icon_value AS icon FROM sets s LEFT JOIN icons i ON i.id = s.icon_id",[],fn);
 		},
-		getCards:function(id,fn){
+		getCards:function(id,fn, counter = 0){
 			this.selectQuery("SELECT c.id as card_id, c.front, c.difficulty, c.back, cc.color_value AS color, c.set_id FROM cards c LEFT JOIN sets s ON c.set_id=s.id LEFT JOIN colors cc ON c.color_id = cc.id WHERE c.set_id=(?)",[id],fn);
 		},
 		deleteSet:function(setid){
 			this.execQuery("DELETE FROM sets WHERE id=(?)",[setid]);
+			this.execQuery("DELETE FROM cards WHERE set_id=(?)",[setid]);
 		},
 
 		updateSet:function(setName, setIcon, setId){
@@ -54,7 +65,12 @@ define(function(require){
 		},
 		saveSet:function(name,desc,icon){
 			this.db.transaction(function(tx){
-				tx.executeSql("INSERT INTO sets(name,difficulty,description,icon_id) VALUES (?,?,?,?)",[name,0.5,desc,icon]);
+				tx.executeSql("INSERT INTO sets(name,difficulty,description,icon_id) VALUES (?,?,?,?)",[name,0.5,desc,icon],
+					function(tx,res){
+						window.App.dbObject.lastInserted = res.insertId;
+						console.log(res.insertId);
+					}
+					);
 			},function(err){
 				console.log(err.message);
 			});
@@ -73,6 +89,7 @@ define(function(require){
 				function(tx){
 					tx.executeSql(str,arr,
 						function(tx){
+
 						}.bind(this));
 				}.bind(this),
 				function(err){
@@ -86,7 +103,6 @@ define(function(require){
 				function(tx){
 					tx.executeSql(str,arr,
 						function(tx,res){
-							this.SQLResult=res.rows;
 							if(callback){
 								callback(res);						
 							}
