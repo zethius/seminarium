@@ -79,7 +79,11 @@ define(function(require){
 		saveCard:function(front,back,color,set){
 			//card difficulty = (card.error / (card.success + card.error)) * 100%
 			this.db.transaction(function(tx){  
-				tx.executeSql("INSERT INTO cards(front,back,color_id,set_id) VALUES (?,?,?,?)",[front,back,color,set]);
+				tx.executeSql("INSERT INTO cards(front,back,color_id,set_id, difficulty) VALUES (?,?,?,?,?)",[front,back,color,set,0.5],
+					function(tx,res){
+						window.App.dbObject.lastInserted = res.insertId;
+						console.log(res.insertId);
+					});
 			},function(err){
 				console.log(err.message);
 			});

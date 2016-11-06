@@ -28,11 +28,6 @@ define(function(require) {
             document.getElementById('MainMenuSetsButton').addEventListener('click', window.App.setList.show.bind(window.App.setList));
         },
 
-        showMain: function(){
-            document.getElementById('MainMenuScreen').style.display='block';
-            document.getElementById('SetsMenuScreen').style.display='none';
-        },
-
         onDeviceReady: function() {
             window.App.dbObject.prepareDb();
             this.fill();

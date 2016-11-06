@@ -3,11 +3,11 @@ define(function(require) {
         setIcon:ko.observable(null),
         setName:ko.observable(null),
         cards: ko.observableArray([]),
-        setId: null,
+        set: ko.observable(null),
 
         initialize: function(set) {
             console.log(set);
-            window.App.cardList.setId = set.set_id;
+            window.App.cardList.set = set;
             window.App.cardList.setName(set.name());
             window.App.cardList.setIcon(set.icon());
             window.App.cardList.cards(set.cards());
@@ -15,7 +15,8 @@ define(function(require) {
         },
 
         bindEvents: function(){
-            document.getElementById('SetIcon').addEventListener('click',this.showIconList.bind(this),false);   
+            document.getElementById('SetIcon').addEventListener('click',this.showIconList.bind(this),false);  
+            document.getElementById('SetName').addEventListener('dblclick',this.changeName.bind(this),false);  
             document.getElementById('CardsMenuBack').addEventListener('click', this.goBack);     
         },
 
@@ -33,19 +34,25 @@ define(function(require) {
         },
 
         newCard: function(){
-            window.App.dbObject.saveCard("New Card Front","New Card Back",4, this.setId);
+            console.log("NEW CARD");
+            window.App.dbObject.saveCard("New Card Front","New Card Back",4, this.set.set_id);
+            var card =  {  
+                            card_id: window.App.dbObject.lastInserted,
+                            set_id: this.set.set_id,
+                            front: ko.observable("New Card Front"),
+                            back: ko.observable('New Card Back'), 
+                            difficulty: ko.observable(0.5)
+                        };
+
+              
+            // window.App.cardList.cards.push(card);
             setTimeout(function(){  
-                ko.utils.arrayFirst( window.App.sets(), function(set) {
-                        return set.set_id == this.setId;
-                    }.bind(this)
-                ).cards.push(
-                            {
-                             set_id: this.setId,
-                             front: ko.observable("New Card Front"),
-                             back: ko.observable('New Card Back'), 
-                             difficulty: ko.observable(0.5)
-                            }
-                        );
+               // var set =  ko.utils.arrayFirst( window.App.sets(), function(set) {
+               //          return set.set_id == this.setId;
+               //      }.bind(this)
+               //  );
+                this.set.cards.push(card);
+                window.App.cardList.cards(this.set.cards());
             }.bind(this),100);
         },
 
@@ -59,15 +66,17 @@ define(function(require) {
                                                         );
         },
 
-         onRemoveConfirm:function(buttonIndex){
+        onRemoveConfirm: function(buttonIndex){
             console.log(this);
             if(buttonIndex==1){
                 window.App.dbObject.deleteCard(this.card_id);
-                ko.utils.arrayFirst( window.App.sets(), function(set) {
-                        return set.set_id ==this.set_id;
-                    }.bind(this)
-                ).cards.remove( function (card) 
+                // var set = ko.utils.arrayFirst( window.App.sets(), function(set) {
+                //         return set.set_id ==this.set_id;
+                //     }.bind(this)
+                // );
+                window.App.cardList.set.cards.remove( function (card) 
                     { return card.card_id == this.card_id;}.bind(this) );
+                window.App.cardList.cards(window.App.cardList.set.cards());
             }        
         },
 
@@ -82,16 +91,17 @@ define(function(require) {
         },
         
         changeIcon:function(icon){
-            console.log(icon);
-            console.log(this);
-            ko.utils.arrayFirst( window.App.sets(), function(set) {
-                        return set.set_id == this.setId;
-                    }.bind(this)
-                ).icon(icon.icon_value);
-            window.App.dbObject.updateSet(this.setName(), icon.id, this.setId);
+            // ko.utils.arrayFirst( window.App.sets(), function(set) {
+            //             return set.set_id == this.set.set_id;
+            //         }.bind(this)
+            //     )
+            this.set.icon(icon.icon_value);
+            window.App.dbObject.updateSet(this.setName(), icon.id, this.set.set_id);
             this.setIcon(icon.icon_value);
         },
-
+        changeName: function(){
+            console.log('changename');
+        },
         show: function(){
             document.getElementById('SetsMenuScreen').style.display='none';
             document.getElementById('CardsMenuScreen').style.display='block';
@@ -100,6 +110,7 @@ define(function(require) {
         goBack: function(){
             document.getElementById('CardsMenuScreen').style.display='none';
             document.getElementById('SetsMenuScreen').style.display='block';
+            document.getElementById("IconList").style.height = 0;
         },
                
     };
