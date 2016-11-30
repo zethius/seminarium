@@ -1,0 +1,5 @@
+Do 4.12: poprawki w menu i edycji zestawów i fiszek (kosmetyka)
+Do 23.12: implementacja testów dla fiszek (dodatkowo kalendarz w mainmenu na 7 dni)
+
+DODATKOWO: memory management
+

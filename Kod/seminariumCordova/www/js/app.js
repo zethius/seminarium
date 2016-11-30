@@ -2,6 +2,7 @@ define(function(require) {
 
     var app = {
         icons: [],
+        colors: [],
         sets: ko.observableArray([]),
         initialize: function() {
             window.App = this;
@@ -9,8 +10,8 @@ define(function(require) {
             window.App.dbObject =  require('dbObject')
             window.App.setList = require('setList');
             window.App.cardObject = require('cardObject');
-
-            this.bindEvents();
+            window.App.UNITTESTS = require('UNITTESTS');
+            this.bindAllEvents();
         },
 
         fill: function(){
@@ -20,12 +21,20 @@ define(function(require) {
                 }
             }.bind(this));
 
+            window.App.dbObject.getColors(function(colors){
+                for(var i = 0; i<colors.rows.length; i++){
+                    this.colors.push(colors.rows.item(i));
+                }
+            }.bind(this));
+            
             window.App.dbObject.getFullSets();  
         },
 
-        bindEvents: function() {
+        bindAllEvents: function() {
             document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
             document.getElementById('MainMenuSetsButton').addEventListener('click', window.App.setList.show.bind(window.App.setList));
+            window.App.cardList.bindEvents();
+            window.App.cardObject.bindEvents();
         },
 
         onDeviceReady: function() {
@@ -33,7 +42,8 @@ define(function(require) {
             this.fill();
             window.App.setList.initialize();
             setTimeout(window.App.cardList.fillIconList,200);
-            window.App.cardList.bindEvents();
+            setTimeout(window.App.cardObject.fillColorList,200);
+
         },
     };
    ko.applyBindings(app, document.getElementById('SetsMenuScreen'));

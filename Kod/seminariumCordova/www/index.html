@@ -27,7 +27,7 @@
                 <div id="MainMenuScreen">
                     <h1>Where is Mnemo?</h1>
                     <div class="Menubutton lightBlue" id="MainMenuSetsButton">Sets</div>
-                    <div class="Menubutton darkBlue" id="MainMenuTestsButton">Tests</div>
+                    <!-- <div class="Menubutton darkBlue" id="MainMenuTestsButton">Tests</div> -->
                 </div>
 
                 <div id="SetsMenuScreen" style="display:none">
@@ -36,7 +36,8 @@
                             <tbody data-bind="foreach: sets">
                                 <tr class="setRow">
                                     <td class="icon" data-bind="click: $parent.cardList.initialize"><img width="32px" height="32px" data-bind="attr : {src: icon}" /></td>
-                                    <td class="label" data-bind="text: name, click: $parent.cardList.initialize"></td>
+                                    <td class="label" data-bind="text: name"></td>
+                                    <td data-bind="click: $parent.cardList.initialize"> Edit </td>
                                     <td class="button"><div data-bind="click: $parent.setList.removeSet">X</div></td>
                                 </tr>
                             </tbody>
@@ -48,13 +49,15 @@
 
                 <div id="CardsMenuScreen" style="display:none">
                     <div>
-                        <img id="SetIcon" width="128px" height="128px" data-bind="attr : {src: setIcon}"  >
+                        <div class="SetIconWrapper">
+                            <img id="SetIcon" width="100%" height="100%" data-bind="attr : {src: setIcon}"  >
+                        </div>
                         <div id="IconList" style="height:0px"></div>
                     </div>
                     <h1 id="SetName" data-bind="text: setName">__FISZKI__</h1>
                     <table id="CardsTable" class="CardsTable">
                           <tbody data-bind="foreach: cards">
-                                <tr class="setRow">
+                                <tr class="setRow" data-bind="click: $parent.goToCardEdit, attr: { 'id': 'TESTCARD'}">
                                     <td class="front" data-bind="text: front"></td>
                                     <td class="back" data-bind="text: back"></td>
                                     <td class="difficulty" data-bind="text: difficulty"></td>
@@ -71,19 +74,26 @@
                     <form id="CardEditForm">
                         <table>
                             <tr>
-                                <td>Front</td>
-                                <td>
-                                    <textarea name="nazwa" cols="3" rows="4" id="Cardfront">___FRONT___</textarea>
+                                <td class="label">Front</td>
+                            </tr> 
+                            <tr>
+                                 <td class="CardInput">
+                                    <textarea name="nazwa" cols="3" rows="4" id="CardfrontEdit">___FRONT___</textarea>
                                 </td>
                             </tr> 
                             <tr>
-                                <td>Back</td>
-                                <td>                       
-                                 <textarea name="nazwa" cols="3" rows="4" id="Cardback">___BACK___</textarea>
+                                <td class="label">Back</td>                       
+                            </tr> 
+                            <tr>
+                                <td class="CardInput">                       
+                                 <textarea name="nazwa" cols="3" rows="4" id="CardbackEdit">___BACK___</textarea>
                                 </td>
                            </tr>
                        </table>
-                       <input type="text" id="Cardcolor"><br>
+                       <div id="ColorPicker">
+                            <div id="CardcolorEdit" data-bind="style:{background: color}">color</div>
+                            <div id="ColorList" style="height:0px"></div>
+                        </div>
                    </form>
 
                    <div class="Menubutton darkBlue" id="CardEditBack">Back</div>

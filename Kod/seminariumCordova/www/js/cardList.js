@@ -1,12 +1,11 @@
 define(function(require) {
     var cardList={
-        setIcon:ko.observable(null),
-        setName:ko.observable(null),
+        setIcon: ko.observable(null),
+        setName: ko.observable(null),
         cards: ko.observableArray([]),
         set: ko.observable(null),
 
         initialize: function(set) {
-            console.log(set);
             window.App.cardList.set = set;
             window.App.cardList.setName(set.name());
             window.App.cardList.setIcon(set.icon());
@@ -16,7 +15,8 @@ define(function(require) {
 
         bindEvents: function(){
             document.getElementById('SetIcon').addEventListener('click',this.showIconList.bind(this),false);  
-            document.getElementById('SetName').addEventListener('dblclick',this.changeName.bind(this),false);  
+            document.getElementById('SetName').addEventListener('click',this.changeName.bind(this),false);  
+            document.getElementById('SetName').addEventListener('blur',this.changeNameSave.bind(this),false);  
             document.getElementById('CardsMenuBack').addEventListener('click', this.goBack);     
         },
 
@@ -34,30 +34,23 @@ define(function(require) {
         },
 
         newCard: function(){
-            console.log("NEW CARD");
-            window.App.dbObject.saveCard("New Card Front","New Card Back",4, this.set.set_id);
+            window.App.dbObject.saveCard("New Card Front","New Card Back",2, this.set.set_id);
             var card =  {  
                             card_id: window.App.dbObject.lastInserted,
                             set_id: this.set.set_id,
                             front: ko.observable("New Card Front"),
                             back: ko.observable('New Card Back'), 
-                            difficulty: ko.observable(0.5)
+                            difficulty: ko.observable(0.5),
+                            color: ko.observable(window.App.colors[2])
                         };
-
-              
-            // window.App.cardList.cards.push(card);
             setTimeout(function(){  
-               // var set =  ko.utils.arrayFirst( window.App.sets(), function(set) {
-               //          return set.set_id == this.setId;
-               //      }.bind(this)
-               //  );
                 this.set.cards.push(card);
                 window.App.cardList.cards(this.set.cards());
             }.bind(this),100);
         },
 
-        removeCard: function(card){
-            console.log(card);
+        removeCard: function(card, event){
+            event.stopPropagation();
             navigator.notification.confirm(
                     'Do you really want to delete this card:"'+card.front() +'"?' , 
                                         window.App.cardList.onRemoveConfirm.bind(this),   //  callback to invoke with index of button pressed
@@ -65,15 +58,13 @@ define(function(require) {
                                                         ['Delete','Cancel']     // buttonLabels
                                                         );
         },
-
+        goToCardEdit: function(card){
+            window.App.cardObject.initialize(card);
+        },
         onRemoveConfirm: function(buttonIndex){
             console.log(this);
             if(buttonIndex==1){
                 window.App.dbObject.deleteCard(this.card_id);
-                // var set = ko.utils.arrayFirst( window.App.sets(), function(set) {
-                //         return set.set_id ==this.set_id;
-                //     }.bind(this)
-                // );
                 window.App.cardList.set.cards.remove( function (card) 
                     { return card.card_id == this.card_id;}.bind(this) );
                 window.App.cardList.cards(window.App.cardList.set.cards());
@@ -82,7 +73,6 @@ define(function(require) {
 
         showIconList:function(){
             this.iconsList = document.getElementById("IconList");
-            console.log(this.iconsList.style.height);
             if(this.iconsList.style.height=='0px'){          
                 this.iconsList.style.height='40px';
             }else{
@@ -91,17 +81,20 @@ define(function(require) {
         },
         
         changeIcon:function(icon){
-            // ko.utils.arrayFirst( window.App.sets(), function(set) {
-            //             return set.set_id == this.set.set_id;
-            //         }.bind(this)
-            //     )
             this.set.icon(icon.icon_value);
-            window.App.dbObject.updateSet(this.setName(), icon.id, this.set.set_id);
+            window.App.dbObject.updateSetIcon(icon.id, this.set.set_id);
             this.setIcon(icon.icon_value);
         },
         changeName: function(){
-            console.log('changename');
+            document.getElementById('SetName').contentEditable=true;
         },
+        changeNameSave: function(){
+            var setNameDOM =  document.getElementById('SetName');
+            setNameDOM.contentEditable=false;
+            this.set.name(setNameDOM.innerText);
+            window.App.dbObject.updateSetName(setNameDOM.innerText, this.set.set_id);
+        },
+
         show: function(){
             document.getElementById('SetsMenuScreen').style.display='none';
             document.getElementById('CardsMenuScreen').style.display='block';

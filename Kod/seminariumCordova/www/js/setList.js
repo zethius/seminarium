@@ -1,7 +1,6 @@
 define(function(require) {
 	var setList = {
 		initialize: function() {
-			console.log('setlist init');
 			this.bindEvents();
 		},
 		bindEvents: function(){
@@ -21,8 +20,8 @@ define(function(require) {
 					 );
 			},100);
 		},
+
         removeSet:function(set){
-            console.log(set);       	
         	navigator.notification.confirm(
 					'Do you really want to delete this set:"'+set.name() +'"?' , 
 										window.App.setList.onRemoveConfirm.bind(this),   //  callback to invoke with index of button pressed
@@ -30,6 +29,7 @@ define(function(require) {
 													    ['Delete','Cancel']     // buttonLabels
 													    );
         },
+
         onRemoveConfirm:function(buttonIndex){
 	    	if(buttonIndex==1){
 	    		console.log(this);
@@ -37,10 +37,12 @@ define(function(require) {
 	    		window.App.sets.remove( function (set) { return set.set_id == this.set_id; }.bind(this) );
 	    	}
 	    },
+
 		goBack: function(){
 			document.getElementById('MainMenuScreen').style.display='block';
 			document.getElementById('SetsMenuScreen').style.display='none';
 		},
+		
 		show: function(){
 			document.getElementById('MainMenuScreen').style.display='none';
 			document.getElementById('SetsMenuScreen').style.display='block';
