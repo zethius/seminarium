@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+        <!--
+        Customize this policy to fit your own app's needs. For more guidance, see:
+            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+        Some notes:
+            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+                * Enable inline JS: add 'unsafe-inline' to default-src
+            -->
+            
+            <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *"> -->
+            <meta name="format-detection" content="telephone=no">
+            <meta name="msapplication-tap-highlight" content="no">
+            <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+            <link rel="stylesheet/less" type="text/css" href="css/index.less">
+            <!-- <link rel="stylesheet" type="text/css" href="css/index.css"> -->
+            <script src="less.js" type="text/javascript"></script>
+            <script src="jquery.js" type="text/javascript"></script>
+            <title>Mnemo</title>
+        </head>
+        <body>
+            <div class="app">
+                <div id="MainMenuScreen">
+                    <h1>Where is Mnemo?</h1>
+                    <div class="Menubutton lightBlue" id="MainMenuSetsButton">Zestawy</div>
+                    <div class="Menubutton darkBlue" id="MainMenuTestsButton">Testy</div>
+                </div>
+                <div id="SetsMenuScreen" style="display:none">
+                    <h1>Zestawy</h1>
+                    <table id="SetsTable"></table>
+                     <div class="Menubutton darkBlue" id="SetsMenuBack">Wstecz</div>
+                </div>
+                <div id="CardsMenuScreen" style="display:none">
+                    <div id="SetIcon"> asd </div>
+                    <h1 id="SetName">__FISZKI__</h1>
+                    <table id="CardsTable"></table>
+                     <div class="Menubutton darkBlue" id="CardsMenuBack">Wstecz</div>
+                </div>
+
+                <div id="CardEditScreen" style="display:none">
+                    <form id="CardEditForm">
+                        <textarea name="nazwa" cols="3" rows="4" id="Cardfront">___FRONT___</textarea>
+                        <textarea name="nazwa" cols="3" rows="4" id="Cardback">___BACK___</textarea>
+                        <input type="text" id="Cardcolor"><br>
+                    </form>
+                   
+                  <div class="Menubutton darkBlue" id="CardEditBack">Wstecz</div>
+                </div>
+
+            </div>
+            <script type="text/javascript" src="cordova.js"></script>
+           <script type="text/javascript" data-main="js/app.js" src="require.js"></script>
+            <script>
+                require.config({ baseUrl: "js" });
+                require(['app'], function (app) {
+                    app.initialize();
+                });
+            </script>
+        </body>
+        </html>

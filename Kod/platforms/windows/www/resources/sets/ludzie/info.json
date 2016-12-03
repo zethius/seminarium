@@ -1,0 +1,58 @@
+﻿{
+    "cardSet": [
+        {
+            "back": "Parzych", 
+            "color": "#92031", 
+            "difficulty": 0.3, 
+            "front": "Patrycja", 
+            "id": 0
+        }, 
+        {
+            "back": "Stalewski", 
+            "color": "#92031", 
+            "difficulty": 0.3, 
+            "front": "Patryk", 
+            "id": 0
+        }, 
+        {
+            "back": "Eli\u0144ski", 
+            "color": "#92031", 
+            "difficulty": 0.4, 
+            "front": "Remek", 
+            "id": 0
+        }, 
+        {
+            "back": "Stalewska", 
+            "color": "#92031", 
+            "difficulty": 0.3, 
+            "front": "Julia", 
+            "id": 0
+        }, 
+        {
+            "back": "Stalewski K.", 
+            "color": "#92031", 
+            "difficulty": 0.1, 
+            "front": "Kacper", 
+            "id": 0
+        }, 
+        {
+            "back": "Stalewski M.", 
+            "color": "#92031", 
+            "difficulty": 0.2, 
+            "front": "Mariusz", 
+            "id": 0
+        }, 
+        {
+            "back": "Parzych", 
+            "color": "#92031", 
+            "difficulty": 0.3, 
+            "front": "Patrycja", 
+            "id": 0
+        }
+    ], 
+    "description": "", 
+    "difficulty": 0.27142857142857146, 
+    "icon": "resources/gui/icons/scientist.png", 
+    "name": "ludzie", 
+    "path": "resources/sets/ludzie"
+}
