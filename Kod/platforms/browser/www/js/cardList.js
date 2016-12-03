@@ -11,18 +11,25 @@ define(function(require) {
             window.App.cardList.setName(set.name());
             window.App.cardList.setIcon(set.icon());
             window.App.cardList.cards(set.cards());
-            if(set.deadline()){
-               window.App.cardList.setDeadline(set.deadline())              
-            }
+            window.App.cardList.prepareDeadline(set.deadline);
             window.App.cardList.show();      
         },
+        prepareDeadline: function(deadline){
+            if(deadline && deadline()){
+                window.App.cardList.setDeadline(deadline());             
+            }else{
+                window.App.cardList.setDeadline("bez terminu"); 
+            }
+            document.getElementById('SetDeadlineInput').style.display='none';  
+            document.getElementById('SetDeadlineSpan').style.display='';  
+        },  
 
         bindEvents: function(){
             document.getElementById('SetIcon').addEventListener('click',this.showIconList.bind(this),false);  
             document.getElementById('SetName').addEventListener('click',this.changeName.bind(this),false);  
             document.getElementById('SetName').addEventListener('blur',this.changeNameSave.bind(this),false);  
-             document.getElementById('SetDeadline').addEventListener('click',this.changeDate.bind(this),false);  
-            document.getElementById('SetDeadline').addEventListener('blur',this.changeDateSave.bind(this),false); 
+            document.getElementById('SetDeadlineSpan').addEventListener('click',this.changeDate.bind(this),false); 
+            document.getElementById('SetDeadlineInput').addEventListener('blur',this.changeDateSave.bind(this),false); 
             document.getElementById('CardsMenuBack').addEventListener('click', this.goBack);     
         },
 
@@ -64,11 +71,12 @@ define(function(require) {
                                                         ['Delete','Cancel']     // buttonLabels
                                                         );
         },
+       
         goToCardEdit: function(card){
             window.App.cardObject.initialize(card);
         },
+
         onRemoveConfirm: function(buttonIndex){
-            console.log(this);
             if(buttonIndex==1){
                 window.App.dbObject.deleteCard(this.card_id);
                 window.App.cardList.set.cards.remove( function (card) 
@@ -91,6 +99,7 @@ define(function(require) {
             window.App.dbObject.updateSetIcon(icon.id, this.set.set_id);
             this.setIcon(icon.icon_value);
         },
+        
         changeName: function(){
             document.getElementById('SetName').contentEditable=true;
         },
@@ -100,14 +109,25 @@ define(function(require) {
             this.set.name(setNameDOM.innerText);
             window.App.dbObject.updateSetName(setNameDOM.innerText, this.set.set_id);
         },
+
         changeDate: function(){
-            document.getElementById('SetDeadline').contentEditable=true;
+            document.getElementById('SetDeadlineInput').style.display='';  
+            document.getElementById('SetDeadlineSpan').style.display='none';  
+            document.getElementById('SetDeadlineInput').focus();
         },
         changeDateSave: function(){
-            var setDeadlineDOM =  document.getElementById('SetDeadline');
-            setDeadlineDOM.contentEditable=false;
-            this.set.deadline(setDeadlineDOM.innerText);
-            window.App.dbObject.updateSetDeadline(setDeadlineDOM.innerText, this.set.set_id);
+            var dom = document.getElementById('SetDeadlineInput');
+            if(dom.value){
+                this.set.deadline(dom.value);
+                this.setDeadline(dom.value);
+                window.App.dbObject.updateSetDeadline(dom.value, this.set.set_id);
+            }else{
+                this.setDeadline('bez terminu');
+                this.set.deadline('');
+                window.App.dbObject.updateSetDeadline('', this.set.set_id);
+            }
+            document.getElementById('SetDeadlineInput').style.display='none';  
+            document.getElementById('SetDeadlineSpan').style.display='';  
         },
 
 

@@ -55,10 +55,13 @@
                         <div id="IconList" style="height:0px"></div>
                     </div>
                     <h1 id="SetName" data-bind="text: setName">__FISZKI__</h1>
-                    <span id="SetDeadline" data-bind="text: setDeadline">Bez terminu</span>
+                    <div class="SetDeadline">
+                        <span id="SetDeadlineSpan" data-bind="text: setDeadline"></span>
+                        <input type="date" id="SetDeadlineInput" data-bind="value: setDeadline"/>
+                    </div>
                     <table id="CardsTable" class="CardsTable">
                           <tbody data-bind="foreach: cards">
-                                <tr class="setRow" data-bind="click: $parent.goToCardEdit, attr: { 'id': 'TESTCARD'}">
+                                <tr class="cardRow" data-bind="click: $parent.goToCardEdit, attr: { 'id': 'TESTCARD'}">
                                     <td class="front" data-bind="text: front"></td>
                                     <td class="back" data-bind="text: back"></td>
                                     <td class="difficulty" data-bind="text: difficulty"></td>

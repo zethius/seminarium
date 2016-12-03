@@ -140,19 +140,18 @@ h1 {
         margin-right:auto;
         border-collapse: collapse;
         //border-spacing: 0;
-
         tbody{
             overflow: auto;
             display: inline-block;
             width:100%;
             height: 100%;
-            .setRow{    
+            .setRow, .cardRow{    
                 cursor:pointer;
                 &:hover{
                   color: @lightBlue;
                   background-color: @darkBlue;
                 }
-                .label{
+               .label{
                     width:100%;
                 }
                 .button{
@@ -174,13 +173,13 @@ h1 {
                     width:10%;
                 }
             }
+            .setRow {
+                &.deadline{
+                    border-left:5px solid red;
+                }
+            }  
         }
-    }
-    #SetsMenuBack{
-        // position:absolute;
-        // bottom:30%;
-        // left:25%;
-    }
+    }   
 }
 
 #CardsMenuScreen{
@@ -202,6 +201,15 @@ h1 {
     #SetName{
         margin-bottom: 10px;
         cursor: pointer;
+    }
+    .SetDeadline{
+        margin-bottom:5px;
+        input[type="date"] {
+            background: transparent;
+            border: none;
+            margin-left: 2em;
+            text-align: center;
+        }
     }
 }
 #CardEditScreen{
@@ -226,7 +234,7 @@ h1 {
                 text-align:center;
             }
         }
-      
+
         #ColorPicker{
             // display: inline-block;
             // width: 100%;
@@ -253,17 +261,10 @@ h1 {
                     height: 100%;
                     margin-left: 0.5em;
                     border-radius: 10em;
-
                 }
             }
-        }
-       
-
+        }      
     }
-
-
-    
-
 }
 
 

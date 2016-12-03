@@ -1,5 +1,6 @@
-﻿ ART OF MEMORY
+﻿ 			ART OF MEMORY
 
+HARMONOGRAM:
 Do 10.12: menu testów i ich widoki
 Do 17.12: implementacja testów
 Do 23.12: implementacja przypomnień, deadline'u daty (+kalendarz)

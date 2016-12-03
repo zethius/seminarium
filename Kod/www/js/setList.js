@@ -9,24 +9,25 @@ define(function(require) {
 		},
 
 		newSet: function(){
-			window.App.dbObject.saveSet("New Set",8);
+			window.App.dbObject.saveSet("Nowy zestaw",1);
 			
 			setTimeout(function(){
 				window.App.sets.push(
 					{ set_id: window.App.dbObject.lastInserted,
 					 cards: ko.observableArray([]),
-					 name:ko.observable('New Set'), 
-					 icon:ko.observable(window.App.icons[7].icon_value)}
-					 );
+					 name:ko.observable('Nowy zestaw'), 
+					 icon:ko.observable(window.App.icons[0].icon_value),
+					 deadline: ko.observable('')
+					});
 			},100);
 		},
 
         removeSet:function(set){
         	navigator.notification.confirm(
-					'Do you really want to delete this set:"'+set.name() +'"?' , 
+					'Czy na pewno chcesz usunąć zestaw:"'+set.name() +'"?' , 
 										window.App.setList.onRemoveConfirm.bind(this),   //  callback to invoke with index of button pressed
-													    'Deleting set',    // title
-													    ['Delete','Cancel']     // buttonLabels
+													    'Usuwanie zestawu',    // title
+													    ['Usuń','Anuluj']     // buttonLabels
 													    );
         },
 
