@@ -1,4 +1,0 @@
-D:\SEMINARIUM\Kod\seminariumCordova\platforms\windows\build\windows\debug\anycpu\win8.1\SQLite3.winmd
-D:\SEMINARIUM\Kod\seminariumCordova\platforms\windows\build\windows\debug\anycpu\win8.1\SQLite3.pdb
-D:\SEMINARIUM\Kod\seminariumCordova\platforms\windows\build\windows\debug\anycpu\win8.1\SQLite3.pri
-D:\SEMINARIUM\Kod\seminariumCordova\platforms\windows\build\windows\bld\CordovaApp.Windows.jsprojResolveAssemblyReference.cache
