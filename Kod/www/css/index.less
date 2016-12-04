@@ -126,7 +126,6 @@ h1 {
         width:33%;
         display: inline-block;
     }
-
 }
 #SetsMenuScreen, #CardsMenuScreen, #CardEditScreen{
     position:absolute;
@@ -181,7 +180,6 @@ h1 {
         }
     }   
 }
-
 #CardsMenuScreen{
     top: ~"-webkit-calc(40% - 131px)";
     top: ~"calc(40% - 131px)";
@@ -220,7 +218,7 @@ h1 {
         table{
             margin-left: auto;
             margin-right: auto;
-            width: 55em;
+            width: 70%;
             .CardInput{
                 height:10em;
             }
@@ -266,6 +264,45 @@ h1 {
         }      
     }
 }
+#TestsMenuScreen{
+    position: absolute;
+    top: 15%;
+    width: 100%; 
+    .testButton{
+        background: @lightBlue;
+        cursor: pointer;
+        border-radius: 1em;
+        height: 10em;
+        line-height: 10em;
+        width: 50%;
+        margin-left: auto;
+        margin-top: 1em;
+        margin-right: auto;
+    }
+    #TestSize{
+        .SizeButton{
+            cursor: pointer;
+            display: inline-block;
+            background: @lightBlue;
+            border-radius:1em;
+            height:4em;
+            width:5em;
+            line-height:4em;
+            span{
+                font-weight: bold;
+            }
+            &.selected{
+                background: @darkBlue;
+                span{
+                    color: @lightBlue;
+                }
+            }
+        }
+    }
 
+
+
+
+}
 
 

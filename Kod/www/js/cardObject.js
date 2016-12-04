@@ -34,6 +34,7 @@ define(function(require) {
 		goBack: function(){
             document.getElementById('CardEditScreen').style.display='none';
             document.getElementById('CardsMenuScreen').style.display='block';
+            document.getElementById("ColorList").style.height = 0;
 		},
 
 		build: function(){

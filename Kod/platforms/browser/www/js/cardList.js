@@ -7,6 +7,7 @@ define(function(require) {
         set: ko.observable(null),
 
         initialize: function(set) {
+            event.stopPropagation();
             window.App.cardList.set = set;
             window.App.cardList.setName(set.name());
             window.App.cardList.setIcon(set.icon());

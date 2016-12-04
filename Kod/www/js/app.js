@@ -10,6 +10,7 @@ define(function(require) {
             window.App.dbObject =  require('dbObject')
             window.App.setList = require('setList');
             window.App.cardObject = require('cardObject');
+            window.App.testMenu = require('testMenu');
             window.App.UNITTESTS = require('UNITTESTS');
             this.bindAllEvents();
         },
