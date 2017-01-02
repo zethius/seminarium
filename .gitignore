@@ -1,3 +1,5 @@
 .idea/
 Kod/platforms
 Kod/plugins
+Kod/hooks
+Kod/node_modules

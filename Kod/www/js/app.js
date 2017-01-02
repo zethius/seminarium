@@ -11,6 +11,7 @@ define(function(require) {
             window.App.setList = require('setList');
             window.App.cardObject = require('cardObject');
             window.App.testMenu = require('testMenu');
+            window.App.quizTest = require('quizTest');
             window.App.UNITTESTS = require('UNITTESTS');
             this.bindAllEvents();
         },
@@ -38,6 +39,7 @@ define(function(require) {
             document.getElementById('MainMenuSetsButton').addEventListener('click', window.App.setList.show.bind(window.App.setList));
             window.App.cardList.bindEvents();
             window.App.cardObject.bindEvents();
+            window.App.testMenu.bindEvents(); 
         },
 
         onDeviceReady: function() {

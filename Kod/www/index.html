@@ -115,6 +115,16 @@
                    <div class="Menubutton darkBlue" id="CardEditBack">Wstecz</div>
                </div>
 
+                <div id="QuizScreen" style="display:none">
+                    <div data-bind="foreach: tests">
+                        <span style="background: gray"data-bind="text: question.front"></span><BR/>
+                        <div data-bind="foreach: answers">
+                               <span style="background: white"data-bind="text: front"></span><BR/>
+                        </div>
+                    </div>           
+                </div>
+
+
            </div>
            <script type="text/javascript" src="cordova.js"></script>
            <script type="text/javascript" data-main="js/app.js" src="lib/require.js"></script>

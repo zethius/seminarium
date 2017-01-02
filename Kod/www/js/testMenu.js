@@ -5,13 +5,19 @@ define(function(require) {
 		initialize: function(set){
 			event.stopPropagation();
             window.App.testMenu.set = set;
-            window.App.testMenu.show();     
-            window.App.testMenu.bindEvents(); 
+            if(set.cards().length>=5){
+	            window.App.testMenu.show();     
+            }
+            else{
+            	console.log("potrzeba wiecej kart");
+            }
 		},
+
 		show: function(){
 			document.getElementById('SetsMenuScreen').style.display='none';
             document.getElementById('TestsMenuScreen').style.display='block';
 		},
+
 		bindEvents: function(){
 			var sizes = document.getElementById('TestSize').childNodes;
 			 for (var i = 0; i < sizes.length; i++) {
@@ -37,9 +43,12 @@ define(function(require) {
 			console.log(cards());
 		},
 		prepareQuizTest: function(){
-			console.log("QUIZ");
-			var cards = this.getCardsForTest();	
-			console.log(cards());
+			if( this.size == 'S' && this.set.cards().length<20){
+				console.log("ZA MALO NA QUIZ"); //TODO
+			}else{
+				var questions = this.getCardsForTest();	
+				window.App.quizTest.initialize(questions, this.set.cards);
+			}
 		},
 
 		getCardsForTest: function(){
