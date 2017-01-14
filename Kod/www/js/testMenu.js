@@ -43,7 +43,7 @@ define(function(require) {
 			console.log(cards());
 		},
 		prepareQuizTest: function(){
-			if( this.size == 'S' && this.set.cards().length<20){
+			if( this.size() == 'S' && this.set.cards().length<20){
 				console.log("ZA MALO NA QUIZ"); //TODO
 			}else{
 				var questions = this.getCardsForTest();	

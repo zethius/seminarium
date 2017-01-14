@@ -32,7 +32,7 @@ define(function(require){
 						var cardsTmp=[];
 						for(var j = 0; j < cards.rows.length; j++)
 						{
-							console.log("Set:"+counter);
+							// console.log("Set:"+counter);
 							var card=  cards.rows.item(j);
 							card.front = ko.observable(card.front);
 							card.back = ko.observable(card.back);
@@ -159,7 +159,7 @@ define(function(require){
                     this.prepareTables(tx);
                     this.prepareIcons(tx);
                     this.prepareColors(tx); 
-                    console.log("TABLES PREPARED");
+                    // console.log("TABLES PREPARED");
                 }.bind(dbObject), function(err){
                 	console.log("Error: " + err.message);
                 });  
@@ -198,7 +198,7 @@ define(function(require){
 			for(var i=0; i<icons.length; i++){
 				tx.executeSql("REPLACE INTO icons(id,icon_value, icon_name) VALUES (?,?,?)",[icons[i].id, icons[i].val,icons[i].name]);
 			}    
-			console.log("ICONS UPDATED");   
+			// console.log("ICONS UPDATED");   
 		},
 
 		prepareColors:function(tx){
@@ -220,7 +220,7 @@ define(function(require){
 			for(var i=0; i<icons.length; i++){
                 icons[i].val = window.App.dbObject.changeIconColor(icons[i].val,colFrom,colTo);
 			}          
-			console.log("ICON COLORS CHANGED");
+			// console.log("ICON COLORS CHANGED");
 			return icons;
 		},
 

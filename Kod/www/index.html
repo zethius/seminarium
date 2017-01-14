@@ -1,17 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-        <!--
-        Customize this policy to fit your own app's needs. For more guidance, see:
-            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
-        Some notes:
-            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
-            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
-            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
-                * Enable inline JS: add 'unsafe-inline' to default-src
-            -->
-            
-            <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *"> -->
+
             <meta name="format-detection" content="telephone=no">
             <meta name="msapplication-tap-highlight" content="no">
             <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
@@ -24,6 +14,12 @@
         <body>
             <div class="app" id="APP">
 
+                <div id="Dialog">
+                    <span id="DialogContent">CZY NA PEWNO SIUBADUBA?</span>
+                    <button id="DialogButtonLeft" class="Menubutton lightBlue">Anuluj</button>
+                    <button id="DialogButtonRight" class="Menubutton darkBlue">Potwierdź</button>
+                </div>
+                
                 <div id="MainMenuScreen">
                     <h1>Art of Memory</h1>
                     <div class="Menubutton lightBlue" id="MainMenuSetsButton">Fiszki</div>
@@ -112,20 +108,23 @@
                         </div>
                    </form>
 
-                   <div class="Menubutton darkBlue" id="CardEditBack">Wstecz</div>
-               </div>
-
-                <div id="QuizScreen" style="display:none">
-                    <div data-bind="foreach: tests">
-                        <span style="background: gray"data-bind="text: question.front"></span><BR/>
-                        <div data-bind="foreach: answers">
-                               <span style="background: white"data-bind="text: front"></span><BR/>
-                        </div>
-                    </div>           
+                   <div class="Menubutton darkBlue" id="CardEditBack">Zapisz</div>
                 </div>
 
+                <div id="QuizScreen" style="display:none">
+                    <div class="quizQuestion">
+                        <span data-bind="text: currentTest() && currentTest().question.content()"></span><BR/>
+                    </div>
+                    <div id='quizTimer'></div>
+                    <div class="quizAnswers" data-bind="foreach: currentTest() && currentTest().answers">
+                        <div class="quizAnswer">
+                           <span data-bind="text: content()"></span>
+                        </div>
+                    </div>
+                </div>
 
            </div>
+
            <script type="text/javascript" src="cordova.js"></script>
            <script type="text/javascript" data-main="js/app.js" src="lib/require.js"></script>
            <script>

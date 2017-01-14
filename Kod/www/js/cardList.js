@@ -60,6 +60,8 @@ define(function(require) {
             setTimeout(function(){  
                 this.set.cards.push(card);
                 window.App.cardList.cards(this.set.cards());
+                var objDiv = document.getElementById("CardsTable").children[0];
+                objDiv.scrollTop = objDiv.scrollHeight;
             }.bind(this),100);
         },
 

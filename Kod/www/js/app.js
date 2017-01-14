@@ -34,6 +34,23 @@ define(function(require) {
             window.App.dbObject.getFullSets();  
         },
 
+        dialog: function(content, onAccept, onCancel){
+            document.getElementById("DialogContent").innerText = content;
+            document.getElementById("Dialog").style.display='block';
+            if(onAccept){
+                document.getElementById("DialogButtonRight").addEventListener('click', function(){ 
+                       document.getElementById("Dialog").style.display='none';
+                       onAccept();
+                   });
+            }
+            if(onCancel){
+                document.getElementById("DialogButtonLeft").addEventListener('click', function(){ 
+                    document.getElementById("Dialog").style.display='none';
+                    onCancel();
+                });
+            }
+        },
+
         bindAllEvents: function() {
             document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
             document.getElementById('MainMenuSetsButton').addEventListener('click', window.App.setList.show.bind(window.App.setList));
