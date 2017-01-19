@@ -69,11 +69,11 @@
                     </div>
                     <table id="CardsTable" class="CardsTable">
                           <tbody data-bind="foreach: cards">
-                                <tr class="cardRow" data-bind="click: $parent.goToCardEdit, attr: { 'id': 'TESTCARD'}">
+                                <tr class="cardRow" data-bind="click: $parent.goToCardEdit, attr: { 'id': 'TESTCARD'}, css:{ 'hardCard': difficulty()>0.8}">
                                     <td class="front"><span data-bind="text: front"></span></td>
                                     <td class="back"><span data-bind="text: back"></span></td>
-                                    <td class="difficulty" data-bind="text: difficulty"></td>
-                                    <td class="button"><div data-bind="click: $parent.removeCard">X</div></td>
+                                    <td class="difficulty"><span data-bind="text: difficulty"></span></td>
+                                    <td class="button"><span data-bind="click: $parent.removeCard">X</span></td>
                                 </tr>
                             </tbody>
 
@@ -112,12 +112,17 @@
                 </div>
 
                 <div id="QuizScreen" style="display:none">
+                <div class="questionCounter">
+                    <span data-bind="text: testIndex()"></span>
+                    <span>/</span>
+                    <span data-bind="text: tests().length"></span>
+                </div>
                     <div class="quizQuestion">
                         <span data-bind="text: currentTest() && currentTest().question.content()"></span><BR/>
                     </div>
                     <div id='quizTimer'></div>
                     <div class="quizAnswers" data-bind="foreach: currentTest() && currentTest().answers">
-                        <div class="quizAnswer">
+                        <div class="quizAnswer" data-bind="click: function(){ $parent.answer($data); }">
                            <span data-bind="text: content()"></span>
                         </div>
                     </div>

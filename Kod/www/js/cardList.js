@@ -48,9 +48,9 @@ define(function(require) {
         },
 
         newCard: function(){
-            window.App.dbObject.saveCard("New Card Front","New Card Back",2, this.set.set_id);
+            window.App.db.saveCard("New Card Front","New Card Back",2, this.set.set_id);
             var card =  {  
-                            card_id: window.App.dbObject.lastInserted,
+                            card_id: window.App.db.lastInserted,
                             set_id: this.set.set_id,
                             front: ko.observable("New Card Front"),
                             back: ko.observable('New Card Back'), 
@@ -81,7 +81,7 @@ define(function(require) {
 
         onRemoveConfirm: function(buttonIndex){
             if(buttonIndex==1){
-                window.App.dbObject.deleteCard(this.card_id);
+                window.App.db.deleteCard(this.card_id);
                 window.App.cardList.set.cards.remove( function (card) 
                     { return card.card_id == this.card_id;}.bind(this) );
                 window.App.cardList.cards(window.App.cardList.set.cards());
@@ -99,7 +99,7 @@ define(function(require) {
         
         changeIcon:function(icon){
             this.set.icon(icon.icon_value);
-            window.App.dbObject.updateSetIcon(icon.id, this.set.set_id);
+            window.App.db.updateSetIcon(icon.id, this.set.set_id);
             this.setIcon(icon.icon_value);
         },
         
@@ -110,7 +110,7 @@ define(function(require) {
             var setNameDOM =  document.getElementById('SetName');
             setNameDOM.contentEditable=false;
             this.set.name(setNameDOM.innerText);
-            window.App.dbObject.updateSetName(setNameDOM.innerText, this.set.set_id);
+            window.App.db.updateSetName(setNameDOM.innerText, this.set.set_id);
         },
 
         changeDate: function(){
@@ -123,11 +123,11 @@ define(function(require) {
             if(dom.value){
                 this.set.deadline(dom.value);
                 this.setDeadline(dom.value);
-                window.App.dbObject.updateSetDeadline(dom.value, this.set.set_id);
+                window.App.db.updateSetDeadline(dom.value, this.set.set_id);
             }else{
                 this.setDeadline('bez terminu');
                 this.set.deadline('');
-                window.App.dbObject.updateSetDeadline('', this.set.set_id);
+                window.App.db.updateSetDeadline('', this.set.set_id);
             }
             document.getElementById('SetDeadlineInput').style.display='none';  
             document.getElementById('SetDeadlineSpan').style.display='';  

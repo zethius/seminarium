@@ -7,7 +7,7 @@ define(function(require) {
         initialize: function() {
             window.App = this;
             window.App.cardList = require('cardList');    
-            window.App.dbObject =  require('dbObject')
+            window.App.db =  require('db')
             window.App.setList = require('setList');
             window.App.cardObject = require('cardObject');
             window.App.testMenu = require('testMenu');
@@ -17,21 +17,21 @@ define(function(require) {
         },
 
         fill: function(callback, callback2){
-            window.App.dbObject.getIcons(function(icons){
+            window.App.db.getIcons(function(icons){
                 for(var i=0; i<icons.rows.length; i++){
                     this.icons.push(icons.rows.item(i));
                 }
                 callback();
             }.bind(this));
 
-            window.App.dbObject.getColors(function(colors){
+            window.App.db.getColors(function(colors){
                 for(var i = 0; i<colors.rows.length; i++){
                     this.colors.push(colors.rows.item(i));
                 }
                 callback2();
             }.bind(this));
             
-            window.App.dbObject.getFullSets();  
+            window.App.db.getFullSets();  
         },
 
         dialog: function(content, onAccept, onCancel){
@@ -60,7 +60,7 @@ define(function(require) {
         },
 
         onDeviceReady: function() {
-            window.App.dbObject.prepareDb();
+            window.App.db.prepareDb();
             this.fill(function(){
                 window.App.cardList.fillIconList();
             }, function(){

@@ -1,7 +1,6 @@
 ﻿ 			ART OF MEMORY
 
 HARMONOGRAM:
-Do 10.12: menu testów i ich widoki
 Do 17.12: implementacja testów
 Do 23.12: implementacja przypomnień, deadline'u daty (+kalendarz)
 Do 31.12: GSP + test do niego

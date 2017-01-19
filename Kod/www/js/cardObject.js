@@ -60,7 +60,7 @@ define(function(require) {
         },
         changeColor: function(color){
         	this.color(color.color_value);
-            window.App.dbObject.updateCardColor(color.id, this.card.card_id);
+            window.App.db.updateCardColor(color.id, this.card.card_id);
             this.card.color(color.color_value);
         },
 		colorPicker: function(){
@@ -75,13 +75,13 @@ define(function(require) {
 		backEditor: function(){
 			var val = document.getElementById('CardbackEdit').value;
 			this.card.back(val);
-			window.App.dbObject.updateCardBack(val, this.card.card_id);
+			window.App.db.updateCardBack(val, this.card.card_id);
 			val = null
 		},
 		frontEditor: function(){
 			var val = document.getElementById('CardfrontEdit').value;
 			this.card.front(val);
-			window.App.dbObject.updateCardFront(val, this.card.card_id);
+			window.App.db.updateCardFront(val, this.card.card_id);
 			val = null;
 		},
 

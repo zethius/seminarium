@@ -3,7 +3,8 @@ define(function(require) {
 		currentTest: ko.observable(),
 		tests: ko.observableArray([]),
 		allCards:  ko.observableArray([]),
-		testIndex: 0,
+		testIndex: ko.observable(0),
+		timer: null,
 		initialize: function(questions, cards){
 			event.stopPropagation();
 			this.allCards(cards());
@@ -16,10 +17,6 @@ define(function(require) {
             document.getElementById('TestsMenuScreen').style.display='none';
             document.getElementById('QuizScreen').style.display='block';
 		},
-		
-		bindEvents: function(){
-
-		}, 
 
 		prepareQuestions: function( questions ){
 			var tests = [];
@@ -79,18 +76,28 @@ define(function(require) {
 		},
 
 		nextQuestion: function(){
-			if(this.testIndex<this.tests().length){
-				this.currentTest(this.tests()[this.testIndex]);
-				console.log(this.currentTest());
+			clearInterval(this.timer);
+			if(this.testIndex() < this.tests().length){
+				this.currentTest(this.tests()[this.testIndex()]);
 				this.questionTimer();		
+				this.testIndex(this.testIndex()+1);
+
 			}else{
 				console.log("END");
+				this.finishQuiz();
 			}		
 		},
-
+		finishQuiz: function(){
+			this.testIndex(0);
+			this.allCards([]);
+			this.tests([]);
+			this.currentTest();
+			document.getElementById('TestsMenuScreen').style.display='block';
+       		document.getElementById('QuizScreen').style.display='none';
+		},
 		questionTimer: function(){
 			var width = 25;
-			var timer = setInterval(function(){
+			this.timer = setInterval(function(){
 				// if(width<74.9){
 				if(width<49.9){
 					width+=0.02; //przesuniecie o 20 to jedna sekunda
@@ -98,23 +105,26 @@ define(function(require) {
 					document.getElementById("quizTimer").style.marginLeft = width +'%';
 				}
 				else{
-					this.testIndex++;
-					calculateQuestionResults(false);
+					this.calculateQuestionResults(false);
 					this.nextQuestion();
-					clearInterval(timer);
 				}
 			}.bind(this),10);
-		},	
+		},
+
+		answer: function(answer){
+			if(answer.card_id == this.currentTest().question.card_id){
+				this.calculateQuestionResults(true);
+			}else{
+				this.calculateQuestionResults(false);
+			}
+		},
 
 		calculateQuestionResults: function(result){
-
-			if(result){
-				//zapis do bazy
-				console.log("right");
-			}
-			else{
-				console.log("wrong");
-			}	
+			this.currentTest().answers.forEach(function(card){
+				window.App.db.updateCardSuccess(result,card.card_id);
+			});
+		
+			this.nextQuestion();
 		},
 	};
 	ko.applyBindings(quizTest, document.getElementById('QuizScreen'));

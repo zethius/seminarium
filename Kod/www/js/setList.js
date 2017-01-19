@@ -9,11 +9,11 @@ define(function(require) {
 		},
 
 		newSet: function(){
-			window.App.dbObject.saveSet("Nowy zestaw",1);
+			window.App.db.saveSet("Nowy zestaw",1);
 			
 			setTimeout(function(){
 				window.App.sets.push(
-					{ set_id: window.App.dbObject.lastInserted,
+					{ set_id: window.App.db.lastInserted,
 					 cards: ko.observableArray([]),
 					 name:ko.observable('Nowy zestaw'), 
 					 icon:ko.observable(window.App.icons[0].icon_value),
@@ -34,7 +34,7 @@ define(function(require) {
         onRemoveConfirm:function(buttonIndex){
 	    	if(buttonIndex==1){
 	    		console.log(this);
-	    		window.App.dbObject.deleteSet(this.set_id);
+	    		window.App.db.deleteSet(this.set_id);
 	    		window.App.sets.remove( function (set) { return set.set_id == this.set_id; }.bind(this) );
 	    	}
 	    },
