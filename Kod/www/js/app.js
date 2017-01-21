@@ -12,7 +12,7 @@ define(function(require) {
             window.App.cardObject = require('cardObject');
             window.App.testMenu = require('testMenu');
             window.App.quizTest = require('quizTest');
-            window.App.UNITTESTS = require('UNITTESTS');
+            window.App.yonTest = require('yonTest');
             this.bindAllEvents();
         },
 

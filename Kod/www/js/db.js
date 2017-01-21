@@ -128,6 +128,7 @@ define(function(require){
 
 		//QUIZ METHODS
 			updateCardSuccess: function(right, cardId){
+				console.log(right);
 				if(!right){
 					this.execQuery("UPDATE cards SET error = error+1 WHERE id = (?)",[cardId]);
 				}else{

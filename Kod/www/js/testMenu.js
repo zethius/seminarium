@@ -33,14 +33,19 @@ define(function(require) {
 			el.className +=" selected";
 			$('.SizeButton').not('#'+el.id).removeClass("selected");
 		},
+		
 		goBack: function(){
 			document.getElementById('SetsMenuScreen').style.display='block';
             document.getElementById('TestsMenuScreen').style.display='none';
 		},
 		prepareYoNTest: function(){
-			console.log("YON");
-			var cards = this.getCardsForTest();	
-			console.log(cards());
+			if( this.size() == 'S' && this.set.cards().length<20){
+				console.log("ZA MALO NA QUIZ"); //TODO
+			}else{
+				console.log("YON");
+				var questions = this.getCardsForTest();	
+				window.App.yonTest.initialize(questions, this.set.cards);
+			}
 		},
 		prepareQuizTest: function(){
 			if( this.size() == 'S' && this.set.cards().length<20){

@@ -70,7 +70,7 @@ define(function(require) {
 			this.tests(tests);
 		},
 
-		goBack: function(){
+		goBack: function(){ //TODO
 			document.getElementById('SetsMenuScreen').style.display='block';
             document.getElementById('TestsMenuScreen').style.display='none';
 		},

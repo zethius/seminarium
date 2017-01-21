@@ -88,7 +88,8 @@ h1 {
 @lightBlue:  #d6eff4;
 @darkBlue:   #61bbd5;
 @darkGreen:  #52a359;
-
+@lightGreen: #aae094;
+@darkRed: #e09494;
 #MainMenuScreen{
     color: rgb(39,145,167);
     // position: relative;
@@ -335,6 +336,14 @@ h1 {
         right: 1%;
     }
 }
+.timer{
+    margin-left: 25%;
+    margin-top: 1%;
+    margin-right: 25%;
+    background: green;
+    border-radius: 1em;
+    height: 1em;
+}
 #QuizScreen{
     text-transform: none;
     .questionCounter{
@@ -349,14 +358,6 @@ h1 {
         margin-right: 25%;
         border-radius: 5px;
         height: 5em;
-    }
-    #quizTimer{
-        margin-left: 25%;
-        margin-top: 1%;
-        margin-right: 25%;
-        background: green;
-        border-radius: 1em;
-        height: 1em;
     }
     .quizAnswers{
         margin-left:25%;
@@ -379,7 +380,71 @@ h1 {
             }
         }
     }
-
-
 }
-
+#YonScreen{
+    .questionCounter{
+            font-size: 3em;
+            margin-top: 2%;
+            margin-bottom: 2%;
+        }
+    .yonQuestion{
+        width: 50%;
+        margin-top: 2em;
+        margin-left: auto;
+        margin-right: auto;
+        height:15em;
+        .yonLeft{
+            display: block;
+            width:47%;
+            height:100%;
+            float: left;
+            background: #FAFAFA;
+            padding: 1%;
+            border-radius: 0.5em;
+            position: relative;
+            span{
+                line-height: 15em;
+            }
+        }
+        .yonRight{
+            cursor:pointer;
+            display: block;
+            width:47%;
+            height:100%;
+            float: right;
+            background: #FAFAFA;
+            padding: 1%;
+            border-radius: 0.5em;
+            position: relative;
+            span{
+                line-height: 15em;
+            }
+        }
+    }
+    .yonAnswers{
+        width: 50%;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 2em;
+        height: 4em;
+        .button{
+            display:inline-block;
+            width:47%;
+            height: 100%;
+            padding:1%;
+            border-radius:1em;
+            cursor:pointer;
+            span{
+                line-height: 4em;
+            }
+        }
+        .same{
+            background:@lightGreen;
+            float: left;
+        }
+        .different{
+            background:@darkRed;
+            float: right;
+        }
+    }
+}

@@ -13,13 +13,13 @@
         </head>
         <body>
             <div class="app" id="APP">
-
+            <div style="width:100%; height:100%; background:#FAFAFA">
                 <div id="Dialog">
                     <span id="DialogContent">CZY NA PEWNO SIUBADUBA?</span>
                     <button id="DialogButtonLeft" class="Menubutton lightBlue">Anuluj</button>
                     <button id="DialogButtonRight" class="Menubutton darkBlue">Potwierdź</button>
                 </div>
-                
+            </div>
                 <div id="MainMenuScreen">
                     <h1>Art of Memory</h1>
                     <div class="Menubutton lightBlue" id="MainMenuSetsButton">Fiszki</div>
@@ -112,20 +112,50 @@
                 </div>
 
                 <div id="QuizScreen" style="display:none">
-                <div class="questionCounter">
-                    <span data-bind="text: testIndex()"></span>
-                    <span>/</span>
-                    <span data-bind="text: tests().length"></span>
-                </div>
+                    <div class="questionCounter">
+                        <span data-bind="text: testIndex()"></span>
+                        <span>/</span>
+                        <span data-bind="text: tests().length"></span>
+                    </div>
                     <div class="quizQuestion">
                         <span data-bind="text: currentTest() && currentTest().question.content()"></span><BR/>
                     </div>
-                    <div id='quizTimer'></div>
+                    <div id='quizTimer' class="timer"></div>
                     <div class="quizAnswers" data-bind="foreach: currentTest() && currentTest().answers">
                         <div class="quizAnswer" data-bind="click: function(){ $parent.answer($data); }">
                            <span data-bind="text: content()"></span>
                         </div>
                     </div>
+                </div>
+
+                 <div id="YonScreen" style="display:none">
+                    <div class="questionCounter">
+                        <span data-bind="text: testIndex()"></span>
+                        <span>/</span>
+                        <span data-bind="text: tests().length"></span>
+                    </div>
+                    <div id='yonTimer' class="timer"></div>
+                    <div class="yonQuestion">
+                        <div class="yonLeft">
+                            <span data-bind="text: currentTest() && currentTest().left.content()"></span>
+                        </div>
+                          <div class="yonRight">
+                            <span data-bind="text: currentTest() && currentTest().right.content()"></span>
+                        </div>
+                    </div>
+                   <div class="yonAnswers">
+                        <div class="button same" data-bind="click: function(){ answer(true); }">
+                              <span data-bind="text: 'Para'"></span>
+                        </div>
+                        <div class="button different" data-bind="click: function(){ answer(false); }">
+                              <span data-bind="text: 'Różne'"></span>
+                        </div>
+                   </div>
+                    <!-- <div class="quizAnswers" data-bind="foreach: currentTest() && currentTest().answers">
+                        <div class="quizAnswer" data-bind="click: function(){ $parent.answer($data); }">
+                           <span data-bind="text: content()"></span>
+                        </div>
+                    </div> -->
                 </div>
 
            </div>
