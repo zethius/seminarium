@@ -25,3 +25,12 @@ Praca pisemna:
 
 
 DODATKOWO (jeśli zostanie czasu): usprawnić zarządzanie pamięcią w aplikacji
+
+
+
+"C:\Program Files\Java\jdk1.8.0_77\bin\jarsigner.exe" -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore my-release-key.keystore android-release-unsigned.apk nihilvana
+
+zipalign.exe -v 4 android-release-unsigned.apk mnemo.apk
+
+
+adb shell logcat - logi w emulatorze android

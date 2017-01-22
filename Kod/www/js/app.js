@@ -4,6 +4,7 @@ define(function(require) {
         icons: [],
         colors: [],
         sets: ko.observableArray([]),
+        showTests: ko.observable(false),
         initialize: function() {
             window.App = this;
             window.App.cardList = require('cardList');    
@@ -16,21 +17,11 @@ define(function(require) {
             this.bindAllEvents();
         },
 
-        fill: function(callback, callback2){
-            window.App.db.getIcons(function(icons){
-                for(var i=0; i<icons.rows.length; i++){
-                    this.icons.push(icons.rows.item(i));
-                }
-                callback();
-            }.bind(this));
-
-            window.App.db.getColors(function(colors){
-                for(var i = 0; i<colors.rows.length; i++){
-                    this.colors.push(colors.rows.item(i));
-                }
-                callback2();
-            }.bind(this));
-            
+        fill: function( ){
+            window.App.icons = window.App.db.icons;
+            window.App.cardList.fillIconList();
+            window.App.colors = window.App.db.colors;  
+            window.App.cardObject.fillColorList();
             window.App.db.getFullSets();  
         },
 
@@ -60,12 +51,8 @@ define(function(require) {
         },
 
         onDeviceReady: function() {
-            window.App.db.prepareDb();
-            this.fill(function(){
-                window.App.cardList.fillIconList();
-            }, function(){
-                window.App.cardObject.fillColorList();
-            });
+            window.App.db.prepareDb.bind(window.App.db)();
+            window.App.fill();
             window.App.setList.initialize();
             // setTimeout(window.App.cardList.fillIconList,200);
             // setTimeout(window.App.cardObject.fillColorList,200);

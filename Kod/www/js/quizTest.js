@@ -91,7 +91,7 @@ define(function(require) {
 			this.testIndex(0);
 			this.allCards([]);
 			this.tests([]);
-			this.currentTest();
+			this.currentTest(null);
 			document.getElementById('TestsMenuScreen').style.display='block';
        		document.getElementById('QuizScreen').style.display='none';
 		},
@@ -106,7 +106,6 @@ define(function(require) {
 				}
 				else{
 					this.calculateQuestionResults(false);
-					this.nextQuestion();
 				}
 			}.bind(this),10);
 		},

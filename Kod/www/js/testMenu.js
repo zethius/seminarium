@@ -5,7 +5,7 @@ define(function(require) {
 		initialize: function(set){
 			event.stopPropagation();
             window.App.testMenu.set = set;
-            if(set.cards().length>=5){
+            if(set.cards().length>=20){
 	            window.App.testMenu.show();     
             }
             else{
@@ -39,7 +39,7 @@ define(function(require) {
             document.getElementById('TestsMenuScreen').style.display='none';
 		},
 		prepareYoNTest: function(){
-			if( this.size() == 'S' && this.set.cards().length<20){
+			if( this.set.cards().length<20){
 				console.log("ZA MALO NA QUIZ"); //TODO
 			}else{
 				console.log("YON");
@@ -48,7 +48,7 @@ define(function(require) {
 			}
 		},
 		prepareQuizTest: function(){
-			if( this.size() == 'S' && this.set.cards().length<20){
+			if( this.set.cards().length<20){
 				console.log("ZA MALO NA QUIZ"); //TODO
 			}else{
 				var questions = this.getCardsForTest();	

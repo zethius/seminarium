@@ -13,13 +13,15 @@
         </head>
         <body>
             <div class="app" id="APP">
-            <div style="width:100%; height:100%; background:#FAFAFA">
-                <div id="Dialog">
-                    <span id="DialogContent">CZY NA PEWNO SIUBADUBA?</span>
-                    <button id="DialogButtonLeft" class="Menubutton lightBlue">Anuluj</button>
-                    <button id="DialogButtonRight" class="Menubutton darkBlue">Potwierdź</button>
+            
+                <div style="width:100%; height:100%; background:#FAFAFA">
+                    <div id="Dialog">
+                        <span id="DialogContent">CZY NA PEWNO SIUBADUBA?</span>
+                        <button id="DialogButtonLeft" class="Menubutton lightBlue">Anuluj</button>
+                        <button id="DialogButtonRight" class="Menubutton darkBlue">Potwierdź</button>
+                    </div>
                 </div>
-            </div>
+                
                 <div id="MainMenuScreen">
                     <h1>Art of Memory</h1>
                     <div class="Menubutton lightBlue" id="MainMenuSetsButton">Fiszki</div>
@@ -28,7 +30,7 @@
 
                 <div id="SetsMenuScreen" style="display:none">
                     <h1>Zestawy</h1>
-                    <table id="SetsTable" class="SetsTable">
+                    <table id="SetsTable" class="SetsTable" data-bind="if: showTests()">
                             <tbody data-bind="foreach: sets">
                                 <tr class="setRow" data-bind="click: $parent.testMenu.initialize">
                                     <td class="icon"><img width="32px" height="32px" data-bind="attr : {src: icon}" /></td>
@@ -40,6 +42,63 @@
                     </table>
                     <div class="Menubutton darkBlue" id="SetsMenuBack">Wstecz</div>
                     <div class="Menubutton darkGreen" id="AddNewSet" >Dodaj</div>
+                </div>
+
+                <div id="CardsMenuScreen" style="display:none">
+                    <div class="SetIconWrapper">
+                        <img id="SetIcon" width="100%" height="100%" data-bind="attr : {src: setIcon}"  >
+                    </div>
+                    <div id="IconList" style="height:0px"></div>
+                    <h1 id="SetName" data-bind="text: setName">__FISZKI__</h1>
+                    <div class="SetDeadline">
+                        <span id="SetDeadlineSpan" data-bind="text: setDeadline"></span>
+                        <input type="date" id="SetDeadlineInput" data-bind="value: setDeadline"/>
+                        <span id="CardCount" data-bind="text: cardCount"></span>
+                    </div>
+                    <table id="CardsTable" class="CardsTable" data-bind="if: set()">
+                          <tbody data-bind="foreach: set().cards">
+                                <tr class="cardRow" data-bind="click: $parent.goToCardEdit, attr: { 'id': 'TESTCARD'}, css:{ 'hardCard': difficulty()>0.8}">
+                                    <td class="front"><span data-bind="text: front"></span></td>
+                                    <td class="back"><span data-bind="text: back"></span></td>
+                                    <td class="difficulty"><span data-bind="text: difficulty"></span></td>
+                                    <td class="button"><span data-bind="click: $parent.removeCard">X</span></td>
+                                </tr>
+                            </tbody>
+                    </table>
+                    <div class="Menubutton darkBlue" id="CardsMenuBack">Wstecz</div>
+                    <div class="Menubutton darkGreen" id="AddNewCard" data-bind="click: newCard">Dodaj</div>
+                </div>
+
+                <div id="CardEditScreen" style="display:none">
+                    <form id="CardEditForm">
+                        <table>
+                            <tr>
+                                <td class="label">Front  <div class="clear" data-bind="click: function(){ front(''); card.front('');}">X</div></td>
+                                
+                            </tr> 
+                            <tr>
+                                 <td class="CardInput">
+                                    <textarea name="nazwa" cols="3" rows="4" id="CardfrontEdit" data-bind="value: front">___FRONT___</textarea>
+                                   
+                                </td>
+                            </tr> 
+                            <tr>
+                                <td class="label">Tył  <div class="clear" data-bind="click: function(){ back(''); card.back('');}">X</div></td>                       
+                                
+                            </tr> 
+                            <tr>
+                                <td class="CardInput">                       
+                                    <textarea name="nazwa" cols="3" rows="4" id="CardbackEdit" data-bind="value: back">___BACK___</textarea>                                 
+                                </td>
+                           </tr>
+                       </table>
+                       <div id="ColorPicker">
+                            <div id="CardcolorEdit" data-bind="style:{background: color}">kolor</div>
+                            <div id="ColorList" style="height:0px"></div>
+                        </div>
+                   </form>
+
+                   <div class="Menubutton darkBlue" id="CardEditBack">Zapisz</div>
                 </div>
 
                 <div id="TestsMenuScreen" style="display:none">
@@ -55,63 +114,7 @@
                     <div class="Menubutton darkBlue" id="TestsMenuBack">Wstecz</div>
                 </div>
 
-                <div id="CardsMenuScreen" style="display:none">
-                    <div>
-                        <div class="SetIconWrapper">
-                            <img id="SetIcon" width="100%" height="100%" data-bind="attr : {src: setIcon}"  >
-                        </div>
-                        <div id="IconList" style="height:0px"></div>
-                    </div>
-                    <h1 id="SetName" data-bind="text: setName">__FISZKI__</h1>
-                    <div class="SetDeadline">
-                        <span id="SetDeadlineSpan" data-bind="text: setDeadline"></span>
-                        <input type="date" id="SetDeadlineInput" data-bind="value: setDeadline"/>
-                    </div>
-                    <table id="CardsTable" class="CardsTable">
-                          <tbody data-bind="foreach: cards">
-                                <tr class="cardRow" data-bind="click: $parent.goToCardEdit, attr: { 'id': 'TESTCARD'}, css:{ 'hardCard': difficulty()>0.8}">
-                                    <td class="front"><span data-bind="text: front"></span></td>
-                                    <td class="back"><span data-bind="text: back"></span></td>
-                                    <td class="difficulty"><span data-bind="text: difficulty"></span></td>
-                                    <td class="button"><span data-bind="click: $parent.removeCard">X</span></td>
-                                </tr>
-                            </tbody>
-
-                    </table>
-                    <div class="Menubutton darkBlue" id="CardsMenuBack">Wstecz</div>
-                    <div class="Menubutton darkGreen" id="AddNewCard" data-bind="click: newCard">Dodaj</div>
-                </div>
-
-                <div id="CardEditScreen" style="display:none">
-                    <form id="CardEditForm">
-                        <table>
-                            <tr>
-                                <td class="label">Front</td>
-                            </tr> 
-                            <tr>
-                                 <td class="CardInput">
-                                    <textarea name="nazwa" cols="3" rows="4" id="CardfrontEdit">___FRONT___</textarea>
-                                </td>
-                            </tr> 
-                            <tr>
-                                <td class="label">Tył</td>                       
-                            </tr> 
-                            <tr>
-                                <td class="CardInput">                       
-                                 <textarea name="nazwa" cols="3" rows="4" id="CardbackEdit">___BACK___</textarea>
-                                </td>
-                           </tr>
-                       </table>
-                       <div id="ColorPicker">
-                            <div id="CardcolorEdit" data-bind="style:{background: color}">kolor</div>
-                            <div id="ColorList" style="height:0px"></div>
-                        </div>
-                   </form>
-
-                   <div class="Menubutton darkBlue" id="CardEditBack">Zapisz</div>
-                </div>
-
-                <div id="QuizScreen" style="display:none">
+                <div id="QuizScreen" style="display:none" data-bind="if: currentTest()">
                     <div class="questionCounter">
                         <span data-bind="text: testIndex()"></span>
                         <span>/</span>
@@ -126,9 +129,12 @@
                            <span data-bind="text: content()"></span>
                         </div>
                     </div>
+                    <div>
+                        
+                    </div>
                 </div>
 
-                 <div id="YonScreen" style="display:none">
+                <div id="YonScreen" style="display:none">
                     <div class="questionCounter">
                         <span data-bind="text: testIndex()"></span>
                         <span>/</span>
@@ -143,19 +149,14 @@
                             <span data-bind="text: currentTest() && currentTest().right.content()"></span>
                         </div>
                     </div>
-                   <div class="yonAnswers">
+                    <div class="yonAnswers">
                         <div class="button same" data-bind="click: function(){ answer(true); }">
                               <span data-bind="text: 'Para'"></span>
                         </div>
                         <div class="button different" data-bind="click: function(){ answer(false); }">
                               <span data-bind="text: 'Różne'"></span>
                         </div>
-                   </div>
-                    <!-- <div class="quizAnswers" data-bind="foreach: currentTest() && currentTest().answers">
-                        <div class="quizAnswer" data-bind="click: function(){ $parent.answer($data); }">
-                           <span data-bind="text: content()"></span>
-                        </div>
-                    </div> -->
+                    </div>            
                 </div>
 
            </div>

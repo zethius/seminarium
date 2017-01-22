@@ -32,6 +32,11 @@ define(function(require) {
 		},
 
 		goBack: function(){
+			this.front(null);
+			this.back(null);
+			this.card = {};
+			this.id(null);
+			this.color(null);
             document.getElementById('CardEditScreen').style.display='none';
             document.getElementById('CardsMenuScreen').style.display='block';
             document.getElementById("ColorList").style.height = 0;
@@ -39,8 +44,8 @@ define(function(require) {
 
 		build: function(){
 			// var form = document.getElementById('CardEditForm');
-			document.getElementById('CardfrontEdit').value = this.front();
-			document.getElementById('CardbackEdit').value = this.back();
+			// document.getElementById('CardfrontEdit').value = this.front();
+			// document.getElementById('CardbackEdit').value = this.back();
 			// document.getElementById('CardcolorEdit').style.background = this.card.color();
 		},
 

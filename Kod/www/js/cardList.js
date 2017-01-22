@@ -3,15 +3,14 @@ define(function(require) {
         setIcon: ko.observable(null),
         setName: ko.observable(null),
         setDeadline: ko.observable("bez terminu"),
-        cards: ko.observableArray([]),
         set: ko.observable(null),
-
+        cardCount: ko.observable(0),
         initialize: function(set) {
             event.stopPropagation();
-            window.App.cardList.set = set;
+            window.App.cardList.set(set);
+            window.App.cardList.cardCount(set.cards().length);
             window.App.cardList.setName(set.name());
             window.App.cardList.setIcon(set.icon());
-            window.App.cardList.cards(set.cards());
             window.App.cardList.prepareDeadline(set.deadline);
             window.App.cardList.show();      
         },
@@ -31,7 +30,7 @@ define(function(require) {
             document.getElementById('SetName').addEventListener('blur',this.changeNameSave.bind(this),false);  
             document.getElementById('SetDeadlineSpan').addEventListener('click',this.changeDate.bind(this),false); 
             document.getElementById('SetDeadlineInput').addEventListener('blur',this.changeDateSave.bind(this),false); 
-            document.getElementById('CardsMenuBack').addEventListener('click', this.goBack);     
+            document.getElementById('CardsMenuBack').addEventListener('click', this.goBack.bind(this),false);     
         },
 
         fillIconList: function(){
@@ -48,30 +47,30 @@ define(function(require) {
         },
 
         newCard: function(){
-            window.App.db.saveCard("New Card Front","New Card Back",2, this.set.set_id);
+            window.App.db.saveCard("New Card Front","New Card Back",2, this.set().set_id);
             var card =  {  
                             card_id: window.App.db.lastInserted,
-                            set_id: this.set.set_id,
+                            set_id: this.set().set_id,
                             front: ko.observable("New Card Front"),
                             back: ko.observable('New Card Back'), 
                             difficulty: ko.observable(0.5),
                             color: ko.observable(window.App.colors[2])
                         };
             setTimeout(function(){  
-                this.set.cards.push(card);
-                window.App.cardList.cards(this.set.cards());
+                this.set().cards.push(card);
                 var objDiv = document.getElementById("CardsTable").children[0];
                 objDiv.scrollTop = objDiv.scrollHeight;
+                this.cardCount(this.set().cards().length);
             }.bind(this),100);
         },
 
         removeCard: function(card, event){
             event.stopPropagation();
             navigator.notification.confirm(
-                    'Do you really want to delete this card:"'+card.front() +'"?' , 
+                    'Czy na pewno chcesz usunąć tą fiszkę:"'+card.front() +'"?' , 
                                         window.App.cardList.onRemoveConfirm.bind(this),   //  callback to invoke with index of button pressed
-                                                        'Deleting card',    // title
-                                                        ['Delete','Cancel']     // buttonLabels
+                                                        'Usuwanie fiszki',    // title
+                                                        ['Usuń','Anuluj']     // buttonLabels
                                                         );
         },
        
@@ -82,9 +81,10 @@ define(function(require) {
         onRemoveConfirm: function(buttonIndex){
             if(buttonIndex==1){
                 window.App.db.deleteCard(this.card_id);
-                window.App.cardList.set.cards.remove( function (card) 
+                window.App.cardList.set().cards.remove( function (card) 
                     { return card.card_id == this.card_id;}.bind(this) );
-                window.App.cardList.cards(window.App.cardList.set.cards());
+                window.App.cardList.cardCount(window.App.cardList.set().cards().length);
+                // window.App.cardList.cards(window.App.cardList.set().cards());f
             }        
         },
 
@@ -98,8 +98,8 @@ define(function(require) {
         },
         
         changeIcon:function(icon){
-            this.set.icon(icon.icon_value);
-            window.App.db.updateSetIcon(icon.id, this.set.set_id);
+            this.set().icon(icon.icon_value);
+            window.App.db.updateSetIcon(icon.id, this.set().set_id);
             this.setIcon(icon.icon_value);
         },
         
@@ -109,8 +109,8 @@ define(function(require) {
         changeNameSave: function(){
             var setNameDOM =  document.getElementById('SetName');
             setNameDOM.contentEditable=false;
-            this.set.name(setNameDOM.innerText);
-            window.App.db.updateSetName(setNameDOM.innerText, this.set.set_id);
+            this.set().name(setNameDOM.innerText);
+            window.App.db.updateSetName(setNameDOM.innerText, this.set().set_id);
         },
 
         changeDate: function(){
@@ -121,13 +121,13 @@ define(function(require) {
         changeDateSave: function(){
             var dom = document.getElementById('SetDeadlineInput');
             if(dom.value){
-                this.set.deadline(dom.value);
+                this.set().deadline(dom.value);
                 this.setDeadline(dom.value);
-                window.App.db.updateSetDeadline(dom.value, this.set.set_id);
+                window.App.db.updateSetDeadline(dom.value, this.set().set_id);
             }else{
                 this.setDeadline('bez terminu');
-                this.set.deadline('');
-                window.App.db.updateSetDeadline('', this.set.set_id);
+                this.set().deadline('');
+                window.App.db.updateSetDeadline('', this.set().set_id);
             }
             document.getElementById('SetDeadlineInput').style.display='none';  
             document.getElementById('SetDeadlineSpan').style.display='';  
@@ -140,6 +140,10 @@ define(function(require) {
         },
 
         goBack: function(){
+            this.setDeadline(null);
+            this.set(null);
+            this.setIcon(null);
+            this.setName(null);
             document.getElementById('CardsMenuScreen').style.display='none';
             document.getElementById('SetsMenuScreen').style.display='block';
             document.getElementById("IconList").style.height = 0;
