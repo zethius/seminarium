@@ -26,6 +26,7 @@
                     <h1>Art of Memory</h1>
                     <div class="Menubutton lightBlue" id="MainMenuSetsButton">Fiszki</div>
                     <div class="Menubutton darkBlue" id="MainMenuGSPButton">GSP</div>
+                    <div class="Menubutton darkBlue" id="MainMenuBodyButton">Ciało</div>
                 </div>
 
                 <div id="SetsMenuScreen" style="display:none">
@@ -159,6 +160,14 @@
                     </div>            
                 </div>
 
+                <div id="HumanScreen" style="display:none">
+               
+                    <div class="humanBody" data-bind="foreach: sillhouette">
+                        <img id="HumanSillhouette" class="bodyPart" data-bind="attr : {src: image}"  >
+                    </div>
+                
+                <div class="Menubutton darkBlue" id="HumanBodyBack">Wstecz</div>
+                </div>
            </div>
 
            <script type="text/javascript" src="cordova.js"></script>

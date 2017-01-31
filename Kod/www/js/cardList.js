@@ -39,7 +39,7 @@ define(function(require) {
                     var icon = document.createElement('img');
                     icon.style.width= '32px';
                     icon.style.height= '32px';
-                    icon.src = el.icon_value;
+                    icon.src = el.icon_value();
                     icon.id = 'icon_'+el.id;     
                     iconsList.appendChild(icon);
                     icon.addEventListener('click',function(){window.App.cardList.changeIcon(el);},false);
@@ -98,9 +98,9 @@ define(function(require) {
         },
         
         changeIcon:function(icon){
-            this.set().icon(icon.icon_value);
+            this.set().icon(icon.icon_value());
             window.App.db.updateSetIcon(icon.id, this.set().set_id);
-            this.setIcon(icon.icon_value);
+            this.setIcon(icon.icon_value());
         },
         
         changeName: function(){

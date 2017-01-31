@@ -14,6 +14,7 @@ define(function(require) {
             window.App.testMenu = require('testMenu');
             window.App.quizTest = require('quizTest');
             window.App.yonTest = require('yonTest');
+            window.App.human = require('human');
             this.bindAllEvents();
         },
 
@@ -45,6 +46,7 @@ define(function(require) {
         bindAllEvents: function() {
             document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
             document.getElementById('MainMenuSetsButton').addEventListener('click', window.App.setList.show.bind(window.App.setList));
+            document.getElementById('MainMenuBodyButton').addEventListener('click', window.App.human.init.bind(window.App.human));
             window.App.cardList.bindEvents();
             window.App.cardObject.bindEvents();
             window.App.testMenu.bindEvents(); 

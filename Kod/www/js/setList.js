@@ -17,7 +17,7 @@ define(function(require) {
 					{ set_id: window.App.db.lastInserted,
 					 cards: ko.observableArray([]),
 					 name:ko.observable('Nowy zestaw'), 
-					 icon: ko.observable(window.App.icons[0].icon_value),
+					 icon: ko.observable(window.App.icons[0].icon_value()),
 					 deadline: ko.observable('')
 					});
 			},100);
