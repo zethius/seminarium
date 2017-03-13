@@ -22,22 +22,22 @@
                     </div>
                 </div>
                 
-                <div id="MainMenuScreen">
+                <div id="MainMenuScreen"  data-bind="if: appReady()">
                     <h1>Art of Memory</h1>
-                    <div class="Menubutton lightBlue" id="MainMenuSetsButton">Fiszki</div>
+                    <div class="Menubutton lightBlue" id="MainMenuSetsButton" data-bind="click: setList.initialize.bind(setList)">Fiszki</div>
                     <div class="Menubutton darkBlue" id="MainMenuGSPButton">GSP</div>
-                    <div class="Menubutton darkBlue" id="MainMenuBodyButton">Ciało</div>
+                    <div class="Menubutton darkBlue" id="MainMenuBodyButton" data-bind="click: bodyList.initialize.bind(bodyList)">Ciało</div>
                 </div>
 
                 <div id="SetsMenuScreen" style="display:none">
                     <h1>Zestawy</h1>
-                    <table id="SetsTable" class="SetsTable" data-bind="if: showTests()">
+                    <table id="SetsTable" class="SetsTable">
                             <tbody data-bind="foreach: sets">
-                                <tr class="setRow" data-bind="click: $parent.testMenu.initialize">
+                                <tr class="setRow" data-bind="click: $parent.gotoTestMenu">
                                     <td class="icon"><img width="32px" height="32px" data-bind="attr : {src: icon}" /></td>
                                     <td class="label" data-bind="text: name"></td>
-                                    <td class="edit" data-bind="click: $parent.cardList.initialize"> Edytuj </td>
-                                    <td class="button"><div data-bind="click: $parent.setList.removeSet">X</div></td>
+                                    <td class="edit" data-bind="click: $parent.gotoCardList"> Edytuj </td>
+                                    <td class="button"><div data-bind="click: $parent.removeSet">X</div></td>
                                 </tr>
                             </tbody>
                     </table>
@@ -46,8 +46,9 @@
                 </div>
 
                 <div id="CardsMenuScreen" style="display:none">
-                    <div class="SetIconWrapper">
-                        <img id="SetIcon" width="100%" height="100%" data-bind="attr : {src: setIcon}"  >
+                    <div class="SetIconWrapper folded" id="SetIcon">
+                        <img width="100%" height="100%" data-bind="attr : {src: setIcon}"  >
+                        <div class="fold down"></div>
                     </div>
                     <div id="IconList" style="height:0px"></div>
                     <h1 id="SetName" data-bind="text: setName">__FISZKI__</h1>
@@ -58,7 +59,8 @@
                     </div>
                     <table id="CardsTable" class="CardsTable" data-bind="if: set()">
                           <tbody data-bind="foreach: set().cards">
-                                <tr class="cardRow" data-bind="click: $parent.goToCardEdit, attr: { 'id': 'TESTCARD'}, css:{ 'hardCard': difficulty()>0.8}">
+                                <tr class="cardRow"
+                                data-bind="click: $parent.goToCardEdit, attr: { 'id': 'TESTCARD'}, css:{ 'hardCard': difficulty()>0.8}, style:{ borderColor: color}">
                                     <td class="front"><span data-bind="text: front"></span></td>
                                     <td class="back"><span data-bind="text: back"></span></td>
                                     <td class="difficulty"><span data-bind="text: difficulty"></span></td>
@@ -74,7 +76,10 @@
                     <form id="CardEditForm">
                         <table>
                             <tr>
-                                <td class="label">Front  <div class="clear" data-bind="click: function(){ front(''); card.front('');}">X</div></td>
+                                <td class="label">
+                                    <div class="labelText">Front</div>
+                                    <div class="clear" data-bind="click: function(){ front(''); card.front('');}">X</div>
+                                </td>
                                 
                             </tr> 
                             <tr>
@@ -84,7 +89,10 @@
                                 </td>
                             </tr> 
                             <tr>
-                                <td class="label">Tył  <div class="clear" data-bind="click: function(){ back(''); card.back('');}">X</div></td>                       
+                                <td class="label">
+                                    <div class="labelText">Tył</div> 
+                                    <div class="clear" data-bind="click: function(){ back(''); card.back('');}">X</div>
+                                </td>                       
                                 
                             </tr> 
                             <tr>
@@ -160,14 +168,31 @@
                     </div>            
                 </div>
 
-                <div id="HumanScreen" style="display:none">
-               
-                    <div class="humanBody" data-bind="foreach: sillhouette">
-                        <img id="HumanSillhouette" class="bodyPart" data-bind="attr : {src: image}"  >
-                    </div>
-                
-                <div class="Menubutton darkBlue" id="HumanBodyBack">Wstecz</div>
+                <div id="HumanMenuScreen" style="display:none">
+                    <h1>Ciała pamięci</h1>
+                    <table id="HumanTable" class="HumanTable">
+                            <tbody data-bind="foreach: bodies">
+                                <tr class="setRow" data-bind="click: $parent.gotoBodyEdit">
+                                    <td class="label" data-bind="text: name"></td>
+                                    <td class="button"><div data-bind="click: $parent.removeBody">X</div></td>
+                                </tr>
+                            </tbody>
+                    </table>
+                    <div class="Menubutton darkBlue" id="BodiesMenuBack">Wstecz</div>
+                    <div class="Menubutton darkGreen" id="AddNewBody" >Dodaj</div>
                 </div>
+                
+                <div id="HumanScreen" style="display:none">
+                    <div data-bind="if: human()">
+                        <h1 id="HumanName" data-bind=" text: human().name">__CZLOWIEK__</h1>
+                        <div class="humanBody" data-bind="foreach: humanBody">
+                            <img class="bodyPart" data-bind="attr : {src: image, id: 'part'+id}, click: $parent.bodypartClicked"  />
+                            <textarea class='bodyPartText' style='display:none' data-bind="value: text, attr:{id: 'partText'+id}, event: { blur: $parent.bodypartSave }"></textarea>      
+                        </div>
+                    </div>
+                    <div class="Menubutton darkBlue" id="HumanBodyBack">Wstecz</div>
+                </div>
+
            </div>
 
            <script type="text/javascript" src="cordova.js"></script>

@@ -17,6 +17,8 @@ Główny System Pamięciowy (GSP):
 
 Praca pisemna: 
 	- zarys działania CORDOVA
+	-state of art: przyklady podobnych rozwiazan na rynku
+	-wykorzystane biblioteki: knockout, jquery, requireJs
 	-trudności związane z pisaniem aplikacji wyglądającej tak samo dobrze na każdej rozdzielczości i jak im zaradzić
 	-mnemotechniki: fiszki i GSP
 	-mnemotechniki: opisac palac pamieci i czemu go nie zaimplementowano na mobilne

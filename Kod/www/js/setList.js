@@ -1,8 +1,13 @@
 define(function(require) {
 	var setList = {
-		// sets: ko.observableArray([]),
+		sets: ko.observableArray([]),
 		initialize: function() {
+			console.log("SETS INITIALZIE");
+			if(!this.sets().length){
+				window.App.db.getFullSets( this.sets );
+			}
 			this.bindEvents();
+			this.show();
 		},
 		bindEvents: function(){
 			document.getElementById('SetsMenuBack').addEventListener('click', this.goBack);
@@ -13,14 +18,14 @@ define(function(require) {
 			window.App.db.saveSet("Nowy zestaw",1);
 			
 			setTimeout(function(){
-				window.App.sets.push(
+				this.sets.push(
 					{ set_id: window.App.db.lastInserted,
 					 cards: ko.observableArray([]),
 					 name:ko.observable('Nowy zestaw'), 
 					 icon: ko.observable(window.App.icons[0].icon_value()),
 					 deadline: ko.observable('')
 					});
-			},100);
+			}.bind(this),100);
 		},
 
         removeSet:function(set){
@@ -33,26 +38,38 @@ define(function(require) {
 													    );
         },
 
+        gotoTestMenu: function(el){
+        	console.log(el);
+        	if(!el.cards().length){
+        		window.App.cardList.fillCards(el, function(){window.App.testMenu.initialize(el)});
+        	}else{
+        		window.App.testMenu.initialize(el);
+        	}
+        },
+        gotoCardList: function(el){
+        	window.App.cardList.initialize(el);
+        },
+
         onRemoveConfirm:function(buttonIndex){
 	    	if(buttonIndex==1){
 	    		console.log(this);
 	    		window.App.db.deleteSet(this.set_id);
-	    		window.App.sets.remove( function (set) { return set.set_id == this.set_id; }.bind(this) );
+	    		window.App.setList.sets.remove( function (set) { return set.set_id == this.set_id; }.bind(this) );
 	    	}
 	    },
 
 		goBack: function(){
-			window.App.showTests(false);
+			$("SetsMenuScreen").children().off();
+			window.App.setList.sets([]);
 			document.getElementById('MainMenuScreen').style.display='block';
 			document.getElementById('SetsMenuScreen').style.display='none';
 		},
 		
 		show: function(  ){
-			window.App.showTests(true);
 			document.getElementById('MainMenuScreen').style.display='none';
 			document.getElementById('SetsMenuScreen').style.display='block';
 		},
-
 	};
+	ko.applyBindings(setList, document.getElementById('SetsMenuScreen'));
 	return setList;
 });

@@ -1,0 +1,197 @@
+#SetsMenuScreen, #CardsMenuScreen,#HumanMenuScreen{
+    .Menubutton{
+        width:33%;
+        display: inline-block;
+    }
+}
+
+#SetsMenuScreen, #CardsMenuScreen, #CardEditScreen, #HumanMenuScreen{
+    position:absolute;
+    width:100%;
+    top:20%;
+    .SetsTable,.CardsTable, .HumanTable{
+        background-color: @lightBlue;
+        width:70%;
+        height:15em;
+        margin-left:auto;
+        margin-right:auto;
+        border-collapse: collapse;
+        //border-spacing: 0;
+        tbody{
+            overflow: auto;
+            display: inline-block;
+            width: 100%;
+            height:15em;
+            .cardRow{
+                border-left:5px solid transparent; 
+            }
+            .setRow, .cardRow{    
+                cursor:pointer;
+                &:hover{
+                  color: @lightBlue;
+                  background-color: @darkBlue;
+                }
+               .label{
+                    width:80%;
+                }
+                .button{
+                    width:1%;
+                    padding: 10px;
+                }
+                .button:hover{
+                    font-weight: bold;
+                }
+                .front{
+                    width:50%;
+                }
+                .back{
+                    width:50%;
+                }
+                .edit{
+                    width: 7%;
+                }
+                .edit:hover{
+                    font-weight: bold;
+                }
+                .icon{
+                    width:10%;
+                }
+            }
+            .hardCard{
+                span{
+                    color: red;
+                }
+            }
+            .setRow {
+                &.deadline{
+                    border-left:5px solid red;
+                }
+            }  
+        }
+    }   
+}
+#CardsMenuScreen{
+    top: ~"-webkit-calc(30% - 131px)";
+    top: ~"calc(30% - 131px)";
+    #IconList{
+        display:block;
+        overflow:hidden;
+        height: 0px;
+        -webkit-transition : height 0.5s;
+        transition : height 0.5s;  
+    }
+    .SetIconWrapper{
+        width:5em;
+        margin-left: auto;
+        margin-right: auto;
+        cursor: pointer;
+        .fold{
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 5px;
+            width: 0; 
+            height: 0; 
+            content:"";
+            &.down{
+                border-top: 10px solid @fontColor;
+                border-left: 8px solid transparent;
+                border-right: 8px solid transparent; 
+            }
+            &.up{
+                border-bottom: 10px solid @fontColor;
+                border-left: 8px solid transparent;
+                border-right: 8px solid transparent;
+            }
+      
+        }
+    }
+    #SetName{
+        margin-bottom: 10px;
+        cursor: pointer;
+    }
+    .SetDeadline{
+        margin-bottom:5px;
+        input[type="date"] {
+            background: transparent;
+            border: none;
+            margin-left: 2em;
+            text-align: center;
+        }
+    }
+}
+#CardEditScreen{
+    top: 15%;
+    #CardEditForm{
+        margin-left: auto;
+        margin-right: auto; 
+        table{
+            margin-left: auto;
+            margin-right: auto;
+            width: 70%;
+            .label{
+                .labelText{
+                    margin-left:2em;
+                    display: inline-block;
+                }
+                .clear{
+                    background: #FAFAFA;
+                    border-radius: 2em;
+                    cursor: pointer;
+                    /* padding: 1%; */
+                    float: right;
+                    height: 2em;
+                    /* text-align: center; */
+                    width: 2em;
+                    line-height: 2em;
+                }
+            }
+          
+            .CardInput{
+                height:10em;
+            }
+            textarea{
+                resize: none;
+                width:100%;
+                height:100%;
+                background-color: @lightBlue;
+                border: 1px solid @darkBlue;
+                border-radius: 3px;
+                text-align:center;
+            }
+           
+        }
+
+        #ColorPicker{
+            // display: inline-block;
+            // width: 100%;
+            #CardcolorEdit{
+                width: 9em;
+                height: 2em;
+                margin-left: auto;
+                margin-right: auto;
+                line-height: 2.2em;
+                cursor: pointer;
+                color: #0e4555 ;
+                // border: 1px solid black;
+                border-radius: 0.5em;    
+            }
+            #ColorList{
+                display: block;
+                height:4em;
+                margin-top: 0.2em;
+                -webkit-transition : height 0.5s;
+                transition : height 0.5s;  
+                .color {
+                    display: inline-block;
+                    width: 4em;
+                    height: 100%;
+                    margin-left: 0.5em;
+                    border-radius: 10em;
+                    &.transparent{
+                        border:1px solid @fontColor;
+                    }
+                }
+            }
+        }      
+    }
+}

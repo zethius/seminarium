@@ -3,7 +3,6 @@ define(function(require) {
 		set: ko.observable(null),
 		size: ko.observable("S"),
 		initialize: function(set){
-			event.stopPropagation();
             window.App.testMenu.set = set;
             if(set.cards().length>=20){
 	            window.App.testMenu.show();     

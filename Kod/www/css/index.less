@@ -1,11 +1,20 @@
- @font-face {
+@import "cards.less";
+@import "tests.less";
+
+@fontColor: #11718d;
+@lightBlue:  #d6eff4;
+@darkBlue:   #61bbd5;
+@darkGreen:  #52a359;
+@lightGreen: #aae094;
+@darkRed: #e09494;
+
+@font-face {
     font-family: 'Raleway';
     src: url('/../Raleway-Regular.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
-
 }
-@fontColor: #11718d;
+
 * {
     -webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
     color: @fontColor;
@@ -36,18 +45,10 @@ body {
      text-transform:uppercase;
      width:100%;
  }
-
  /* Portrait layout (default) */
- .app {
-    // background:url(../img/logo.png) no-repeat center top; /* 170px x 200px */
-    // position:absolute;             /* position in the center of the screen */
-    // left:50%;
-    // top:50%;
-    // height:100%;                   /* text area height */
+.app {
     width:100%;                   /* text area width */
     text-align:center;
-    // padding:180px 0px 0px 0px;     /* image height is 200px (bottom 20px are overlapped with text) */
-    // margin:-115px 0px 0px -112px;  /* offset vertical: half of image height and text area height */
     font-family: 'Raleway';                   /* offset horizontal: half of text area width */
     margin-left: auto;
     margin-right: auto;                            
@@ -67,6 +68,7 @@ h1 {
     font-size:24px;
     font-weight:normal;
     margin:0px;
+    margin-bottom:20px;
     overflow:visible;
     padding:0px;
     text-align:center;
@@ -84,12 +86,6 @@ h1 {
     to { opacity: 1.0; }
 }
 
-
-@lightBlue:  #d6eff4;
-@darkBlue:   #61bbd5;
-@darkGreen:  #52a359;
-@lightGreen: #aae094;
-@darkRed: #e09494;
 #MainMenuScreen{
     color: rgb(39,145,167);
     // position: relative;
@@ -125,201 +121,6 @@ h1 {
         color: @lightBlue;
     }
 }
-#SetsMenuScreen, #CardsMenuScreen{
-    .Menubutton{
-        width:33%;
-        display: inline-block;
-    }
-}
-#SetsMenuScreen, #CardsMenuScreen, #CardEditScreen{
-    position:absolute;
-    width:100%;
-    top:20%;
-    .SetsTable,.CardsTable{
-        background-color: @lightBlue;
-        width:70%;
-        height:15em;
-        margin-left:auto;
-        margin-right:auto;
-        border-collapse: collapse;
-        //border-spacing: 0;
-        tbody{
-            overflow: auto;
-            display: inline-block;
-            width:100%;
-            height: 100%;
-            .setRow, .cardRow{    
-                cursor:pointer;
-                &:hover{
-                  color: @lightBlue;
-                  background-color: @darkBlue;
-                }
-               .label{
-                    width:100%;
-                }
-                .button{
-                    padding: 10px;
-                }
-                .button:hover{
-                    font-weight: bold;
-                }
-                .front{
-                    width:50%;
-                }
-                .back{
-                    width:50%;
-                }
-                .edit:hover{
-                    font-weight: bold;
-                }
-                .icon{
-                    width:10%;
-                }
-            }
-            .hardCard{
-                span{
-                    color: red;
-                }
-            }
-            .setRow {
-                &.deadline{
-                    border-left:5px solid red;
-                }
-            }  
-        }
-    }   
-}
-#CardsMenuScreen{
-    top: ~"-webkit-calc(40% - 131px)";
-    top: ~"calc(40% - 131px)";
-    #IconList{
-        display:block;
-        overflow:hidden;
-        height: 0px;
-        -webkit-transition : height 0.5s;
-        transition : height 0.5s;  
-    }
-    .SetIconWrapper{
-        width:5em;
-        margin-left: auto;
-        margin-right: auto;
-        cursor: pointer;
-    }
-    #SetName{
-        margin-bottom: 10px;
-        cursor: pointer;
-    }
-    .SetDeadline{
-        margin-bottom:5px;
-        input[type="date"] {
-            background: transparent;
-            border: none;
-            margin-left: 2em;
-            text-align: center;
-        }
-    }
-}
-#CardEditScreen{
-    top: 15%;
-    #CardEditForm{
-        margin-left: auto;
-        margin-right: auto; 
-        table{
-            margin-left: auto;
-            margin-right: auto;
-            width: 70%;
-            .CardInput{
-                height:10em;
-            }
-            textarea{
-                resize: none;
-                width:100%;
-                height:100%;
-                background-color: @lightBlue;
-                border: 1px solid @darkBlue;
-                border-radius: 3px;
-                text-align:center;
-            }
-            .clear{
-                background: #FAFAFA;
-                border-radius: 2em;
-                cursor: pointer;
-                /* padding: 1%; */
-                float: right;
-                height: 2em;
-                /* text-align: center; */
-                width: 2em;
-                line-height: 2em;
-            }
-        }
-
-        #ColorPicker{
-            // display: inline-block;
-            // width: 100%;
-            #CardcolorEdit{
-                width: 9em;
-                height: 2em;
-                margin-left: auto;
-                margin-right: auto;
-                line-height: 2.2em;
-                cursor: pointer;
-                color: #0e4555 ;
-                // border: 1px solid black;
-                border-radius: 0.5em;    
-            }
-            #ColorList{
-                display: block;
-                height:4em;
-                margin-top: 0.2em;
-                -webkit-transition : height 0.5s;
-                transition : height 0.5s;  
-                .color {
-                    display: inline-block;
-                    width: 4em;
-                    height: 100%;
-                    margin-left: 0.5em;
-                    border-radius: 10em;
-                }
-            }
-        }      
-    }
-}
-#TestsMenuScreen{
-    position: absolute;
-    top: 15%;
-    width: 100%; 
-    .testButton{
-        background: @lightBlue;
-        cursor: pointer;
-        border-radius: 1em;
-        height: 10em;
-        line-height: 10em;
-        width: 50%;
-        margin-left: auto;
-        margin-top: 1em;
-        margin-right: auto;
-    }
-    #TestSize{
-        .SizeButton{
-            cursor: pointer;
-            display: inline-block;
-            background: @lightBlue;
-            border-radius:1em;
-            height:4em;
-            width:5em;
-            line-height:4em;
-            span{
-                font-weight: bold;
-            }
-            &.selected{
-                background: @darkBlue;
-                span{
-                    color: @lightBlue;
-                }
-            }
-        }
-    }
-}
 #Dialog{
     position: absolute;
     box-shadow: rgb(133, 228, 255) 6px 8px;
@@ -350,136 +151,32 @@ h1 {
         right: 1%;
     }
 }
-.timer{
-    margin-left: 25%;
-    margin-top: 1%;
-    margin-right: 25%;
-    background: green;
-    border-radius: 1em;
-    height: 1em;
-}
-#QuizScreen{
-    text-transform: none;
-    .questionCounter{
-        font-size: 3em;
-        margin-top: 2%;
-        margin-bottom: 2%;
-    }
-    .quizQuestion{
-        background: @lightBlue;
-        padding: 20px;
-        margin-left: 25%;
-        margin-right: 25%;
-        border-radius: 5px;
-        height: 5em;
-    }
-    .quizAnswers{
-        margin-left:25%;
-        margin-right:25%;
-        // height:10em;
-        .quizAnswer{
-            cursor: pointer;
-            // width: 49%;
-            // display: inline-block;
-            background: @darkBlue;
-            width:100%;
-            height: 100%;
-            line-height: 6em;
-            margin: 10px;
-            margin-left: auto;
-            border-radius: 0.5em;
-            margin-right: auto;
-            span{
-                color: @lightBlue;
-            }
-        }
-    }
-}
-#YonScreen{
-    .questionCounter{
-            font-size: 3em;
-            margin-top: 2%;
-            margin-bottom: 2%;
-        }
-    .yonQuestion{
-        width: 50%;
-        margin-top: 2em;
-        margin-left: auto;
-        margin-right: auto;
-        height:15em;
-        .yonLeft{
-            display: block;
-            width:47%;
-            height:100%;
-            float: left;
-            background: #FAFAFA;
-            padding: 1%;
-            border-radius: 0.5em;
-            position: relative;
-            font-size:71%;
-            span{
-                display:block;
-                margin-top:2%;
-            }
-        }
-        .yonRight{
-            cursor:pointer;
-            display: block;
-            width:47%;
-            height:100%;
-            float: right;
-            background: #FAFAFA;
-            padding: 1%;
-            border-radius: 0.5em;
-            position: relative;
-            font-size:71%;
-            span{
-                display:block;
-                margin-top:2%;
-            }
-        }
-    }
-    .yonAnswers{
-        width: 50%;
-        margin-left: auto;
-        margin-right: auto;
-        margin-top: 2em;
-        height: 4em;
-        .button{
-            display:inline-block;
-            width:47%;
-            height: 100%;
-            padding:1%;
-            border-radius:1em;
-            cursor:pointer;
-            span{
-                line-height: 4em;
-            }
-        }
-        .same{
-            background:@lightGreen;
-            float: left;
-        }
-        .different{
-            background:@darkRed;
-            float: right;
-        }
-    }
-}
+
 #HumanScreen{
     position: absolute;
     top: 15%;
     width: 100%; 
     .humanBody{
-        width:50%;
+        width:100%;
         margin-left: auto;
         margin-right: auto;
         .bodyPart{
-           width: 60%;
-           cursor: pointer;
-           &:hover{
+            width: 50%;
+            cursor: pointer;
+            // vertical-align: middle;
+            padding-left: 15px;
+            &:hover{
                 background: @lightBlue;
-           }
+            }
+        }
+        .bodyPartText{
+                margin: 0px;
+                width: 50%;
+                height: 5em;
+                border-color: transparent;
+                resize: none;
+                background-color: #d6eff4;
+                text-align: center;
         }
     }
     

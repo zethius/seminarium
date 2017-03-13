@@ -37,16 +37,10 @@ define(function(require) {
 			this.card = {};
 			this.id(null);
 			this.color(null);
+			$(".noColor").removeClass("transparent");
             document.getElementById('CardEditScreen').style.display='none';
             document.getElementById('CardsMenuScreen').style.display='block';
             document.getElementById("ColorList").style.height = 0;
-		},
-
-		build: function(){
-			// var form = document.getElementById('CardEditForm');
-			// document.getElementById('CardfrontEdit').value = this.front();
-			// document.getElementById('CardbackEdit').value = this.back();
-			// document.getElementById('CardcolorEdit').style.background = this.card.color();
 		},
 
 		fillColorList: function(){
@@ -55,6 +49,10 @@ define(function(require) {
                     var color = document.createElement('div');
                     // color.innerText= "";
                     color.className = "color"
+                    if(el.color_value=="transparent"){
+                    	color.className+=" noColor";
+                    	// color.className+=" transparent";
+                    }
                     color.style.background = el.color_value;
                     color.id = 'color_'+el.id;     
                     colorList.appendChild(color);
@@ -70,9 +68,16 @@ define(function(require) {
         },
 		colorPicker: function(){
 			var colorList = document.getElementById("ColorList");
-            if(colorList.style.height=='0px'){          
-                colorList.style.height='4em';
+            if(colorList.style.height=='0px'){   
+            	var marginBottom = '0em';
+            	if(screen.width<400){
+            		marginBottom = '5em';
+            	}       
+            	colorList.style.height='4em';
+                colorList.style.marginBottom= marginBottom;
+                $(".noColor").addClass("transparent");
             }else{
+            	$(".noColor").removeClass("transparent");
                 colorList.style.height=0;
             }
             colorList = null;
