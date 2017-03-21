@@ -15,8 +15,6 @@ define(function(require) {
 			this.difficulty = options.difficulty();
 			this.color(options.color());
 			// this.color = options.color();
-
-            this.build();
 			this.show();
 		},
 		bindEvents: function(){

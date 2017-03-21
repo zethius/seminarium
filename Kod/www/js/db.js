@@ -34,6 +34,7 @@ define(function(require){
 					for(var i = 0; i < sets.rows.length; i++)
 					{
 						var set = sets.rows.item(i);
+						set.size = ko.observable(set.size);
 						set.name = ko.observable(set.name);
 						set.icon = ko.observable(window.App.db.icons[set.icon-1].icon_value());
 						set.cards = ko.observableArray();
@@ -45,7 +46,7 @@ define(function(require){
 		
 			//SET METHODS
 				getSets:function(fn){
-					this.selectQuery("SELECT s.id as set_id, s.name, s.difficulty, s.deadline, s.icon_id AS icon FROM sets s",[],fn);
+					this.selectQuery("SELECT COUNT(c.id) as size, s.id as set_id, s.name, s.difficulty, s.deadline, s.icon_id AS icon FROM sets s LEFT JOIN cards c ON s.id = c.set_id GROUP BY s.id",[],fn);
 				},
 
 				updateSetName: function(setName, setId){

@@ -1,19 +1,14 @@
 ﻿ 			ART OF MEMORY
 
 HARMONOGRAM:
-Do 17.12: implementacja testów
 Do 23.12: implementacja przypomnień, deadline'u daty (+kalendarz)
 Do 31.12: GSP + test do niego
-W wolnym czasie: ustandaryzowanie widoku między różnymi platformami
-
 
 Główny System Pamięciowy (GSP):
 	-skojarzenie cyfr z literami lub całych dat ze słowami
 	-użytkownik wpisuje datę/liczbę i ma możliwośc wygenerowania słowa (na podstawie skojarzeń cyfr z literami) lub wpisania własnego
 	-na podstawie tego tworzy się fiszka z jednej strony liczba z drugiej słowo (ZESTAW WBUDOWANY: System Pamięciowy)
 	-TEST: wyświetla się słowo należy podać co to za liczba
-	TODO: stworzyć bazę słów
-			optymalny algorytm wyszukujący dopasowania słowa
 
 Praca pisemna: 
 	- zarys działania CORDOVA
@@ -26,6 +21,12 @@ Praca pisemna:
 	-spacing effect: (przypomnienia testów)
 
 
+ZRODLA:
+http://stackoverflow.com/questions/24933430/img-src-svg-changing-the-fill-color 
+
+
+Trudnosci: knockout + svg databinding
+
 DODATKOWO (jeśli zostanie czasu): usprawnić zarządzanie pamięcią w aplikacji
 
 
@@ -36,3 +37,4 @@ zipalign.exe -v 4 android-release-unsigned.apk mnemo.apk
 
 
 adb shell logcat - logi w emulatorze android
+

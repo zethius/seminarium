@@ -4,3 +4,15 @@
 [1012/002750:ERROR:exception_snapshot_win.cc(87)] thread ID 8864 not found in process
 [1012/002750:WARNING:crash_report_exception_handler.cc(56)] ProcessSnapshotWin::Initialize failed
 [1012/002750:ERROR:scoped_process_suspend.cc(38)] NtResumeProcess: An attempt was made to access an exiting process.  (0xc000010a)
+[0315/230529.768:ERROR:crash_report_database_win.cc(563)] CreateDirectory C:\Program Files (x86)\Cansuck\reports: Access is denied. (0x5)
+[0315/230529.802:ERROR:registration_protocol_win.cc(84)] TransactNamedPipe: The pipe has been ended. (0x6D)
+[0315/230529.803:ERROR:crash_report_database_win.cc(563)] CreateDirectory C:\Program Files (x86)\Cansuck\reports: Access is denied. (0x5)
+[0315/231210.646:ERROR:crash_report_database_win.cc(563)] CreateDirectory C:\Program Files (x86)\Cansuck\reports: Access is denied. (0x5)
+[0315/231210.646:ERROR:registration_protocol_win.cc(84)] TransactNamedPipe: The pipe has been ended. (0x6D)
+[0315/231210.646:ERROR:crash_report_database_win.cc(563)] CreateDirectory C:\Program Files (x86)\Cansuck\reports: Access is denied. (0x5)
+[0317/173649.862:ERROR:crash_report_database_win.cc(563)] CreateDirectory C:\Program Files (x86)\Cansuck\reports: Access is denied. (0x5)
+[0317/173649.929:ERROR:registration_protocol_win.cc(84)] TransactNamedPipe: The pipe has been ended. (0x6D)
+[0317/173649.930:ERROR:crash_report_database_win.cc(563)] CreateDirectory C:\Program Files (x86)\Cansuck\reports: Access is denied. (0x5)
+[0320/193236.702:ERROR:crash_report_database_win.cc(563)] CreateDirectory C:\Program Files (x86)\Cansuck\: Access is denied. (0x5)
+[0320/193236.704:ERROR:registration_protocol_win.cc(84)] TransactNamedPipe: The pipe has been ended. (0x6D)
+[0320/193236.705:ERROR:crash_report_database_win.cc(563)] CreateDirectory C:\Program Files (x86)\Cansuck\: Access is denied. (0x5)

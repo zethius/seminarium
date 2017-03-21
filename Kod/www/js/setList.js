@@ -21,6 +21,7 @@ define(function(require) {
 				this.sets.push(
 					{ set_id: window.App.db.lastInserted,
 					 cards: ko.observableArray([]),
+					 size: ko.observable(0),
 					 name:ko.observable('Nowy zestaw'), 
 					 icon: ko.observable(window.App.icons[0].icon_value()),
 					 deadline: ko.observable('')
@@ -30,16 +31,20 @@ define(function(require) {
 
         removeSet:function(set){
         	event.stopPropagation();
-        	navigator.notification.confirm(
-					'Czy na pewno chcesz usunąć zestaw:"'+set.name() +'"?' , 
-										window.App.setList.onRemoveConfirm.bind(this),   //  callback to invoke with index of button pressed
-													    'Usuwanie zestawu',    // title
-													    ['Usuń','Anuluj']     // buttonLabels
-													    );
+        	if(set.size()>0){
+	        	navigator.notification.confirm(
+						'Zestaw "'+set.name() +'" zawiera fiszki, czy na pewno chcesz go usunąć?' , 
+											window.App.setList.onRemoveConfirm.bind(this),   //  callback to invoke with index of button pressed
+														    'Usuwanie zestawu',    // title
+														    ['Usuń','Anuluj']     // buttonLabels
+														    );
+        	}else{
+        		window.App.db.deleteSet(this.set_id);
+	    		window.App.setList.sets.remove( function (set) { return set.set_id == this.set_id; }.bind(this) );
+        	}
         },
 
         gotoTestMenu: function(el){
-        	console.log(el);
         	if(!el.cards().length){
         		window.App.cardList.fillCards(el, function(){window.App.testMenu.initialize(el)});
         	}else{
@@ -52,7 +57,6 @@ define(function(require) {
 
         onRemoveConfirm:function(buttonIndex){
 	    	if(buttonIndex==1){
-	    		console.log(this);
 	    		window.App.db.deleteSet(this.set_id);
 	    		window.App.setList.sets.remove( function (set) { return set.set_id == this.set_id; }.bind(this) );
 	    	}

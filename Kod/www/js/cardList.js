@@ -2,9 +2,9 @@ define(function(require) {
     var cardList={
         setIcon: ko.observable(null),
         setName: ko.observable(null),
+        setSize: ko.observable(null),
         setDeadline: ko.observable("bez terminu"),
         set: ko.observable(null),
-        cardCount: ko.observable(0),
         initialize: function(set) {
             console.log("CARDS INITIALIZE");
             event.stopPropagation();
@@ -15,6 +15,7 @@ define(function(require) {
                 }.bind(this));
             }
             this.setName(set.name());
+            this.setSize(set.size());
             this.setIcon(set.icon());
             this.prepareDeadline(set.deadline);
             this.show();
@@ -35,7 +36,7 @@ define(function(require) {
                         card.difficulty = ko.observable(  diff );
                         set.cards.push(card);
                     }
-                window.App.cardList.cardCount(set.cards().length);
+                window.App.cardList.setSize(set.cards().length);
                 fn(); //uzyte do wyswietlenia listy kart lub menu testow
             }.bind(this)); 
         },
@@ -88,18 +89,23 @@ define(function(require) {
                 this.set().cards.push(card);
                 var objDiv = document.getElementById("CardsTable").children[0];
                 objDiv.scrollTop = objDiv.scrollHeight;
-                this.cardCount(this.set().cards().length);
+                this.setSize(this.set().cards().length);
             }.bind(this),100);
         },
 
         removeCard: function(card, event){
             event.stopPropagation();
-            navigator.notification.confirm(
-                    'Czy na pewno chcesz usunąć tą fiszkę:"'+card.front() +'"?' , 
-                                        window.App.cardList.onRemoveConfirm.bind(this),   //  callback to invoke with index of button pressed
-                                                        'Usuwanie fiszki',    // title
-                                                        ['Usuń','Anuluj']     // buttonLabels
-                                                        );
+            window.App.db.deleteCard(this.card_id);
+            window.App.cardList.set().cards.remove( function (card) 
+                { return card.card_id == this.card_id;}.bind(this) );
+            window.App.cardList.setSize(window.App.cardList.set().cards().length);
+            
+            // navigator.notification.confirm(
+            //         'Czy na pewno chcesz usunąć tą fiszkę:"'+card.front() +'"?' , 
+            //                             window.App.cardList.onRemoveConfirm.bind(this),   //  callback to invoke with index of button pressed
+            //                                             'Usuwanie fiszki',    // title
+            //                                             ['Usuń','Anuluj']     // buttonLabels
+            //                                             );
         },
        
         goToCardEdit: function(card){
@@ -107,13 +113,12 @@ define(function(require) {
         },
 
         onRemoveConfirm: function(buttonIndex){
-            if(buttonIndex==1){
-                window.App.db.deleteCard(this.card_id);
-                window.App.cardList.set().cards.remove( function (card) 
-                    { return card.card_id == this.card_id;}.bind(this) );
-                window.App.cardList.cardCount(window.App.cardList.set().cards().length);
-                // window.App.cardList.cards(window.App.cardList.set().cards());f
-            }        
+            // if(buttonIndex==1){
+            //     window.App.db.deleteCard(this.card_id);
+            //     window.App.cardList.set().cards.remove( function (card) 
+            //         { return card.card_id == this.card_id;}.bind(this) );
+            //     window.App.cardList.cardCount(window.App.cardList.set().cards().length);
+            // }        
         },
 
         showIconList:function(){
