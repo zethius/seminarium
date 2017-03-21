@@ -188,7 +188,9 @@
                         <h1 id="HumanName" data-bind=" text: human().name">__CZLOWIEK__</h1>
                         <div class="humanBody" data-bind="foreach: humanBody">
                             <!-- <img class="bodyPart" height="65" width="320px" data-bind="attr : {src: image, id: 'part'+id}, click: $parent.bodypartClicked"  /> -->
-                            <object  class="bodyPart" width="320" height="65" type="image/svg+xml" data-bind="attr : {data: image, id: 'part'+id}, click: $parent.bodypartClicked"></object>
+                            <div  class="bodyPart" data-bind="click: $parent.bodypartClicked, attr:{id: 'part'+id}">
+                            <object  class="bodyPartSVG" width="320" height="65" type="image/svg+xml" data-bind="attr : {data: image}">    </object>
+                            </div>
                             <textarea class='bodyPartText' style='display:none' data-bind="value: text, attr:{id: 'partText'+id}, event: { blur: $parent.bodypartSave }"></textarea>      
                         </div>
                     </div>
