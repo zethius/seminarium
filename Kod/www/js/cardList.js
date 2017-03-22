@@ -18,6 +18,7 @@ define(function(require) {
             this.setSize(set.size());
             this.setIcon(set.icon());
             this.prepareDeadline(set.deadline);
+            this.bindEvents();
             this.show();
         },
 
@@ -52,12 +53,13 @@ define(function(require) {
         },  
 
         bindEvents: function(){
-            document.getElementById('SetIcon').addEventListener('click',this.showIconList.bind(this),false);  
-            document.getElementById('SetName').addEventListener('click',this.changeName.bind(this),false);  
-            document.getElementById('SetName').addEventListener('blur',this.changeNameSave.bind(this),false);  
-            document.getElementById('SetDeadlineSpan').addEventListener('click',this.changeDate.bind(this),false); 
-            document.getElementById('SetDeadlineInput').addEventListener('blur',this.changeDateSave.bind(this),false); 
-            document.getElementById('CardsMenuBack').addEventListener('click', this.goBack.bind(this),false);     
+            $('#SetIcon').unbind('click').bind('click', this.showIconList.bind(this)); 
+            $('#SetName').unbind('click').bind('click', this.changeName.bind(this)); 
+            $('#SetNameEdit').unbind('click').bind('click', this.changeName.bind(this)); 
+            $('#SetName').unbind('blur').bind('blur',this.changeNameSave.bind(this)); 
+            $('#SetDeadlineSpan').unbind('click').bind('click',this.changeDate.bind(this)); 
+            $('#SetDeadlineInput').unbind('blur').bind('blur', this.changeDateSave.bind(this)); 
+            $('#CardsMenuBack').unbind('click').bind('click', this.goBack.bind(this)); 
         },
 
         fillIconList: function(){
@@ -145,6 +147,7 @@ define(function(require) {
         
         changeName: function(){
             document.getElementById('SetName').contentEditable=true;
+            document.getElementById('SetName').focus();
         },
         changeNameSave: function(){
             var setNameDOM = document.getElementById('SetName');

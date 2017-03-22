@@ -10,8 +10,8 @@ define(function(require) {
 			this.show();
 		},
 		bindEvents: function(){
-			document.getElementById('SetsMenuBack').addEventListener('click', this.goBack);
-			document.getElementById('AddNewSet').addEventListener('click', this.newSet.bind(this));
+			$('#SetsMenuBack').unbind('click').bind('click', this.goBack); 
+			$('#AddNewSet').unbind('click').bind('click', this.newSet.bind(this)); 
 		},
 
 		newSet: function(){
