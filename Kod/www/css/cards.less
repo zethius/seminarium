@@ -38,17 +38,31 @@
                     width: 5%;
                 }
                 .button{
-                    width:1%;
                     padding: 10px;
+                    cursor: pointer;
+                    width: 10%;
+                    max-width: 1em;
                 }
                 .button:hover{
                     font-weight: bold;
                 }
                 .front{
-                    width:50%;
+                    width:40%;
+                    max-width: 10em;
+                    /* overflow: overlay; */
+                    overflow: hidden;
+                    text-overflow: ellipsis;
                 }
                 .back{
-                    width:50%;
+                    width:40%;
+                    max-width: 10em;
+                    /* overflow: overlay; */
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+                .difficulty{
+                    width: 10%;
+                    max-width: 1em;
                 }
                 .edit{
                     width: 7%;
@@ -96,12 +110,12 @@
             height: 0; 
             content:"";
             &.down{
-                border-top: 10px solid @fontColor;
+                border-top: 10px solid @paleBlue;
                 border-left: 8px solid transparent;
                 border-right: 8px solid transparent; 
             }
             &.up{
-                border-bottom: 10px solid @fontColor;
+                border-bottom: 10px solid @paleBlue;
                 border-left: 8px solid transparent;
                 border-right: 8px solid transparent;
             }
@@ -134,18 +148,19 @@
             margin-right: auto;
             width: 70%;
             .label{
+                position: relative;
                 .labelText{
                     margin-left:2em;
                     display: inline-block;
                 }
                 .clear{
-                    background: #FAFAFA;
-                    border-radius: 2em;
+                    border-radius: 3em;
                     cursor: pointer;
-                    /* padding: 1%; */
-                    float: right;
+                    float: left;
                     height: 2em;
-                    /* text-align: center; */
+                    top: 2em;
+                    right: 1.5em;
+                    position: absolute;
                     width: 2em;
                     line-height: 2em;
                 }
@@ -162,6 +177,10 @@
                 border: 1px solid @darkBlue;
                 border-radius: 3px;
                 text-align:center;
+                box-sizing:border-box;
+                padding: 2em;
+                padding-right: 2.5em;
+                padding-left: 2.5em;
             }
            
         }

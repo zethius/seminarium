@@ -26,7 +26,8 @@ define(function(require){
 		],
 		lastInserted: 0,
 		iconsToChange: 12,
-		database: window.openDatabase("mnemo", "2.0", "Mnemo DB", 1000000), //WEBSQL
+		database: null,
+		// window.openDatabase("mnemo", "2.0", "Mnemo DB", 1000000), //WEBSQL
 		// db: window.sqlitePlugin.openDatabase({name: "mnemo.db", location: 'default'}),
 		//FILL METHODS
 			getFullSets:function(setsArray){
@@ -207,16 +208,21 @@ define(function(require){
 			},
 
 			prepareDb: function(purge){
-				// this.database = window.openDatabase("mnemo", "2.0", "Mnemo DB", 1000000);
-				this.prepareIcons();
-				this.database.transaction(
-					function(tx) {
-	                    //create tables
-	                    this.prepareTables(tx, purge);
+				if(window.openDatabase){
+					this.database = window.openDatabase("mnemo", "2.0", "Mnemo DB", 1000000);
+					this.prepareIcons();
+					this.database.transaction(
+						function(tx) {
+		                    //create tables
+		                    this.prepareTables(tx, purge);
 
-	                }.bind(db), function(err){
-	                	console.log("Error: ", err);
-	                });  
+		                }.bind(db), function(err){
+		                	console.log("Error: ", err);
+		                });  
+				}else{
+					document.getElementById("ApplicationStatus").className ="fa fa-exclamation-triangle fa-4x";
+					window.App.toast("Niewspierana przeglądarka", 1000);
+				}
 			},
 
 			prepareTables:function(tx, purge){

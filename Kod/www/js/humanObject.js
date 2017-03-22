@@ -36,10 +36,14 @@ define(function(require) {
 		},
 
 		setColor: function(bodypart, index, svg){
+			var colorFilled = '#11718d';
+			var colorEmpty = '#d6eff4'
+			// if(bodypart.id)
+
 			if(bodypart.text().length){
-				svg.contentDocument.styleSheets[0].cssRules[0].style.fill='#11718d';
+				svg.contentDocument.styleSheets[0].cssRules[0].style.fill=colorFilled;
 			}else{
-				svg.contentDocument.styleSheets[0].cssRules[0].style.fill='#d6eff4';
+				svg.contentDocument.styleSheets[0].cssRules[0].style.fill=colorEmpty;
 			}	
 		},
 

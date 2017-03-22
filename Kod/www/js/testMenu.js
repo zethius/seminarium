@@ -8,7 +8,7 @@ define(function(require) {
 	            window.App.testMenu.show();     
             }
             else{
-            	window.App.toast("Testy wymagają minimum 20 kart w zestawie!", 1000);
+            	window.App.toast("Testy wymagają min. 20 kart w zestawie");
             }
 		},
 

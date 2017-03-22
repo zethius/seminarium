@@ -29,11 +29,11 @@
                 
                 <div id="MainMenuScreen"  data-bind="if: appReady()">
                     <h1>Art of Memory</h1>
-                    <i class="fa fa-cog  fa-spin fa-3x fa-fw"></i>
+                    <i id='ApplicationStatus' class="fa fa-cog  fa-spin fa-3x fa-fw"></i>
                     <!-- <div class="help">?</div> -->
                     <div class="Menubutton lightBlue" id="MainMenuSetsButton" data-bind="click: setList.initialize.bind(setList)">Fiszki</div>
-                    <div class="Menubutton darkBlue" id="MainMenuGSPButton">GSP</div>
                     <div class="Menubutton darkBlue" id="MainMenuBodyButton" data-bind="click: bodyList.initialize.bind(bodyList)">Ciało</div>
+                    <div class="Menubutton blackBlue" id="MainMenuGSPButton">GSP</div>
                 </div>
 
                 <div id="SetsMenuScreen" style="display:none">
@@ -88,7 +88,7 @@
                             <tr>
                                 <td class="label">
                                     <div class="labelText">Front</div>
-                                    <div class="clear" data-bind="click: function(){ front(''); card.front('');}">X</div>
+                                    <div class="clear" data-bind="click: function(){ front(''); card.front('');}"><i class="fa fa-times-circle" aria-hidden="true"></i></div>
                                 </td>
                                 
                             </tr> 
@@ -100,8 +100,8 @@
                             </tr> 
                             <tr>
                                 <td class="label">
-                                    <div class="labelText">Tył</div> 
-                                    <div class="clear" data-bind="click: function(){ back(''); card.back('');}">X</div>
+                                    <div class="labelText">Tył</div>
+                                    <div class="clear" data-bind="click: function(){ back(''); card.back('');}"><i class="fa fa-times-circle" aria-hidden="true"></i></div>
                                 </td>                       
                                 
                             </tr> 

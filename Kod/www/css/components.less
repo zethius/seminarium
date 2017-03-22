@@ -1,0 +1,142 @@
+@font-face {
+    font-family: 'Raleway';
+    src: url('/../Raleway-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+* {
+    -webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
+    color: @fontColor;
+}
+body {
+    -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
+    -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
+    -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
+    background-color:#AFDDEA;
+    background-image:linear-gradient(top, #54B5D1 0%, #AFDDEA 51%);
+    background-image:-webkit-linear-gradient(top, #54B5D1 0%, #AFDDEA 51%);
+    background-image:-ms-linear-gradient(top, #54B5D1 0%, #AFDDEA 51%);
+    background-image:-webkit-gradient(
+        linear,
+        left top,
+        left bottom,
+        color-stop(0, #54B5D1),
+        color-stop(0.51, #AFDDEA)
+        );
+     background-attachment:fixed;
+     // font-family:'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
+     font-size:12px;
+     height:100%;
+     margin:0px;
+     padding:0px;
+     text-transform:uppercase;
+     width:100%;
+ }
+ /* Portrait layout (default) */
+.app {
+    width:100%;                   /* text area width */
+    text-align:center;
+    font-family: 'Raleway';                   /* offset horizontal: half of text area width */
+    margin-left: auto;
+    margin-right: auto;                            
+}
+
+/* Landscape layout (with min-width) */
+@media screen and (min-aspect-ratio: 1/1) and (min-width:400px) {
+    .app {
+        background-position:left center;
+        // padding:75px 0px 75px 170px;  /* padding-top + padding-bottom + text area = image height */
+        // margin:-90px 0px 0px -198px;  /* offset vertical: half of image height */
+        /* offset horizontal: half of image width and text area width */
+    }
+}
+
+//AWESOMEFONT ICONS
+.fa{ 
+    cursor: pointer; 
+    color: @paleBlue;
+}
+.fa-plus-circle{
+    color: @lightGreen;
+}
+
+//SCROLL
+/* Turn on custom 8px wide scrollbar */
+::-webkit-scrollbar {
+  width: 10px; /* 1px wider than Lion. */
+  /* This is more usable for users trying to click it. */
+  background-color: rgba(0,0,0,0);
+  -webkit-border-radius: 100px;
+}
+/* hover effect for both scrollbar area, and scrollbar 'thumb' */
+::-webkit-scrollbar:hover {
+  background-color: rgba(0, 0, 0, 0.09);
+}
+ 
+/* The scrollbar 'thumb' ...that marque oval shape in a scrollbar */
+::-webkit-scrollbar-thumb:vertical {
+  /* This is the EXACT color of Mac OS scrollbars. 
+     Yes, I pulled out digital color meter */
+  background: rgba(0,0,0,0.5);
+  -webkit-border-radius: 100px;
+  background-clip: padding-box;
+  border: 2px solid rgba(0, 0, 0, 0);
+  min-height: 10px; /*Prevent it from getting too small */
+}
+::-webkit-scrollbar-thumb:vertical:active {
+  background: rgba(0,0,0,0.61); /* Some darker color when you click it */
+  -webkit-border-radius: 100px;
+}
+
+
+
+//TOAST
+#snackbar {
+    visibility: hidden; 
+    min-width: 240px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 4px;
+    padding: 6px;
+    position: fixed;
+    z-index: 1;
+    left: 30%;
+    right: 30%;
+    bottom: 50px;
+    font-size: 13px;
+}
+#snackbar.show {
+    visibility: visible;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 1.5s;
+    animation: fadein 0.5s, fadeout 0.5s 1.5s;
+}
+@-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;} 
+    to {bottom: 50px; opacity: 1;}
+}
+@keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 50px; opacity: 1;}
+}
+@-webkit-keyframes fadeout {
+    from {bottom: 50px; opacity: 1;} 
+    to {bottom: 0; opacity: 0;}
+}
+@keyframes fadeout {
+    from {bottom: 50px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+}
+
+
+.help{
+                background: #FAFAFA;
+                border-radius: 2em;
+                cursor: pointer;
+                /* padding: 1%; */
+                float: right;
+                height: 2em;
+                /* text-align: center; */
+                width: 2em;
+                line-height: 2em;
+            }
