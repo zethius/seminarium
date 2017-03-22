@@ -47,10 +47,15 @@ define(function(require) {
             }
         },
 
+        toast: function( text ){
+            var x = document.getElementById("snackbar")
+            x.innerText = text;
+            x.className = "show";
+            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 2000);
+        },
+
         bindAllEvents: function() {
             document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
-            window.App.cardList.bindEvents();
-            window.App.cardObject.bindEvents();
             window.App.testMenu.bindEvents(); 
         },
 

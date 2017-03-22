@@ -21,14 +21,13 @@ Praca pisemna:
 	-spacing effect: (przypomnienia testów)
 
 
-ZRODLA:
-http://stackoverflow.com/questions/24933430/img-src-svg-changing-the-fill-color 
 
+TODO
+-przycisk ? help
+-trudnosci wyswietlane w zestawie przeliczaja sie po odswiezeniu strony 
+-widok na koniec testu
 
 Trudnosci: knockout + svg databinding
-
-DODATKOWO (jeśli zostanie czasu): usprawnić zarządzanie pamięcią w aplikacji
-
 
 
 "C:\Program Files\Java\jdk1.8.0_77\bin\jarsigner.exe" -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore my-release-key.keystore android-release-unsigned.apk nihilvana

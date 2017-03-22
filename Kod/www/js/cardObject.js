@@ -15,13 +15,14 @@ define(function(require) {
 			this.difficulty = options.difficulty();
 			this.color(options.color());
 			// this.color = options.color();
+			this.bindEvents();
 			this.show();
 		},
 		bindEvents: function(){
-			document.getElementById('CardEditBack').addEventListener('click', this.goBack.bind(this));
-			document.getElementById('CardfrontEdit').addEventListener('blur', this.frontEditor.bind(this));
-            document.getElementById('CardbackEdit').addEventListener('blur', this.backEditor.bind(this));
-            document.getElementById('CardcolorEdit').addEventListener('click',this.colorPicker.bind(this));
+            $('#CardEditBack').unbind('click').bind('click', this.goBack.bind(this)); 
+            $('#CardfrontEdit').unbind('blur').bind('blur', this.frontEditor.bind(this)); 
+            $('#CardbackEdit').unbind('blur').bind('blur', this.backEditor.bind(this)); 
+			$('#CardcolorEdit').unbind('click').bind('click',this.colorPicker.bind(this)); 
 		},
 
 		show: function(){

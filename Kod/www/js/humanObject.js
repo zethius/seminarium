@@ -58,13 +58,15 @@ define(function(require) {
 		},
 
 		bindEvents: function(){
-			document.getElementById('HumanBodyBack').addEventListener('click',this.goBack.bind(this));
-			document.getElementById('HumanName').addEventListener('click',this.changeName.bind(this),false);  
-			document.getElementById('HumanName').addEventListener('blur',this.changeNameSave.bind(this),false);  
+			$('#HumanBodyBack').unbind('click').bind('click', this.goBack.bind(this)); 
+			$('#HumanName').unbind('click').bind('click', this.changeName.bind(this)); 
+			$('#HumanName').unbind('blur').bind('blur', this.changeNameSave.bind(this)); 
+			$('#HumanNameEdit').unbind('click').bind('click', this.changeName.bind(this)); 
 		},
 
 		changeName: function(){
             document.getElementById('HumanName').contentEditable=true;
+            document.getElementById('HumanName').focus();
         },
         changeNameSave: function(){
             var humanNameDOM = document.getElementById('HumanName');
