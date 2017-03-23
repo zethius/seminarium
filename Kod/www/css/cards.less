@@ -35,7 +35,7 @@
                     width: 70%;
                 }
                 .size{
-                    width: 5%;
+                    width: 10%;
                 }
                 .button{
                     padding: 10px;
@@ -48,24 +48,29 @@
                 }
                 .front{
                     width:40%;
-                    max-width: 10em;
+
                     /* overflow: overlay; */
                     overflow: hidden;
                     text-overflow: ellipsis;
+                    @media (max-width:480px){
+                        max-width: 10em;
+                    }
                 }
                 .back{
                     width:40%;
-                    max-width: 10em;
+                    @media (max-width:480px){
+                        max-width: 10em;
+                    }
                     /* overflow: overlay; */
                     overflow: hidden;
                     text-overflow: ellipsis;
                 }
                 .difficulty{
-                    width: 10%;
+                    width: 20%;
                     max-width: 1em;
                 }
                 .edit{
-                    width: 7%;
+                    width: 4%;
                 }
                 .edit:hover{
                     font-weight: bold;
