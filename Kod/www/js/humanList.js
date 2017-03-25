@@ -15,11 +15,9 @@ define(function(require) {
 		},
 
 		newBody: function(){
-			window.App.db.saveBody("Adam");
-
-			setTimeout(function(){
+			window.App.db.saveBody("Adam",function(insertId){
 				this.bodies.push(
-					{ id: window.App.db.lastInserted,
+					{ id: insertId,
 					 name: ko.observable('Adam'),
 					 bodyparts: [
 					 				{id:0, text:  ko.observable('')},
@@ -30,7 +28,7 @@ define(function(require) {
 									{id:5, text:  ko.observable('')}
 								]
 					});
-			}.bind(this),100);
+			}.bind(this));
 		},
 
         removeBody:function(body){

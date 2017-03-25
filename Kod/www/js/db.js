@@ -24,7 +24,6 @@ define(function(require){
 				{'id':6,'color_value':'#94c81a'}, // green 55ce53
 				{'id':7,'color_value': 'transparent'}
 		],
-		lastInserted: 0,
 		iconsToChange: 12,
 		database: null,
 		// window.openDatabase("mnemo", "2.0", "Mnemo DB", 1000000), //WEBSQL
@@ -65,12 +64,11 @@ define(function(require){
 					this.execQuery("UPDATE sets SET name=(?), icon_id=(?) WHERE id = (?)",[setName,setIcon,setId]);
 				},
 
-				saveSet:function(name, icon){
+				saveSet:function(name, icon, fn){
 					this.database.transaction(function(tx){
-						tx.executeSql("INSERT INTO sets(name, difficulty, icon_id) VALUES (?,?,?)",[name,0.5,icon],
+						tx.executeSql("INSERT INTO sets(name, difficulty, icon_id) VALUES (?,?,?)",[name,0.5,icon], 
 							function(tx,res){
-								window.App.db.lastInserted = res.insertId;
-								console.log(res.insertId);
+								fn( res.insertId);
 							}
 						);
 					},function(err){
@@ -100,14 +98,14 @@ define(function(require){
 				updateCardColor: function(colorId, cardId){
 					this.execQuery("UPDATE cards SET color_id=(?) WHERE id = (?)",[colorId,cardId]);
 				},
-				saveCard:function(front,back,color,set){
+				saveCard:function(front,back,color,set, fn){
 					//card difficulty = (card.error / (card.success + card.error)) * 100%
 					this.database.transaction(function(tx){  
-						tx.executeSql("INSERT INTO cards(front,back,color_id,set_id) VALUES (?,?,?,?)",[front,back,color,set],
+						tx.executeSql("INSERT INTO cards(front,back,color_id,set_id) VALUES (?,?,?,?)",[front,back,color,set], 
 							function(tx,res){
-								window.App.db.lastInserted = res.insertId;
-								console.log(res.insertId);
-							});
+								fn(res.insertId);
+							}
+					);
 					},function(err){
 						console.log(err.message);
 					});
@@ -152,12 +150,11 @@ define(function(require){
 				deleteBody:function(bodyid){
 					this.execQuery("DELETE FROM bodies WHERE id=(?)",[bodyid]);
 				},
-				saveBody:function(name){
+				saveBody:function(name, fn){
 					this.database.transaction(function(tx){
 						tx.executeSql("INSERT INTO bodies(name) VALUES (?)",[name],
 							function(tx,res){
-								window.App.db.lastInserted = res.insertId;
-								console.log(res.insertId);
+								fn(res.insertId);
 							}
 						);
 					},function(err){

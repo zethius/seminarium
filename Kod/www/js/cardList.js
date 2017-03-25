@@ -34,7 +34,7 @@ define(function(require) {
                         if(card.success > 0 ||  card.error > 0){
                             diff = (card.error / (card.success+card.error)).toFixed(2);
                         }
-                        card.difficulty = ko.observable(  diff );
+                        card.difficulty = ko.observable(  diff*100 );
                         set.cards.push(card);
                     }
                 window.App.cardList.setSize(set.cards().length);
@@ -55,8 +55,11 @@ define(function(require) {
         bindEvents: function(){
             $('#SetIcon').unbind('click').bind('click', this.showIconList.bind(this)); 
             $('#SetName').unbind('click').bind('click', this.changeName.bind(this)); 
-            $('#SetNameEdit').unbind('click').bind('click', this.changeName.bind(this)); 
             $('#SetName').unbind('blur').bind('blur',this.changeNameSave.bind(this)); 
+            $("#SetName").keypress(function(e){ if (e.which === 13) {
+                                       window.App.cardList.changeNameSave.bind(cardList)();
+                                    } });
+            $('#SetNameEdit').unbind('click').bind('click', this.changeName.bind(this)); 
             $('#SetDeadlineSpan').unbind('click').bind('click',this.changeDate.bind(this)); 
             $('#SetDeadlineInput').unbind('blur').bind('blur', this.changeDateSave.bind(this)); 
             $('#CardsMenuBack').unbind('click').bind('click', this.goBack.bind(this)); 
@@ -78,21 +81,21 @@ define(function(require) {
         },
 
         newCard: function(){
-            window.App.db.saveCard("New Card Front","New Card Back",2, this.set().set_id);
-            var card =  {  
-                            card_id: window.App.db.lastInserted,
+            window.App.db.saveCard("New Card Front","New Card Back",7, this.set().set_id,
+                function(insertId){
+                    var card =  {  
+                            card_id: insertId,
                             set_id: this.set().set_id,
                             front: ko.observable("New Card Front"),
                             back: ko.observable('New Card Back'), 
-                            difficulty: ko.observable(0.5),
+                            difficulty: ko.observable(50),
                             color: ko.observable(window.App.colors[6])
                         };
-            setTimeout(function(){  
-                this.set().cards.push(card);
-                var objDiv = document.getElementById("CardsTable").children[0];
-                objDiv.scrollTop = objDiv.scrollHeight;
-                this.setSize(this.set().cards().length);
-            }.bind(this),100);
+                    this.set().cards.push(card);
+                    var objDiv = document.getElementById("CardsTable").children[0];
+                    objDiv.scrollTop = objDiv.scrollHeight;
+                    this.setSize(this.set().cards().length);
+                }.bind(this));
         },
 
         removeCard: function(card, event){
@@ -152,6 +155,7 @@ define(function(require) {
         changeNameSave: function(){
             var setNameDOM = document.getElementById('SetName');
             setNameDOM.contentEditable=false;
+            setNameDOM.innerText = setNameDOM.innerText.replace(/(\r\n|\n|\r)/gm,"");
             this.set().name(setNameDOM.innerText);
             window.App.db.updateSetName(setNameDOM.innerText, this.set().set_id);
         },

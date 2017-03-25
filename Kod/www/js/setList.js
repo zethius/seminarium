@@ -15,18 +15,16 @@ define(function(require) {
 		},
 
 		newSet: function(){
-			window.App.db.saveSet("Nowy zestaw",1);
-			
-			setTimeout(function(){
+			window.App.db.saveSet("Nowy zestaw",1, function(insertId){
 				this.sets.push(
-					{ set_id: window.App.db.lastInserted,
+					{ set_id: insertId,
 					 cards: ko.observableArray([]),
 					 size: ko.observable(0),
 					 name:ko.observable('Nowy zestaw'), 
 					 icon: ko.observable(window.App.icons[0].icon_value()),
 					 deadline: ko.observable('')
 					});
-			}.bind(this),100);
+			}.bind(this));
 		},
 
         removeSet:function(set){

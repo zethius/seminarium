@@ -70,10 +70,10 @@
                     <table id="CardsTable" class="CardsTable" data-bind="if: set()">
                           <tbody data-bind="foreach: set().cards">
                                 <tr class="cardRow"
-                                data-bind="click: $parent.goToCardEdit, attr: { 'id': 'TESTCARD'}, css:{ 'hardCard': difficulty()>0.8}, style:{ borderColor: color}">
+                                data-bind="click: $parent.goToCardEdit, attr: { 'id': 'TESTCARD'}, css:{ 'hardCard': difficulty()>80}, style:{ borderColor: color}">
                                     <td class="front"><span data-bind="text: front"></span></td>
                                     <td class="back"><span data-bind="text: back"></span></td>
-                                    <td class="difficulty"><span data-bind="text: difficulty"></span></td>
+                                    <td class="difficulty"><span data-bind="text: difficulty()+'%' "></span></td>
                                     <td class="button" data-bind="click: $parent.removeCard"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></td>
                                 </tr>
                             </tbody>
