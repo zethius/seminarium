@@ -25,6 +25,11 @@ define(function(require) {
 		    document.getElementById('TestsMenuBack').addEventListener('click', this.goBack, false);  
 		    document.getElementById('YesorNot').addEventListener('click', function(){ window.App.testMenu.prepareYoNTest();}, false);
 		    document.getElementById('Quiz').addEventListener('click', function(){ window.App.testMenu.prepareQuizTest();}, false);
+		    document.getElementById('helpTests').addEventListener('click', 
+                function(){
+                    event.stopPropagation();
+                    window.App.dialog("TESTS");
+            }.bind(this));
 		}, 
 
 		setSize: function(el){

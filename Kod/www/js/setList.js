@@ -12,6 +12,11 @@ define(function(require) {
 		bindEvents: function(){
 			$('#SetsMenuBack').unbind('click').bind('click', this.goBack); 
 			$('#AddNewSet').unbind('click').bind('click', this.newSet.bind(this)); 
+			document.getElementById('helpSets').addEventListener('click', 
+                function(){
+                    event.stopPropagation();
+               		window.App.dialog("SETS");
+            }.bind(this));
 		},
 
 		newSet: function(){

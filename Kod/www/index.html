@@ -2,10 +2,10 @@
 <html>
 <head>
 
+            <meta http-equiv="content-type" content="text/html; charset=UTF-8">
             <meta name="format-detection" content="telephone=no">
             <meta name="msapplication-tap-highlight" content="no">
             <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
-
             <link rel="stylesheet/less" type="text/css" href="css/index.less">
             <link rel="stylesheet/less" href="css/fontawesome/less/font-awesome.less">
 
@@ -19,18 +19,16 @@
             
                 <div id="snackbar">Some text some message..</div>
 
-                <div style="width:100%; height:100%; background:#FAFAFA">
-                    <div id="Dialog">
-                        <span id="DialogContent">CZY NA PEWNO SIUBADUBA?</span>
-                        <button id="DialogButtonLeft" class="Menubutton lightBlue">Anuluj</button>
-                        <button id="DialogButtonRight" class="Menubutton darkBlue">Potwierdź</button>
+                <div id="Dialog" class='closed'>
+                    <div id="DialogContent">
+                        <p>__DIALOG_CONTENT__</p>
                     </div>
                 </div>
-                
+
                 <div id="MainMenuScreen"  data-bind="if: appReady()">
                     <h1>Art of Memory</h1>
                     <i id='ApplicationStatus' class="fa fa-cog  fa-spin fa-3x fa-fw"></i>
-                    <!-- <div class="help">?</div> -->
+                    <div id='helpIntro' class="help"><i class="fa fa-question" aria-hidden="true"></i></div>
                     <div class="Menubutton lightBlue" id="MainMenuSetsButton" data-bind="click: setList.initialize.bind(setList)">Fiszki</div>
                     <div class="Menubutton darkBlue" id="MainMenuBodyButton" data-bind="click: bodyList.initialize.bind(bodyList)">Ciało</div>
                     <div class="Menubutton blackBlue" id="MainMenuGSPButton">GSP</div>
@@ -38,6 +36,7 @@
 
                 <div id="SetsMenuScreen" style="display:none">
                     <h1>Zestawy</h1>
+                    <div id='helpSets' class="help"><i class="fa fa-question" aria-hidden="true"></i></div>
                     <table id="SetsTable" class="SetsTable">
                             <tbody data-bind="foreach: sets">
                                 <tr class="setRow" data-bind="click: $parent.gotoTestMenu">
@@ -60,7 +59,7 @@
                     </div>
                     <div id="IconList" style="height:0px"></div>
                     <h1 id="SetName" data-bind="text: setName">__FISZKI__</h1>
-                    <i   id="SetNameEdit" class="fa fa-pencil fa-2x" aria-hidden="true"></i>
+                    <i id="SetNameEdit" class="fa fa-pencil fa-2x" aria-hidden="true"></i>
 
                     <div class="SetDeadline">
                         <span id="SetDeadlineSpan" data-bind="text: setDeadline"></span>
@@ -121,6 +120,7 @@
                 </div>
 
                 <div id="TestsMenuScreen" style="display:none">
+                    <div id='helpTests' class="help"><i class="fa fa-question" aria-hidden="true"></i></div>
                     <div id="TestSize">
                         <div class="SizeButton selected" id="S"><span>S</span></div>
                         <div class="SizeButton" id="M"><span>M</span></div>
@@ -180,6 +180,7 @@
 
                 <div id="HumanMenuScreen" style="display:none">
                     <h1>Ciała pamięci</h1>
+                    <div id='helpBodies' class="help"><i class="fa fa-question" aria-hidden="true"></i></div>
                     <table id="HumanTable" class="HumanTable">
                             <tbody data-bind="foreach: bodies">
                                 <tr class="setRow" data-bind="click: $parent.gotoBodyEdit">

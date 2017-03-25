@@ -31,15 +31,18 @@ define(function(require) {
         },
 
         dialog: function(content, onAccept, onCancel){
+            el = document.getElementById("Dialog");
+            el.className='shown';
             document.getElementById("DialogContent").innerText = content;
-            document.getElementById("Dialog").style.display='block';
             if(onAccept){
+                //show button
                 document.getElementById("DialogButtonRight").addEventListener('click', function(){ 
                        document.getElementById("Dialog").style.display='none';
                        onAccept();
                    });
             }
             if(onCancel){
+                //show button
                 document.getElementById("DialogButtonLeft").addEventListener('click', function(){ 
                     document.getElementById("Dialog").style.display='none';
                     onCancel();
@@ -56,6 +59,22 @@ define(function(require) {
 
         bindAllEvents: function() {
             document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
+
+            $(window).click(function() {
+                el = document.getElementById("Dialog");
+                if(el.className=='shown'){
+                    el.className = 'closing';
+                }
+                setTimeout(function(){  el.className = el.className.replace("closing", "closed");  }, 500);
+            });
+
+            document.getElementById('helpIntro').addEventListener('click', 
+                function(){
+                    event.stopPropagation();
+                    this.dialog("MAIN");
+            }.bind(this));
+
+
             window.App.testMenu.bindEvents(); 
         },
 

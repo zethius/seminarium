@@ -12,6 +12,11 @@ define(function(require) {
 		bindEvents: function(){
 			$('#BodiesMenuBack').unbind('click').bind('click', this.goBack); 
 			$('#AddNewBody').unbind('click').bind('click', this.newBody.bind(this)); 
+			document.getElementById('helpBodies').addEventListener('click', 
+                function(){
+                    event.stopPropagation();
+                    window.App.dialog("BODIES");
+            }.bind(this));
 		},
 
 		newBody: function(){
