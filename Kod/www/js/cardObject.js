@@ -24,14 +24,14 @@ define(function(require) {
             $('#CardfrontEdit').unbind('blur').bind('blur', this.frontEditor.bind(this)); 
             $("#CardfrontEdit").unbind('keyup').bind('keyup', function(){
             	var val = $(this).val();
-			    if (val.length > maxlength) {
-			        $(this).val(val.slice(0, maxlength));
+			    if (val.length > window.App.cardObject.maxlength) {
+			        $(this).val(val.slice(0, window.App.cardObject.maxlength));
 			    }
             });
             $("#CardbackEdit").unbind('keyup').bind('keyup', function(){
             	var val = $(this).val();
-			    if (val.length > maxlength) {
-			        $(this).val(val.slice(0, maxlength));
+			    if (val.length > window.App.cardObject.maxlength) {
+			        $(this).val(val.slice(0, window.App.cardObject.maxlength));
 			    }
             });
 
