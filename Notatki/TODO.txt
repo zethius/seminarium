@@ -24,7 +24,7 @@ Praca pisemna:
 
 TODO
 -przycisk ? help - tresc
--limit dlugosci tresci w fiszkach (255 znakow)
+- na liscie wyswietlac tylko poczatek tresci fiszek
 -trudnosci wyswietlane w zestawie przeliczaja sie po odswiezeniu strony 
 -widok na koniec testu
 

@@ -64,8 +64,8 @@
                     <div class="SetDeadline">
                         <span id="SetDeadlineSpan" data-bind="text: setDeadline"></span>
                         <input type="date" id="SetDeadlineInput" data-bind="value: setDeadline"/>
-                        <span id="CardCount" data-bind="text: setSize"></span>
                     </div>
+                    <span id="CardCount" data-bind="text: setSize"></span>
                     <table id="CardsTable" class="CardsTable" data-bind="if: set()">
                           <tbody data-bind="foreach: set().cards">
                                 <tr class="cardRow"

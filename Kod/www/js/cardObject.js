@@ -6,6 +6,7 @@ define(function(require) {
 		back: ko.observable(null),
 		id: ko.observable(null),
 		color: ko.observable(null),
+		maxlength: 255,
 		initialize: function(options){
 			$.extend(this, cardObject);  
 			this.card = options;
@@ -21,6 +22,19 @@ define(function(require) {
 		bindEvents: function(){
             $('#CardEditBack').unbind('click').bind('click', this.goBack.bind(this)); 
             $('#CardfrontEdit').unbind('blur').bind('blur', this.frontEditor.bind(this)); 
+            $("#CardfrontEdit").unbind('keyup').bind('keyup', function(){
+            	var val = $(this).val();
+			    if (val.length > maxlength) {
+			        $(this).val(val.slice(0, maxlength));
+			    }
+            });
+            $("#CardbackEdit").unbind('keyup').bind('keyup', function(){
+            	var val = $(this).val();
+			    if (val.length > maxlength) {
+			        $(this).val(val.slice(0, maxlength));
+			    }
+            });
+
             $('#CardbackEdit').unbind('blur').bind('blur', this.backEditor.bind(this)); 
 			$('#CardcolorEdit').unbind('click').bind('click',this.colorPicker.bind(this)); 
 		},
