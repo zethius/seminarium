@@ -156,8 +156,12 @@ body {
   background: rgba(0, 0, 0, 0.38);
  
   #DialogContent {
-      width:300px;
-      margin: 100px auto;
+     @media (max-width:480px){
+        margin: 50% auto;
+        width: 50%;
+      }
+      width: 25%;
+      margin: 13% auto;
       background-color: #fff;
       border-radius: 0.5em;
       padding:15px;

@@ -5,9 +5,15 @@ define(function(require) {
 		allCards:  ko.observableArray([]),
 		testIndex: ko.observable(0),
 		timer: null,
+		setId:0,
+		errorCount: ko.observable(0),
 		initialize: function(questions, cards){
 			event.stopPropagation();
+			this.testIndex(0);
+			this.errorCount(0);
+			this.currentTest(null);
 			this.allCards(cards());
+			this.setId = cards()[0].set_id;
 			this.prepareQuestions(questions());
 			this.show();
 			this.nextQuestion();
@@ -34,7 +40,7 @@ define(function(require) {
 			else{ // dla M i L moga sie powtarzac
 				for(var i = 0; i< questions.length; i++){
 					var ans = this.allCards().slice(); //duplicate allcards
-					ans=ans.filter(function(card){return card.card_id != questions[i].card_id }); //filter out answer
+					ans = ans.filter(function(card){return card.card_id != questions[i].card_id }); //filter out answer
 					tests[i] = {
 						question: questions[i],
 						answers: [Object.create(questions[i])]
@@ -88,12 +94,14 @@ define(function(require) {
 			}		
 		},
 		finishQuiz: function(){
-			this.testIndex(0);
+			var right = this.testIndex() - this.errorCount()/4;
 			this.allCards([]);
 			this.tests([]);
-			this.currentTest(null);
+			var endingResult = "Twój wynik to:<BR><span style='color=green'>"+ right +"</span> poprawnych odpowiedzi na "+this.testIndex()+" pytań.";
 			document.getElementById('TestsMenuScreen').style.display='block';
        		document.getElementById('QuizScreen').style.display='none';
+			window.App.dialog(endingResult);
+			debugger;
 		},
 		questionTimer: function(){
 			var width = 25;
@@ -120,8 +128,19 @@ define(function(require) {
 
 		calculateQuestionResults: function(result){
 			this.currentTest().answers.forEach(function(card){
+				var editing = window.App.setList.sets()
+					.filter(function(el){return el.set_id == this.setId; }.bind(this))[0].cards()
+					.filter(function(el){return el.card_id == card.card_id;})[0];
+				if(result){
+					editing.success++;
+				}else{
+					editing.error++;
+					this.errorCount(this.errorCount()+1);
+				}
+				var diff = (editing.error / (editing.success+editing.error)).toFixed(2);
+				editing.difficulty(  diff*100 );
 				window.App.db.updateCardSuccess(result,card.card_id);
-			});
+			}.bind(this));
 		
 			this.nextQuestion();
 		},

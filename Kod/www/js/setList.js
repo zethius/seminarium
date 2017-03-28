@@ -15,7 +15,7 @@ define(function(require) {
 			document.getElementById('helpSets').addEventListener('click', 
                 function(){
                     event.stopPropagation();
-               		window.App.dialog("SETS");
+               		window.App.dialog('Tworząc fiszki wiążesz hasła z odpowiadającymi im informacjami (definicje, tłumaczenia, daty).<BR><BR><i class="fa fa-graduation-cap" style="cursor:default" aria-hidden="true"></i> Zestaw musi zawierać co najmniej 20 fiszek, aby rozpocząć rozwiązywanie testów sprawdzających wiedzę.');
             }.bind(this));
 		},
 
@@ -34,7 +34,7 @@ define(function(require) {
 
         removeSet:function(set){
         	event.stopPropagation();
-        	if(set.size()>0){
+        	if(set.size()>0 && navigator && navigator.notification){
 	        	navigator.notification.confirm(
 						'Zestaw "'+set.name() +'" zawiera fiszki, czy na pewno chcesz go usunąć?' , 
 											window.App.setList.onRemoveConfirm.bind(this),   //  callback to invoke with index of button pressed
@@ -47,15 +47,17 @@ define(function(require) {
         	}
         },
 
-        gotoTestMenu: function(el){
+        gotoTestMenu: function(el, event){
+        	event.stopPropagation();
         	if(!el.cards().length){
-        		window.App.cardList.fillCards(el, function(){window.App.testMenu.initialize(el)});
+        		window.App.cardList.fillCards(el, function(){window.App.testMenu.initialize(el,event);});
         	}else{
-        		window.App.testMenu.initialize(el);
+        		window.App.testMenu.initialize(el,event);
         	}
         },
-        gotoCardList: function(el){
-        	window.App.cardList.initialize(el);
+        gotoCardList: function(el, event){
+        	event.stopPropagation();
+        	window.App.cardList.initialize(el, event);
         },
 
         onRemoveConfirm:function(buttonIndex){

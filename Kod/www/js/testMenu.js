@@ -2,7 +2,7 @@ define(function(require) {
 	var testMenu = {
 		set: ko.observable(null),
 		size: ko.observable("S"),
-		initialize: function(set){
+		initialize: function(set, event){
             window.App.testMenu.set = set;
             if(set.cards().length>=20){
 	            window.App.testMenu.show();     
@@ -28,8 +28,8 @@ define(function(require) {
 		    document.getElementById('helpTests').addEventListener('click', 
                 function(){
                     event.stopPropagation();
-                    window.App.dialog("TESTS");
-            }.bind(this));
+                    window.App.dialog("Do sprawdzenia swojej wiedzy z danego zestawu można wybrać jeden z dwóch testów. <BR><BR>Rozwiązując Quiz należy dopasować odpowiedni tył fiszki do jej przodu. <BR>Test Para polega na zweryfikowaniu, czy podana para informacji jest ze sobą dobrze dobrana.<BR><BR>Rozmiar testu wybierany jest poprzez naciśnięcie jednego z symboli:<BR>S - 5 pytań<BR>M - 15 pytań<BR>L - wszystkie pytania");
+                }.bind(this));
 		}, 
 
 		setSize: function(el){

@@ -2,7 +2,7 @@
 
 HARMONOGRAM:
 Do 23.12: implementacja przypomnień, deadline'u daty (+kalendarz)
-Do 31.12: GSP + test do niego
+Do 31.12: GSP
 
 Główny System Pamięciowy (GSP):
 	-skojarzenie cyfr z literami lub całych dat ze słowami
@@ -24,12 +24,12 @@ Praca pisemna:
 
 TODO
 -przycisk ? help - tresc
-- na liscie wyswietlac tylko poczatek tresci fiszek
--trudnosci wyswietlane w zestawie przeliczaja sie po odswiezeniu strony 
--widok na koniec testu
+-test do cial
+-GSP -> osobny zestaw id=0 z samymi datami? front = data, back = wygenerowane zdanie
+-kalendarz
 
 Trudnosci: knockout + svg databinding
-
+0.14 by 100 in JavaScript evaluates to 14.0000000000002 
 
 "C:\Program Files\Java\jdk1.8.0_77\bin\jarsigner.exe" -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore my-release-key.keystore android-release-unsigned.apk nihilvana
 

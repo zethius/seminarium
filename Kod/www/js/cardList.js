@@ -5,9 +5,8 @@ define(function(require) {
         setSize: ko.observable(null),
         setDeadline: ko.observable("bez terminu"),
         set: ko.observable(null),
-        initialize: function(set) {
+        initialize: function(set, event) {
             console.log("CARDS INITIALIZE");
-            event.stopPropagation();
             this.fillIconList(); 
             this.set(set);
             if(!this.set().cards().length){
@@ -34,7 +33,7 @@ define(function(require) {
                         if(card.success > 0 ||  card.error > 0){
                             diff = (card.error / (card.success+card.error)).toFixed(2);
                         }
-                        card.difficulty = ko.observable(  diff*100 );
+                        card.difficulty = ko.observable(  (diff*100).toFixed(0) );
                         set.cards.push(card);
                     }
                 window.App.cardList.setSize(set.cards().length);
@@ -92,6 +91,7 @@ define(function(require) {
                             color: ko.observable(window.App.colors[6])
                         };
                     this.set().cards.push(card);
+                    this.set().size(this.set().cards().length);
                     var objDiv = document.getElementById("CardsTable").children[0];
                     objDiv.scrollTop = objDiv.scrollHeight;
                     this.setSize(this.set().cards().length);
@@ -104,7 +104,7 @@ define(function(require) {
             window.App.cardList.set().cards.remove( function (card) 
                 { return card.card_id == this.card_id;}.bind(this) );
             window.App.cardList.setSize(window.App.cardList.set().cards().length);
-            
+            window.App.cardList.set().size(window.App.cardList.set().cards().length);
             // navigator.notification.confirm(
             //         'Czy na pewno chcesz usunąć tą fiszkę:"'+card.front() +'"?' , 
             //                             window.App.cardList.onRemoveConfirm.bind(this),   //  callback to invoke with index of button pressed

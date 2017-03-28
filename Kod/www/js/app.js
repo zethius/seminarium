@@ -33,7 +33,7 @@ define(function(require) {
         dialog: function(content, onAccept, onCancel){
             el = document.getElementById("Dialog");
             el.className='shown';
-            document.getElementById("DialogContent").innerText = content;
+            document.getElementById("DialogContent").innerHTML = content;
             if(onAccept){
                 //show button
                 document.getElementById("DialogButtonRight").addEventListener('click', function(){ 
@@ -71,7 +71,7 @@ define(function(require) {
             document.getElementById('helpIntro').addEventListener('click', 
                 function(){
                     event.stopPropagation();
-                    this.dialog("MAIN");
+                    this.dialog("Witaj w Art of Memory, aplikacji ułatwiającej uczenie się. <BR><BR>Możesz organizować, przechowywać i przypominać sobie informacje korzystając z trzech mnemotechnik: fiszek, ciała oraz głównego systemu pamięciowego.");
             }.bind(this));
 
 
