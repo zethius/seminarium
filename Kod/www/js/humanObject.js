@@ -69,8 +69,9 @@ define(function(require) {
 		},
 
 		changeName: function(){
-            document.getElementById('HumanName').contentEditable=true;
-            document.getElementById('HumanName').focus();
+            var el =  document.getElementById('HumanName');
+            el.contentEditable=true;
+            window.App.placeCaretAtEnd(el)
         },
         changeNameSave: function(){
             var humanNameDOM = document.getElementById('HumanName');

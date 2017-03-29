@@ -15,7 +15,7 @@ define(function(require) {
 			document.getElementById('helpBodies').addEventListener('click', 
                 function(){
                     event.stopPropagation();
-                    window.App.dialog("BODIES");
+                    window.App.dialog("Ciało jest mnemotechniką ułatwiającą zapamiętywanie hierarchii oraz kolejności wydarzeń, poprzez dopasowywanie informacji do konkretnych części postaci.");
             }.bind(this));
 		},
 

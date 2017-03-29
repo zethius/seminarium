@@ -9,10 +9,10 @@ define(function(require) {
 		errorCount: ko.observable(0),
 		initialize: function(questions, cards){
 			event.stopPropagation();
+			this.allCards(cards());
 			this.testIndex(0);
 			this.errorCount(0);
 			this.currentTest(null);
-			this.allCards(cards());
 			this.setId = cards()[0].set_id;
 			this.prepareQuestions(questions());
 			this.show();
@@ -97,11 +97,12 @@ define(function(require) {
 			var right = this.testIndex() - this.errorCount()/4;
 			this.allCards([]);
 			this.tests([]);
-			var endingResult = "Twój wynik to:<BR><span style='color=green'>"+ right +"</span> poprawnych odpowiedzi na "+this.testIndex()+" pytań.";
+			this.currentTest(null);
+			var endingResult = "Twój wynik to:<BR>Poprawnych <span style='color=green'>"+ right +"</span> na "+this.testIndex()+" pytań.";
 			document.getElementById('TestsMenuScreen').style.display='block';
        		document.getElementById('QuizScreen').style.display='none';
+			event.stopPropagation();
 			window.App.dialog(endingResult);
-			debugger;
 		},
 		questionTimer: function(){
 			var width = 25;

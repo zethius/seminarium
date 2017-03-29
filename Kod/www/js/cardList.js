@@ -149,8 +149,9 @@ define(function(require) {
         },
         
         changeName: function(){
-            document.getElementById('SetName').contentEditable=true;
-            document.getElementById('SetName').focus();
+            var el =  document.getElementById('SetName');
+            el.contentEditable=true;
+            window.App.placeCaretAtEnd(el)
         },
         changeNameSave: function(){
             var setNameDOM = document.getElementById('SetName');

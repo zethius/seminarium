@@ -10,7 +10,12 @@ Główny System Pamięciowy (GSP):
 	-na podstawie tego tworzy się fiszka z jednej strony liczba z drugiej słowo (ZESTAW WBUDOWANY: System Pamięciowy)
 	-TEST: wyświetla się słowo należy podać co to za liczba
 
+
 Praca pisemna: 
+Aplikacja na system Android wspierająca procesy nauki i zapamiętywania
+Student w ramach pracy przeanalizuje i wybierze kilka mnemotechnik 
+oraz zaprojektuje i zaimplementuje aplikację na system Android usprawniającą ich wykorzystywanie
+
 	- zarys działania CORDOVA
 	-state of art: przyklady podobnych rozwiazan na rynku
 	-wykorzystane biblioteki: knockout, jquery, requireJs
@@ -23,10 +28,11 @@ Praca pisemna:
 
 
 TODO
--przycisk ? help - tresc
 -test do cial
 -GSP -> osobny zestaw id=0 z samymi datami? front = data, back = wygenerowane zdanie
+-zmiana widoku listy fiszek: z listy na kafelki (fiszki- z przyciskiem do obrocenia na druga strone)
 -kalendarz
+
 
 Trudnosci: knockout + svg databinding
 0.14 by 100 in JavaScript evaluates to 14.0000000000002 
@@ -38,3 +44,7 @@ zipalign.exe -v 4 android-release-unsigned.apk mnemo.apk
 
 adb shell logcat - logi w emulatorze android
 
+
+
+
+//=======================

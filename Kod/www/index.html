@@ -65,7 +65,7 @@
                         <span id="SetDeadlineSpan" data-bind="text: setDeadline"></span>
                         <input type="date" id="SetDeadlineInput" data-bind="value: setDeadline"/>
                     </div>
-                    <span id="CardCount" data-bind="text: setSize"></span>
+                    <i class="fa fa-hashtag" style="cursor:default"aria-hidden="true"></i><span id="CardCount" data-bind="text: setSize"></span>
                     <table id="CardsTable" class="CardsTable" data-bind="if: set()">
                           <tbody data-bind="foreach: set().cards">
                                 <tr class="cardRow"
@@ -78,7 +78,8 @@
                             </tbody>
                     </table>
                     <div class="Menubutton darkBlue" id="CardsMenuBack"><i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i></div>
-                    <div class="Menubutton darkGreen" id="AddNewCard" data-bind="click: newCard"><i class="fa fa-plus-circle" aria-hidden="true"></i> fiszka</div>
+                    <div class="Menubutton darkGreen" id="AddNewCard" data-bind="click: newCard">
+                    <i class="fa fa-plus-circle" aria-hidden="true"></i> fiszka</div>
                 </div>
 
                 <div id="CardEditScreen" style="display:none">
@@ -111,7 +112,7 @@
                            </tr>
                        </table>
                        <div id="ColorPicker">
-                            <div id="CardcolorEdit" data-bind="style:{background: color}">kolor</div>
+                            <div id="CardcolorEdit" data-bind="style:{background: color}"><i class="fa fa-paint-brush" aria-hidden="true"></i></div>
                             <div id="ColorList" style="height:0px"></div>
                         </div>
                    </form>
@@ -127,8 +128,8 @@
                         <div class="SizeButton" id="L"><span>L</span></div>
                     </div>
                     <div id="Tests">
-                        <div id="Quiz" class='testButton'><span>QUIZ</span></div>
-                        <div id="YesorNot" class='testButton'><span>PARY</span></div>
+                        <div id="Quiz" class='testButton'><i class="fa fa-th-large fa-2x" aria-hidden="true"></i><span> QUIZ</span></div>
+                        <div id="YesorNot" class='testButton'><i class="fa fa-pause fa-2x" aria-hidden="true"></i><span> PARY</span></div>
                     </div>
                     <div class="Menubutton darkBlue" id="TestsMenuBack"><i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i></div>
                 </div>

@@ -5,9 +5,15 @@ define(function(require) {
 		allCards:  ko.observableArray([]),
 		testIndex: ko.observable(0),
 		timer: null,
+		setId:0,
+		errorCount: ko.observable(0),
 		initialize: function(questions, cards){
 			event.stopPropagation();
 			this.allCards(cards());
+			this.testIndex(0);
+			this.errorCount(0);
+			this.currentTest(null);
+			this.setId = cards()[0].set_id;
 			this.prepareQuestions(questions());
 			this.show();
 			this.nextQuestion();
@@ -68,12 +74,15 @@ define(function(require) {
 			}		
 		},
 		finishQuiz: function(){
-			this.testIndex(0);
+			var right = this.testIndex() - this.errorCount();
 			this.allCards([]);
 			this.tests([]);
 			this.currentTest(null);
+			var endingResult = "Twój wynik to:<BR>Poprawnych <span style='color=green'>"+ right +"</span> na "+this.testIndex()+" pytań.";
 			document.getElementById('TestsMenuScreen').style.display='block';
        		document.getElementById('YonScreen').style.display='none';
+       		event.stopPropagation();
+			window.App.dialog(endingResult);
 		},
 		questionTimer: function(){
 			var width = 25;
@@ -110,6 +119,25 @@ define(function(require) {
 		},
 
 		calculateQuestionResults: function(result){
+			var editingL = window.App.setList.sets()
+					.filter(function(el){return el.set_id == this.setId; }.bind(this))[0].cards()
+					.filter(function(el){return el.card_id == this.currentTest().left.card_id;}.bind(this))[0];
+			var editingR = window.App.setList.sets()
+					.filter(function(el){return el.set_id == this.setId; }.bind(this))[0].cards()
+					.filter(function(el){return el.card_id == this.currentTest().right.card_id;}.bind(this))[0];
+			if(result){
+				editingL.success++;
+				editingR.success++;
+			}else{
+				editingL.error++;
+				editingR.error++;
+				this.errorCount(this.errorCount()+1);
+			}
+			var diffL = (editingL.error / (editingL.success+editingL.error)).toFixed(2);
+				editingL.difficulty(  diffL*100 );
+			var diffR = (editingR.error / (editingR.success+editingR.error)).toFixed(2);
+				editingR.difficulty(  diffR*100 );
+				
 			window.App.db.updateCardSuccess(result,this.currentTest().left.card_id);
 			window.App.db.updateCardSuccess(result,this.currentTest().right.card_id);
 			this.nextQuestion();

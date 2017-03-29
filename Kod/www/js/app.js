@@ -4,6 +4,7 @@ define(function(require) {
         icons: [],
         colors: [],
         appReady: ko.observable(false),
+        dialogElement: {el: document.getElementById("Dialog"), shown: false},
         initialize: function() {
             window.App = this;
             window.App.db =  require('db')
@@ -23,7 +24,24 @@ define(function(require) {
             this.appReady(true);
             this.bindAllEvents();            
         },
-
+        
+        placeCaretAtEnd: function(el) {
+            el.focus();
+            if (typeof window.getSelection != "undefined"
+                    && typeof document.createRange != "undefined") {
+                var range = document.createRange();
+                range.selectNodeContents(el);
+                range.collapse(false);
+                var sel = window.getSelection();
+                sel.removeAllRanges();
+                sel.addRange(range);
+            } else if (typeof document.body.createTextRange != "undefined") {
+                var textRange = document.body.createTextRange();
+                textRange.moveToElementText(el);
+                textRange.collapse(false);
+                textRange.select();
+            }
+        },
         fill: function( ){
             window.App.icons = window.App.db.icons;
             window.App.colors = window.App.db.colors;  
@@ -31,8 +49,8 @@ define(function(require) {
         },
 
         dialog: function(content, onAccept, onCancel){
-            el = document.getElementById("Dialog");
-            el.className='shown';
+            this.dialogElement.el.className='shown';
+            this.dialogElement.shown = true;
             document.getElementById("DialogContent").innerHTML = content;
             if(onAccept){
                 //show button
@@ -61,11 +79,10 @@ define(function(require) {
             document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
 
             $(window).click(function() {
-                el = document.getElementById("Dialog");
-                if(el.className=='shown'){
-                    el.className = 'closing';
+                if(window.App.dialogElement.shown || window.App.dialogElement.el.className == 'shown'){
+                    window.App.dialogElement.el.className = 'closing';
                 }
-                setTimeout(function(){  el.className = el.className.replace("closing", "closed");  }, 500);
+                setTimeout(function(){  window.App.dialogElement.el.className = window.App.dialogElement.el.className.replace("closing", "closed"); window.App.dialogElement.shown = false;  }, 400);
             });
 
             document.getElementById('helpIntro').addEventListener('click', 
