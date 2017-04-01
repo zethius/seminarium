@@ -105,8 +105,13 @@ define(function(require){
 				},
 
 			//CARD METHODS
-				getCards:function(id, fn){
-					this.selectQuery("SELECT c.id as card_id, c.front,c.success, c.error, c.back, c.color_id AS color, c.set_id FROM cards c LEFT JOIN sets s ON c.set_id=s.id WHERE c.set_id=(?)",[id],fn);
+				getCards:function(id, fn, gsp){
+					var sql = "SELECT c.id as card_id, c.front,c.success, c.error, c.back, c.color_id AS color, c.set_id FROM cards c LEFT JOIN sets s ON c.set_id=s.id WHERE c.set_id=(?)";
+					if(gsp == true)
+					{
+						 sql = "SELECT c.description, c.id as card_id, c.front,c.success, c.error, c.back, c.color_id AS color, c.set_id FROM cards c LEFT JOIN sets s ON c.set_id=s.id WHERE c.set_id=(?)"
+					}
+					this.selectQuery(sql,[id],fn);
 				},
 
 				deleteCard:function(cardid){
@@ -121,10 +126,16 @@ define(function(require){
 				updateCardColor: function(colorId, cardId){
 					this.execQuery("UPDATE cards SET color_id=(?) WHERE id = (?)",[colorId,cardId]);
 				},
-				saveCard:function(front,back,color,set, fn){
+				saveCard:function(front,back,color,set, fn, description){
 					//card difficulty = (card.error / (card.success + card.error)) * 100%
 					this.database.transaction(function(tx){  
-						tx.executeSql("INSERT INTO cards(front,back,color_id,set_id) VALUES (?,?,?,?)",[front,back,color,set], 
+						var sql = "INSERT INTO cards(front,back,color_id,set_id) VALUES (?,?,?,?)";
+						var args = [front,back,color,set];
+						if(description){
+							sql= "INSERT INTO cards(front,back,color_id,set_id,description) VALUES (?,?,?,?,?)";
+							args = [front,back,color,set, description];
+						}
+						tx.executeSql(sql,args, 
 							function(tx,res){
 								fn(res.insertId);
 							}
@@ -241,6 +252,10 @@ define(function(require){
 		                });  
 				}else{
 					document.getElementById("ApplicationStatus").className ="fa fa-exclamation-triangle fa-4x";
+					document.getElementById("MainMenuSetsButton").style.display='none';
+					document.getElementById("MainMenuBodyButton").style.display='none';
+					document.getElementById("MainMenuGSPButton").style.display='none';
+					document.getElementById("Uncombatibile").style.display='';
 					window.App.toast("Niewspierana przeglądarka", 1000);
 				}
 			},
@@ -252,7 +267,7 @@ define(function(require){
 					tx.executeSql("DROP TABLE bodies");
 				}
 				tx.executeSql("CREATE TABLE IF NOT EXISTS sets(id INTEGER PRIMARY KEY AUTOINCREMENT,deadline TEXT,difficulty FLOAT,gsp INTEGER DEFAULT 0, name TEXT,icon_id INTEGER,FOREIGN KEY(icon_id) REFERENCES icons(id))");
-				tx.executeSql("CREATE TABLE IF NOT EXISTS cards(id INTEGER PRIMARY KEY AUTOINCREMENT,front TEXT,back TEXT, success INTEGER DEFAULT 0, error INTEGER DEFAULT 0, set_id INTEGER,color_id INTEGER,FOREIGN KEY(color_id) REFERENCES colors(id),FOREIGN KEY(set_id) REFERENCES sets(id))");        
+				tx.executeSql("CREATE TABLE IF NOT EXISTS cards(id INTEGER PRIMARY KEY AUTOINCREMENT,description TEXT DEFAULT '',front TEXT,back TEXT, success INTEGER DEFAULT 0, error INTEGER DEFAULT 0, set_id INTEGER,color_id INTEGER,FOREIGN KEY(color_id) REFERENCES colors(id),FOREIGN KEY(set_id) REFERENCES sets(id))");        
 				
 				tx.executeSql("CREATE TABLE IF NOT EXISTS bodies(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL DEFAULT '', part0 TEXT NOT NULL DEFAULT '',part1 TEXT NOT NULL DEFAULT '',part2 TEXT NOT NULL DEFAULT '',part3 TEXT NOT NULL DEFAULT '',part4 TEXT NOT NULL DEFAULT '',part5 TEXT NOT NULL DEFAULT '')");        
 

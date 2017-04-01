@@ -5,6 +5,8 @@ define(function(require) {
         setSize: ko.observable(null),
         setDeadline: ko.observable("bez terminu"),
         set: ko.observable(null),
+        description:'',
+        newDateValue: new Date().toISOString().split('T')[0],
         initialize: function(set, event) {
             console.log("DATES INITIALIZE");
             this.fillIconList(); 
@@ -29,6 +31,7 @@ define(function(require) {
                         card.front = ko.observable(card.front);
                         card.back = ko.observable(card.back);
                         card.color = ko.observable(window.App.db.colors[card.color-1].color_value);
+                        card.description = ko.observable(card.description);
                         var diff = 0.5;
                         if(card.success > 0 ||  card.error > 0){
                             diff = (card.error / (card.success+card.error)).toFixed(2);
@@ -38,7 +41,7 @@ define(function(require) {
                     }
                 window.App.datesList.setSize(set.cards().length);
                 fn(); //uzyte do wyswietlenia listy kart lub menu testow
-            }.bind(this)); 
+            }.bind(this), true); 
         },
 
         prepareDeadline: function(deadline){
@@ -83,9 +86,66 @@ define(function(require) {
                 });
             }
         },
+        
 
         newDate: function(){
-          console.log("TODO");
+            event.stopPropagation();
+            window.App.gspdialogElement.el.className='shown';
+            window.App.gspdialogElement.shown = true;
+        },
+
+        gspDialogClose:function(){
+            window.App.gspdialogElement.el.className = 'closing';
+            setTimeout(function(){  window.App.gspdialogElement.el.className = window.App.gspdialogElement.el.className.replace("closing", "closed"); window.App.gspdialogElement.shown = false;  }, 400);    
+        },
+        save: function(){
+            console.log(this.newDateValue);
+            if(this.newDateValue.length){
+                console.log('data');
+                var generated = this.newDateValue.split('-');
+                var year = generated[0].split('');
+                var month = parseInt(generated[1]);
+                var day = parseInt(generated[2]);
+                var result = window.App.wordList.days[day];
+                result+=' '+ window.App.wordList.months[month];
+                // result+=' ';
+                if(year[0]>0){
+                    if(year[0]<3){
+                        result+=' '+window.App.wordList.year[1000][year[0]];
+                    }else{
+                        result+=' futurystycznie'; //rok wiekszy niz 2999
+                    }
+                }
+                result+=' '+window.App.wordList.year[100][year[1]];
+                result+=' '+window.App.wordList.year[10][year[2]];
+                result+=' '+window.App.wordList.year[1][year[3]];
+                this.newDateValue = generated[2]+'-'+generated[1]+'-'+generated[0];
+
+                window.App.db.saveCard(this.newDateValue,result,7, this.set().set_id,
+                    function(insertId){
+                        var card =  {  
+                                card_id: insertId,
+                                set_id: this.set().set_id,
+                                description: ko.observable(this.description),
+                                front: ko.observable(this.newDateValue),
+                                back: ko.observable(result), 
+                                difficulty: ko.observable(50),
+                                color: ko.observable(window.App.colors[6])
+                            };
+                        this.set().cards.push(card);
+                        this.set().size(this.set().cards().length);
+                        this.newDateValue = new Date().toISOString().split('T')[0];
+                        this.description = '';
+                        this.gspDialogClose();
+                        var objDiv = document.getElementById("DatesTable").children[0];
+                        objDiv.scrollTop = objDiv.scrollHeight;
+                        this.setSize(this.set().cards().length);
+
+                }.bind(this), this.description);
+         
+            }else{
+                window.App.toast("Nie rozpoznano daty");
+            }  
         },
 
         removeCard: function(card, event){
@@ -97,8 +157,10 @@ define(function(require) {
             window.App.datesList.set().size(window.App.datesList.set().cards().length);
         },
        
-        goToCardEdit: function(card){
-            window.App.cardObject.initialize(card);
+        showDate: function(card){
+            event.stopPropagation();
+            var str = "<b>"+card.front()+"</b><BR><BR>"+card.description()+"<BR><BR>"+card.back();
+            window.App.dialog(str);
         },
 
         showIconList:function(){
@@ -173,6 +235,6 @@ define(function(require) {
                
     };
     ko.applyBindings(datesList, document.getElementById('DatesMenuScreen'));
-
+    ko.applyBindings(datesList, document.getElementById('GSPDialog'));
     return datesList;
 });

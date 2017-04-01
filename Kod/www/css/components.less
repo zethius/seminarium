@@ -144,8 +144,7 @@ body {
     width: 2em;
     line-height: 2em;
 }
-#Dialog {
- 
+#GSPDialog, #Dialog {
   position: absolute;
   left: 0px;
   top: 0px;
@@ -155,10 +154,13 @@ body {
   z-index: 1000;
   background: rgba(0, 0, 0, 0.38);
  
-  #DialogContent {
+  #GSPDialogContent, #DialogContent {
      @media (max-width:480px){
         margin: 50% auto;
         width: 50%;
+        #GSPDescription{
+          width: 77% !important;
+        }  
       }
       width: 25%;
       margin: 13% auto;
@@ -166,6 +168,14 @@ body {
       border-radius: 0.5em;
       padding:15px;
       text-align:center;
+      #GSPDescription{
+        display: block;
+        width: 54%;
+        margin-top: 5px;
+        margin-left: auto;
+        margin-right: auto;
+        resize: none;
+      }
   }
   &.closing{
     -webkit-animation: dialogout 0.5s ;

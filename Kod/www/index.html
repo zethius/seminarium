@@ -32,6 +32,7 @@
                     <div class="Menubutton lightBlue" id="MainMenuSetsButton" data-bind="click: setList.initialize.bind(setList)">Fiszki</div>
                     <div class="Menubutton darkBlue" id="MainMenuBodyButton" data-bind="click: bodyList.initialize.bind(bodyList)">Ciało</div>
                     <div class="Menubutton blackBlue" id="MainMenuGSPButton" data-bind="click: gspSetList.initialize.bind(gspSetList)">GSP</div>
+                    <div style='display:none' id="Uncombatibile">Urządzenie niekompatybilne z aplikacją</div>
                 </div>
 
                 <div id="SetsMenuScreen" style="display:none">
@@ -227,6 +228,14 @@
                     <div class="Menubutton darkGreen" id="GSPAddNewSet" ><i class="fa fa-plus-circle" aria-hidden="true"></i> zestaw</div>
                 </div>
 
+                <div id="GSPDialog" class='closed'>
+                    <div id="GSPDialogContent">
+                        <p>Wprowadź datę</p>
+                        <input type="date" id="GSPInput" data-bind="value: newDateValue"/>
+                         <textarea cols="2" rows="2" id="GSPDescription" data-bind="value: description"></textarea>                    
+                        <div class="Menubutton darkBlue saveButton" data-bind="click:  function(){save();}">Dodaj</div>
+                    </div>
+                </div>
                
                 <div id="DatesMenuScreen" style="display:none">
                     <div id='helpDates' class="help"><i class="fa fa-question" aria-hidden="true"></i></div>
@@ -245,16 +254,16 @@
                     <table id="DatesTable" class="CardsTable" data-bind="if: set()">
                           <tbody data-bind="foreach: set().cards">
                                 <tr class="cardRow"
-                                data-bind="click: $parent.goToCardEdit, attr: { 'id': 'TESTCARD'}, css:{ 'hardCard': difficulty()>80}, style:{ borderColor: color}">
-                                    <td class="front"><div data-bind="text: front"></div></td>
-                                    <td class="back"><div data-bind="text: back"></div></td>
+                                data-bind="click: $parent.showDate, attr: { 'id': 'TESTCARD'}, css:{ 'hardCard': difficulty()>80}, style:{ borderColor: color}">
+                                    <td class="date"><div data-bind="text: front"></div></td>
+                                    <td class="sentence"><div data-bind="text: back"></div></td>
                                     <td class="difficulty"><span data-bind="text: difficulty()+'%' "></span></td>
                                     <td class="button" data-bind="click: $parent.removeCard"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></td>
                                 </tr>
                             </tbody>
                     </table>
                     <div class="Menubutton darkBlue" id="DatesMenuBack"><i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i></div>
-                    <div class="Menubutton darkGreen" id="AddNewDate" data-bind="click: newDate">
+                    <div class="Menubutton darkGreen" id="AddNewDate" data-bind="click: function(){newDate();}">
                     <i class="fa fa-plus-circle" aria-hidden="true"></i> data</div>
                 </div>
 

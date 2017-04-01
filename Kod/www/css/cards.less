@@ -46,6 +46,38 @@
                 .button:hover{
                     font-weight: bold;
                 }
+                .date{
+                    width:5%;
+                    @media (max-width:480px){
+                        max-width: 5em;
+                        div{
+                           width: 5em !important;  
+                           margin-right:0.2em !important;   
+                        }
+                    }
+                    div{
+                        width:8.75em;
+                        margin-right:5em;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                        overflow: hidden;
+                    }
+                }
+                .sentence{
+                    max-width:60%;
+                    @media (max-width:480px){
+                        max-width: 10em;
+                        div{
+                           width: 5em !important;     
+                        }
+                    }
+                    div{
+                        width:70em;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                        overflow: hidden;
+                    }
+                }
                 .front{
                     width:40%;
 

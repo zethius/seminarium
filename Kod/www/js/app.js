@@ -5,6 +5,7 @@ define(function(require) {
         colors: [],
         appReady: ko.observable(false),
         dialogElement: {el: document.getElementById("Dialog"), shown: false},
+        gspdialogElement: {el: document.getElementById("GSPDialog"), shown: false},
         initialize: function() {
             window.App = this;
             window.App.db =  require('db')
@@ -53,24 +54,10 @@ define(function(require) {
             window.App.cardObject.fillColorList();
         },
 
-        dialog: function(content, onAccept, onCancel){
+        dialog: function(content){
             this.dialogElement.el.className='shown';
             this.dialogElement.shown = true;
-            document.getElementById("DialogContent").innerHTML = content;
-            if(onAccept){
-                //show button
-                document.getElementById("DialogButtonRight").addEventListener('click', function(){ 
-                       document.getElementById("Dialog").style.display='none';
-                       onAccept();
-                   });
-            }
-            if(onCancel){
-                //show button
-                document.getElementById("DialogButtonLeft").addEventListener('click', function(){ 
-                    document.getElementById("Dialog").style.display='none';
-                    onCancel();
-                });
-            }
+            window.App.dialogElement.el.children[0].innerHTML = content; 
         },
 
         toast: function( text ){
@@ -84,11 +71,16 @@ define(function(require) {
             document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
 
             $(window).click(function() {
-                if(event.target.id!='DialogContent'){
-                     if(window.App.dialogElement.shown || window.App.dialogElement.el.className == 'shown'){
+                if(event.target.id!='DialogContent' && (event.target.id!="GSPDialogContent" && event.target.parentNode.id!='GSPDialogContent') ){
+                    if(window.App.dialogElement.shown || window.App.dialogElement.el.className == 'shown'){
                         window.App.dialogElement.el.className = 'closing';
                     }
                     setTimeout(function(){  window.App.dialogElement.el.className = window.App.dialogElement.el.className.replace("closing", "closed"); window.App.dialogElement.shown = false;  }, 400); 
+                    if(window.App.gspdialogElement.shown || window.App.gspdialogElement.el.className == 'shown'){
+                        window.App.gspdialogElement.el.className = 'closing';
+                    }
+                    setTimeout(function(){  window.App.gspdialogElement.el.className = window.App.gspdialogElement.el.className.replace("closing", "closed"); window.App.gspdialogElement.shown = false;  }, 400); 
+             
                 }
             });
 
