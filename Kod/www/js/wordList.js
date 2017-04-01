@@ -63,7 +63,7 @@ define(function(require) {
 				6: 'głupio', 
 				7: 'hałaśliwie', 
 				8: 'intensywnie', 
-				9: 'jasno'
+				9: 'jednolicie'
 			},
 			10:{
 				0: 'biało', 
