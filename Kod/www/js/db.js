@@ -29,6 +29,20 @@ define(function(require){
 		// window.openDatabase("mnemo", "2.0", "Mnemo DB", 1000000), //WEBSQL
 		// db: window.sqlitePlugin.openDatabase({name: "mnemo.db", location: 'default'}),
 		//FILL METHODS
+			getFullGSP: function(setsArray){
+				this.getGSP(function(sets){
+					for(var i = 0; i < sets.rows.length; i++)
+					{
+						var set = sets.rows.item(i);
+						set.size = ko.observable(set.size);
+						set.name = ko.observable(set.name);
+						set.icon = ko.observable(window.App.db.icons[set.icon-1].icon_value());
+						set.cards = ko.observableArray();
+						set.deadline = ko.observable(set.deadline);
+						setsArray.push(set);
+					}
+				});
+			},
 			getFullSets:function(setsArray){
 				this.getSets(function(sets){
 					for(var i = 0; i < sets.rows.length; i++)
@@ -45,8 +59,11 @@ define(function(require){
 			},
 		
 			//SET METHODS
+				getGSP: function(fn){
+					this.selectQuery("SELECT COUNT(c.id) as size, s.id as set_id, s.name, s.difficulty, s.deadline, s.icon_id AS icon FROM sets s LEFT JOIN cards c ON s.id = c.set_id WHERE s.gsp = 1 GROUP BY s.id",[],fn);
+				},
 				getSets:function(fn){
-					this.selectQuery("SELECT COUNT(c.id) as size, s.id as set_id, s.name, s.difficulty, s.deadline, s.icon_id AS icon FROM sets s LEFT JOIN cards c ON s.id = c.set_id GROUP BY s.id",[],fn);
+					this.selectQuery("SELECT COUNT(c.id) as size, s.id as set_id, s.name, s.difficulty, s.deadline, s.icon_id AS icon FROM sets s LEFT JOIN cards c ON s.id = c.set_id WHERE s.gsp = 0 GROUP BY s.id",[],fn);
 				},
 
 				updateSetName: function(setName, setId){
@@ -64,9 +81,15 @@ define(function(require){
 					this.execQuery("UPDATE sets SET name=(?), icon_id=(?) WHERE id = (?)",[setName,setIcon,setId]);
 				},
 
-				saveSet:function(name, icon, fn){
+				saveSet:function(name, icon, fn, gsp){
 					this.database.transaction(function(tx){
-						tx.executeSql("INSERT INTO sets(name, difficulty, icon_id) VALUES (?,?,?)",[name,0.5,icon], 
+						var args = [name,0.5,icon];
+						var sql = "INSERT INTO sets(name, difficulty, icon_id) VALUES (?,?,?)";
+						if(gsp == true){
+							args =  [name,0.5,icon,1];
+							sql = "INSERT INTO sets(name, difficulty, icon_id, gsp) VALUES (?,?,?,?)";
+						}
+						tx.executeSql(sql,args, 
 							function(tx,res){
 								fn( res.insertId);
 							}
@@ -224,11 +247,11 @@ define(function(require){
 
 			prepareTables:function(tx, purge){
 				if(purge){
-					// tx.executeSql("DROP TABLE sets");
-					// tx.executeSql("DROP TABLE cards");
+					tx.executeSql("DROP TABLE sets");
+					tx.executeSql("DROP TABLE cards");
 					tx.executeSql("DROP TABLE bodies");
 				}
-				tx.executeSql("CREATE TABLE IF NOT EXISTS sets(id INTEGER PRIMARY KEY AUTOINCREMENT,deadline TEXT,difficulty FLOAT, name TEXT,icon_id INTEGER,FOREIGN KEY(icon_id) REFERENCES icons(id))");
+				tx.executeSql("CREATE TABLE IF NOT EXISTS sets(id INTEGER PRIMARY KEY AUTOINCREMENT,deadline TEXT,difficulty FLOAT,gsp INTEGER DEFAULT 0, name TEXT,icon_id INTEGER,FOREIGN KEY(icon_id) REFERENCES icons(id))");
 				tx.executeSql("CREATE TABLE IF NOT EXISTS cards(id INTEGER PRIMARY KEY AUTOINCREMENT,front TEXT,back TEXT, success INTEGER DEFAULT 0, error INTEGER DEFAULT 0, set_id INTEGER,color_id INTEGER,FOREIGN KEY(color_id) REFERENCES colors(id),FOREIGN KEY(set_id) REFERENCES sets(id))");        
 				
 				tx.executeSql("CREATE TABLE IF NOT EXISTS bodies(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL DEFAULT '', part0 TEXT NOT NULL DEFAULT '',part1 TEXT NOT NULL DEFAULT '',part2 TEXT NOT NULL DEFAULT '',part3 TEXT NOT NULL DEFAULT '',part4 TEXT NOT NULL DEFAULT '',part5 TEXT NOT NULL DEFAULT '')");        

@@ -28,6 +28,7 @@ oraz zaprojektuje i zaimplementuje aplikację na system Android usprawniającą 
 
 
 TODO
+- trudnosc zestawu
 -test do cial
 -GSP -> osobny zestaw id=0 z samymi datami? front = data, back = wygenerowane zdanie
 -zmiana widoku listy fiszek: z listy na kafelki (fiszki- z przyciskiem do obrocenia na druga strone)

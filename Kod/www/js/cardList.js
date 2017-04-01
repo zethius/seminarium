@@ -80,13 +80,13 @@ define(function(require) {
         },
 
         newCard: function(){
-            window.App.db.saveCard("New Card Front","New Card Back",7, this.set().set_id,
+            window.App.db.saveCard("Definicja","Treść",7, this.set().set_id,
                 function(insertId){
                     var card =  {  
                             card_id: insertId,
                             set_id: this.set().set_id,
-                            front: ko.observable("New Card Front"),
-                            back: ko.observable('New Card Back'), 
+                            front: ko.observable("Definicja"),
+                            back: ko.observable('Treść'), 
                             difficulty: ko.observable(50),
                             color: ko.observable(window.App.colors[6])
                         };
@@ -130,14 +130,14 @@ define(function(require) {
 
             this.iconsList = document.getElementById("IconList");
             if(this.iconsList.style.height=='0px'){  
-                $('.fold').first().removeClass('down').addClass('up');
+                $('#CardsMenuScreen .fold').first().removeClass('down').addClass('up');
                 var width = '40px';  
                 if(screen.width<400){
                     width = '80px';
                 }      
                   this.iconsList.style.height=width;
             }else{
-                $('.fold').first().removeClass('up').addClass('down');
+                $('#CardsMenuScreen .fold').first().removeClass('up').addClass('down');
                 this.iconsList.style.height=0;
             }
         },

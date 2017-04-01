@@ -13,12 +13,17 @@ define(function(require) {
             window.App.cardList = require('cardList');    
             window.App.cardObject = require('cardObject');
 
+            window.App.gspSetList = require('gspSetList');
+            window.App.datesList = require('datesList');
+
             window.App.testMenu = require('testMenu');
             window.App.quizTest = require('quizTest');
             window.App.yonTest = require('yonTest');
 
             window.App.bodyList = require('humanList');
             window.App.humanObject = require('humanObject');
+            window.App.wordList = require('wordList');
+            
 
             console.log("APP INIT");
             this.appReady(true);
@@ -79,10 +84,12 @@ define(function(require) {
             document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
 
             $(window).click(function() {
-                if(window.App.dialogElement.shown || window.App.dialogElement.el.className == 'shown'){
-                    window.App.dialogElement.el.className = 'closing';
+                if(event.target.id!='DialogContent'){
+                     if(window.App.dialogElement.shown || window.App.dialogElement.el.className == 'shown'){
+                        window.App.dialogElement.el.className = 'closing';
+                    }
+                    setTimeout(function(){  window.App.dialogElement.el.className = window.App.dialogElement.el.className.replace("closing", "closed"); window.App.dialogElement.shown = false;  }, 400); 
                 }
-                setTimeout(function(){  window.App.dialogElement.el.className = window.App.dialogElement.el.className.replace("closing", "closed"); window.App.dialogElement.shown = false;  }, 400);
             });
 
             document.getElementById('helpIntro').addEventListener('click', 

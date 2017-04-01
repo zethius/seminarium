@@ -1,15 +1,15 @@
-#SetsMenuScreen, #CardsMenuScreen,#HumanMenuScreen{
+#DatesMenuScreen, #GSPMenuScreen, #SetsMenuScreen, #CardsMenuScreen,#HumanMenuScreen{
     .Menubutton{
         width:33%;
         display: inline-block;
     }
 }
 
-#SetsMenuScreen, #CardsMenuScreen, #CardEditScreen, #HumanMenuScreen{
+#GSPMenuScreen,#SetsMenuScreen, #DatesMenuScreen, #CardsMenuScreen, #CardEditScreen, #HumanMenuScreen{
     position:absolute;
     width:100%;
     top:20%;
-    .SetsTable,.CardsTable, .HumanTable{
+    .gspTable, .SetsTable,.CardsTable, .HumanTable{
         background-color: @lightBlue;
         width:70%;
         height:15em;
@@ -106,10 +106,10 @@
         }
     }   
 }
-#CardsMenuScreen{
+#CardsMenuScreen, #DatesMenuScreen{
     top: ~"-webkit-calc(30% - 131px)";
     top: ~"calc(30% - 131px)";
-    #IconList{
+    .IconList{
         display:block;
         overflow:hidden;
         height: 0px;
@@ -141,11 +141,11 @@
       
         }
     }
-    #CardCount{
+    .CardCount{
         font-size: 17px;
         margin-left: 5px;
     }
-    #SetName{
+    .SetName{
         margin-bottom: 10px;
         cursor: pointer;
         width:50%;
