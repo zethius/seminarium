@@ -31,7 +31,7 @@ define(function(require) {
                         card.front = ko.observable(card.front);
                         card.back = ko.observable(card.back);
                         card.color = ko.observable(window.App.db.colors[card.color-1].color_value);
-                        card.description = ko.observable(card.description);
+                        card.description = ko.observable(card.description?card.description:'');
                         var diff = 0.5;
                         if(card.success > 0 ||  card.error > 0){
                             diff = (card.error / (card.success+card.error)).toFixed(2);
