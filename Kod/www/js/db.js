@@ -95,6 +95,8 @@ define(function(require){
 							}
 						);
 					},function(err){
+						window.App.db.prepareDb(true);
+						window.App.toast("Nieaktualna baza danych - przywracanie domyślnej", 1000);
 						console.log(err.message);
 					});
 				},
@@ -141,6 +143,8 @@ define(function(require){
 							}
 					);
 					},function(err){
+						window.App.db.prepareDb(true);
+						window.App.toast("Nieaktualna baza danych - przywracanie domyślnej", 1000);
 						console.log(err.message);
 					});
 				},
@@ -192,6 +196,8 @@ define(function(require){
 							}
 						);
 					},function(err){
+						window.App.db.prepareDb(true);
+						window.App.toast("Nieaktualna baza danych - przywracanie domyślnej", 1000);
 						console.log(err.message);
 					});
 				},
@@ -218,6 +224,8 @@ define(function(require){
 							}.bind(this));
 					}.bind(this),
 					function(err){
+						window.App.db.prepareDb(true);
+						window.App.toast("Nieaktualna baza danych - przywracanie domyślnej", 1000);
 						console.log(err.message);
 					}
 					);
@@ -233,6 +241,8 @@ define(function(require){
 							}.bind(this));
 					}.bind(this),
 					function(err){
+						window.App.db.prepareDb(true);
+						window.App.toast("Nieaktualna baza danych - przywracanie domyślnej", 1000);
 						console.log(err.message);
 					}
 					);
