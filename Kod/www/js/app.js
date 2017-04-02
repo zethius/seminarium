@@ -71,7 +71,7 @@ define(function(require) {
             document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
 
             $(window).click(function() {
-                if(event.target.id!='DialogContent' && (event.target.id!="GSPDialogContent" && event.target.parentNode.id!='GSPDialogContent') ){
+                if(event.target.id!='DialogContent' && (event.target.id!="GSPDialogContent" && (event.target.parentNode && event.target.parentNode.id!='GSPDialogContent')) ){
                     if(window.App.dialogElement.shown || window.App.dialogElement.el.className == 'shown'){
                         window.App.dialogElement.el.className = 'closing';
                     }

@@ -5,7 +5,7 @@ define(function(require) {
         setSize: ko.observable(null),
         setDeadline: ko.observable("bez terminu"),
         set: ko.observable(null),
-        description:'',
+        description: ko.observable(''),
         newDateValue: ko.observable(new Date().toISOString().split('T')[0]),
         initialize: function(set, event) {
             console.log("DATES INITIALIZE");
@@ -100,7 +100,7 @@ define(function(require) {
         },
         save: function(){
             console.log(this.newDateValue());
-            if(this.newDateValue().length){
+            if(this.newDateValue().length && this.description().length){
                 console.log('data');
                 var generated = this.newDateValue().split('-');
                 var year = generated[0].split('');
@@ -126,7 +126,7 @@ define(function(require) {
                         var card =  {  
                                 card_id: insertId,
                                 set_id: this.set().set_id,
-                                description: ko.observable(this.description),
+                                description: ko.observable(this.description()),
                                 front: ko.observable(this.newDateValue()),
                                 back: ko.observable(result), 
                                 difficulty: ko.observable(50),
@@ -135,16 +135,20 @@ define(function(require) {
                         this.set().cards.push(card);
                         this.set().size(this.set().cards().length);
                         this.newDateValue(new Date().toISOString().split('T')[0]);
-                        this.description = '';
+                        this.description('');
                         this.gspDialogClose();
                         var objDiv = document.getElementById("DatesTable").children[0];
                         objDiv.scrollTop = objDiv.scrollHeight;
                         this.setSize(this.set().cards().length);
 
-                }.bind(this), this.description);
+                }.bind(this), this.description());
          
             }else{
-                window.App.toast("Nie rozpoznano daty");
+                if(!this.description().length){
+                    window.App.toast("Brak opisu daty");
+                }else{
+                    window.App.toast("Nie rozpoznano daty");
+                }
             }  
         },
 

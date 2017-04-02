@@ -7,8 +7,10 @@ define(function(require) {
 		timer: null,
 		setId:0,
 		errorCount: ko.observable(0),
-		initialize: function(questions, cards){
+		gsp: false,
+		initialize: function(questions, cards, gsp){
 			event.stopPropagation();
+			this.gsp = gsp;
 			this.allCards(cards());
 			this.testIndex(0);
 			this.errorCount(0);
@@ -44,11 +46,19 @@ define(function(require) {
 							};
 				var showfront = Math.random()<0.5;
 				if(showfront<0.5){ //pytanie malarz
+					if(this.gsp){
+						tests[i].right.content = ko.observable(tests[i].right.description());
+					}else{
+						tests[i].right.content = ko.observable(tests[i].right.back());	
+					}
 					tests[i].left.content = ko.observable(tests[i].left.front());
-					tests[i].right.content = ko.observable(tests[i].right.back());
 				}
 				else{
-					tests[i].left.content = ko.observable(tests[i].left.back());
+					if(this.gsp){
+						tests[i].left.content = ko.observable(tests[i].left.description());
+					}else{
+						tests[i].left.content = ko.observable(tests[i].left.back());
+					}
 					tests[i].right.content = ko.observable(tests[i].right.front());
 				}			
 
@@ -57,7 +67,11 @@ define(function(require) {
 		},
 
 		goBack: function(){
-			document.getElementById('SetsMenuScreen').style.display='block';
+			if(this.gsp){
+				document.getElementById('GSPMenuScreen').style.display='block';
+			}else{	
+				document.getElementById('SetsMenuScreen').style.display='block';
+			}
             document.getElementById('TestsMenuScreen').style.display='none';
 		},
 
@@ -119,12 +133,21 @@ define(function(require) {
 		},
 
 		calculateQuestionResults: function(result){
-			var editingL = window.App.setList.sets()
+			if(this.gsp){
+				var editingL = window.App.gspSetList.gspSets()
 					.filter(function(el){return el.set_id == this.setId; }.bind(this))[0].cards()
 					.filter(function(el){return el.card_id == this.currentTest().left.card_id;}.bind(this))[0];
-			var editingR = window.App.setList.sets()
+				var editingR = window.App.gspSetList.gspSets()
 					.filter(function(el){return el.set_id == this.setId; }.bind(this))[0].cards()
 					.filter(function(el){return el.card_id == this.currentTest().right.card_id;}.bind(this))[0];
+			}else{
+				var editingL = window.App.setList.sets()
+						.filter(function(el){return el.set_id == this.setId; }.bind(this))[0].cards()
+						.filter(function(el){return el.card_id == this.currentTest().left.card_id;}.bind(this))[0];
+				var editingR = window.App.setList.sets()
+						.filter(function(el){return el.set_id == this.setId; }.bind(this))[0].cards()
+						.filter(function(el){return el.card_id == this.currentTest().right.card_id;}.bind(this))[0];
+			}
 			if(result){
 				editingL.success++;
 				editingR.success++;

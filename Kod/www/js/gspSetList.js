@@ -50,9 +50,9 @@ define(function(require) {
         gotoTestMenu: function(el, event){
         	event.stopPropagation();
         	if(!el.cards().length){
-        		window.App.cardList.fillCards(el, function(){window.App.testMenu.initialize(el,event);});
+        		window.App.cardList.fillCards(el, function(){window.App.testMenu.initialize(el,event, true);}, true);
         	}else{
-        		window.App.testMenu.initialize(el,event);
+        		window.App.testMenu.initialize(el,event, true);
         	}
         },
         gotoDatesList: function(el, event){

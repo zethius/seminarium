@@ -7,9 +7,11 @@ define(function(require) {
 		timer: null,
 		setId:0,
 		errorCount: ko.observable(0),
-		initialize: function(questions, cards){
+		gsp: false,
+		initialize: function(questions, cards, gsp){
 			event.stopPropagation();
 			this.allCards(cards());
+			this.gsp = gsp;
 			this.testIndex(0);
 			this.errorCount(0);
 			this.currentTest(null);
@@ -63,11 +65,19 @@ define(function(require) {
 				if(showfront<0.5){ //pytanie malarz
 					tests[i].question.content = ko.observable(tests[i].question.front());
 					for(var j=0; j<tests[i].answers.length; j++){
-						tests[i].answers[j].content = ko.observable(tests[i].answers[j].back());
+						if(this.gsp){
+							tests[i].answers[j].content = ko.observable(tests[i].answers[j].description());
+						}else{
+							tests[i].answers[j].content = ko.observable(tests[i].answers[j].back());
+						}
 					}
 				}
 				else{
-					tests[i].question.content = ko.observable(tests[i].question.back());
+					if(this.gsp){
+						tests[i].question.content = ko.observable(tests[i].question.description());
+					}else{
+						tests[i].question.content = ko.observable(tests[i].question.back());
+					}
 					for(var j=0; j<tests[i].answers.length; j++){
 						tests[i].answers[j].content = ko.observable(tests[i].answers[j].front());
 					}
@@ -77,7 +87,11 @@ define(function(require) {
 		},
 
 		goBack: function(){ //TODO
-			document.getElementById('SetsMenuScreen').style.display='block';
+			if(this.gsp){
+				document.getElementById('GSPMenuScreen').style.display='block';
+			}else{	
+				document.getElementById('SetsMenuScreen').style.display='block';
+			}
             document.getElementById('TestsMenuScreen').style.display='none';
 		},
 
@@ -99,6 +113,8 @@ define(function(require) {
 			this.tests([]);
 			this.currentTest(null);
 			var endingResult = "Twój wynik to:<BR>Poprawnych <span style='color=green'>"+ right +"</span> na "+this.testIndex()+" pytań.";
+
+
 			document.getElementById('TestsMenuScreen').style.display='block';
        		document.getElementById('QuizScreen').style.display='none';
 			event.stopPropagation();
@@ -129,9 +145,16 @@ define(function(require) {
 
 		calculateQuestionResults: function(result){
 			this.currentTest().answers.forEach(function(card){
-				var editing = window.App.setList.sets()
+				if(this.gsp){
+					var editing = window.App.gspSetList.gspSets()
+						.filter(function(el){return el.set_id == this.setId; }.bind(this))[0].cards()
+						.filter(function(el){return el.card_id == card.card_id;})[0];
+				}
+				else{
+					var editing = window.App.setList.sets()
 					.filter(function(el){return el.set_id == this.setId; }.bind(this))[0].cards()
 					.filter(function(el){return el.card_id == card.card_id;})[0];
+				}
 				if(result){
 					editing.success++;
 				}else{

@@ -21,13 +21,14 @@ define(function(require) {
             this.show();
         },
 
-        fillCards: function(set, fn){
+        fillCards: function(set, fn, gsp){
               window.App.db.getCards(set.set_id, function(cards){
                 for(var j = 0; j < cards.rows.length; j++)
                     {
                         var card =  cards.rows.item(j);
                         card.front = ko.observable(card.front);
                         card.back = ko.observable(card.back);
+                        card.description = ko.observable(card.description);
                         card.color = ko.observable(window.App.db.colors[card.color-1].color_value);
                         var diff = 0.5;
                         if(card.success > 0 ||  card.error > 0){
@@ -38,7 +39,7 @@ define(function(require) {
                     }
                 window.App.cardList.setSize(set.cards().length);
                 fn(); //uzyte do wyswietlenia listy kart lub menu testow
-            }.bind(this)); 
+            }.bind(this), gsp); 
         },
 
         prepareDeadline: function(deadline){
