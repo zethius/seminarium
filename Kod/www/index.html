@@ -73,7 +73,7 @@
                                 data-bind="click: $parent.goToCardEdit, attr: { 'id': 'TESTCARD'}, css:{ 'hardCard': difficulty()>80}, style:{ borderColor: color}">
                                     <td class="front"><div data-bind="text: front"></div></td>
                                     <td class="back"><div data-bind="text: back"></div></td>
-                                    <td class="difficulty"><span data-bind="text: difficulty()+'%' "></span></td>
+                                    <td class="difficulty"><div data-bind="text: 100 - difficulty()+'%' "></div></td>
                                     <td class="button" data-bind="click: $parent.removeCard"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></td>
                                 </tr>
                             </tbody>

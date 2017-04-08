@@ -31,7 +31,7 @@ define(function(require) {
 			if( questions.length == 5){ //dla testu S bez powtorzen
 				for(var i = 0; i< questions.length; i++){
 					var ans = this.allCards().slice(); //duplicate allcards
-					ans=ans.filter(function(card){return card.card_id != questions[i].card_id }); //filter out answer
+					ans = ans.filter(function(card){return card.card_id != questions[i].card_id }); //filter out answer
 					tests[i] = {
 						question: questions[i],
 						answers: [Object.create(ans.pop()), Object.create(ans.pop()), Object.create(ans.pop()), Object.create(questions[i])]
@@ -162,7 +162,7 @@ define(function(require) {
 					this.errorCount(this.errorCount()+1);
 				}
 				var diff = (editing.error / (editing.success+editing.error)).toFixed(2);
-				editing.difficulty(  diff*100 );
+				editing.difficulty(  (diff*100).toFixed(0) );
 				window.App.db.updateCardSuccess(result,card.card_id);
 			}.bind(this));
 		

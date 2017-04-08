@@ -157,9 +157,9 @@ define(function(require) {
 				this.errorCount(this.errorCount()+1);
 			}
 			var diffL = (editingL.error / (editingL.success+editingL.error)).toFixed(2);
-				editingL.difficulty(  diffL*100 );
+				editingL.difficulty(  (diffL*100).toFixed(0) );
 			var diffR = (editingR.error / (editingR.success+editingR.error)).toFixed(2);
-				editingR.difficulty(  diffR*100 );
+				editingR.difficulty(  (diffR*100).toFixed(0));
 				
 			window.App.db.updateCardSuccess(result,this.currentTest().left.card_id);
 			window.App.db.updateCardSuccess(result,this.currentTest().right.card_id);

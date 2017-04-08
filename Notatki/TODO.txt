@@ -1,4 +1,4 @@
-﻿ 			ART OF MEMORY
+ 			ART OF MEMORY
 
 HARMONOGRAM:
 Do 23.12: implementacja przypomnień, deadline'u daty (+kalendarz)
@@ -12,14 +12,35 @@ Główny System Pamięciowy (GSP):
 
 
 Praca pisemna: 
-Aplikacja na system Android wspierająca procesy nauki i zapamiętywania
-Student w ramach pracy przeanalizuje i wybierze kilka mnemotechnik 
+Temat: Aplikacja na system Android wspierająca procesy nauki i zapamiętywania
+Opis: Student w ramach pracy przeanalizuje i wybierze kilka mnemotechnik 
 oraz zaprojektuje i zaimplementuje aplikację na system Android usprawniającą ich wykorzystywanie
+	6. Wstep:
+		-o czym praca
+		-o konkursach na pamiec
+		-o powstawaniu nowych mnemotechnik
+		-brak w polskim szkolnictwie ( a nacisk na pamieciowke), kursy platne - krytyka
+		-organizacja pracy (co w ktorym rozdziale)
+		-w czym zaimplementowano
+	1. mnemotechniki:
+		-analiza mnemotechnik
+		-poleganie na indywidualizacji 
+	3. przeglad aplikacji mobilnych
+		-pol strony na aplikacje (akapit + zrzut ekranu)
+	2/4. opis aplikacji:
+		- jaki byl problem i jak go rozwiazano
+		- kazdy modul opisany jako osobny podrozdzial
+		- uzasadnienie dlaczego w konkretny sposob 
+		- przykladowe uzycie i wynik
+	5. podsumowanie:
+		- co zostalo zrobione 
+		- kierunek w ktorym mozna rozwinac aplikacje ( co mozna zrobic )
+		bibliografia
+			-1 ksiazka
+			-7-8 linkow (kazda mnemotechnika, aplikacja) + data dostepu
 
-	- zarys działania CORDOVA
 	-state of art: przyklady podobnych rozwiazan na rynku
-	-wykorzystane biblioteki: knockout, jquery, requireJs
-	-trudności związane z pisaniem aplikacji wyglądającej tak samo dobrze na każdej rozdzielczości i jak im zaradzić
+	we wstepie i w opisie aplikacji: -trudności związane z pisaniem aplikacji wyglądającej tak samo dobrze na każdej rozdzielczości i jak im zaradzić
 	-mnemotechniki: fiszki i GSP
 	-mnemotechniki: opisac palac pamieci i czemu go nie zaimplementowano na mobilne
 	-mnemotechniki: zestawy fiszek jako sposób kategoryzowania wiedzy
@@ -28,9 +49,10 @@ oraz zaprojektuje i zaimplementuje aplikację na system Android usprawniającą 
 
 
 TODO
-- trudnosc zestawu
+
 -test do cial
--GSP -> osobny zestaw id=0 z samymi datami? front = data, back = wygenerowane zdanie
+-import eksport zestawow
+-trudnosc zestawu
 -zmiana widoku listy fiszek: z listy na kafelki (fiszki- z przyciskiem do obrocenia na druga strone)
 -kalendarz
 

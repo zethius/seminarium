@@ -60,7 +60,8 @@ define(function(require) {
 
 		getCardsForTest: function(){
 			var size = this.size();
-			var allCards = this.shuffle(this.set.cards());
+			var cardsForTest = this.set.cards().slice(); //skopiowanie fiszek z  zestawu zeby nie pomieszac kolejnosci w wyswietlaniu
+			var allCards = this.shuffle(cardsForTest);
 			var cards = ko.observableArray([]);
 			if(size == 'L'){  //100%
 				cards(allCards);
@@ -82,11 +83,16 @@ define(function(require) {
 
 		shuffle: function(cards) {
 			var currentIndex = cards.length, temporaryValue, randomIndex;
-
+			cards = cards.sort(function(a,b){ return a.difficulty() - b.difficulty();});
 		  	while (0 !== currentIndex) 
 		  	{
 			    randomIndex = Math.floor(Math.random() * currentIndex);
 			    currentIndex -= 1;
+			    var conditionToSort = Math.random() - Math.random()*cards[currentIndex].difficulty();
+		  		if( conditionToSort>0 ){ //uwzglednienie trudnosci karty - jak przebije warunek to nie tasujemy i zostaje z brzegu
+		  			console.log("Przebitka",conditionToSort);
+		  			continue;
+		  		}
 			    temporaryValue = cards[currentIndex];
 			    cards[currentIndex] = cards[randomIndex];
 			    cards[randomIndex] = temporaryValue;
