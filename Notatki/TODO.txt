@@ -1,9 +1,5 @@
  			ART OF MEMORY
 
-HARMONOGRAM:
-Do 23.12: implementacja przypomnień, deadline'u daty (+kalendarz)
-Do 31.12: GSP
-
 Główny System Pamięciowy (GSP):
 	-skojarzenie cyfr z literami lub całych dat ze słowami
 	-użytkownik wpisuje datę/liczbę i ma możliwośc wygenerowania słowa (na podstawie skojarzeń cyfr z literami) lub wpisania własnego
@@ -52,9 +48,22 @@ TODO
 
 -test do cial
 -import eksport zestawow
--trudnosc zestawu
 -zmiana widoku listy fiszek: z listy na kafelki (fiszki- z przyciskiem do obrocenia na druga strone)
 -kalendarz
+
+
+
+Przeglad aplikacji: 
+https://play.google.com/store/apps/details?id=com.studymode.cram&hl=pl
+https://play.google.com/store/apps/details?id=org.urbian.android.games.memorytrainer
+https://play.google.com/store/apps/details?id=air.biz.krokodyl.Fiszkoteka&hl=pl
+
+
+
+Bibliografia:
+http://artofmemory.com/
+
+
 
 
 Trudnosci: knockout + svg databinding

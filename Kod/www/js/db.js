@@ -38,6 +38,7 @@ define(function(require){
 						set.name = ko.observable(set.name);
 						set.icon = ko.observable(window.App.db.icons[set.icon-1].icon_value());
 						set.cards = ko.observableArray();
+						set.difficulty = ko.observable(set.difficulty);
 						set.deadline = ko.observable(set.deadline);
 						setsArray.push(set);
 					}
@@ -50,6 +51,7 @@ define(function(require){
 						var set = sets.rows.item(i);
 						set.size = ko.observable(set.size);
 						set.name = ko.observable(set.name);
+						set.difficulty = ko.observable(set.difficulty);
 						set.icon = ko.observable(window.App.db.icons[set.icon-1].icon_value());
 						set.cards = ko.observableArray();
 						set.deadline = ko.observable(set.deadline);
@@ -69,6 +71,9 @@ define(function(require){
 				updateSetName: function(setName, setId){
 					this.execQuery("UPDATE sets SET name=(?) WHERE id = (?)",[setName,setId]);
 				},
+				updateSetDifficulty: function(difficulty, setId){
+					this.execQuery("UPDATE sets SET difficulty=(?) WHERE id = (?)",[difficulty,setId]);
+				},
 				updateSetDeadline: function(setDeadline, setId){
 					this.execQuery("UPDATE sets SET deadline=(?) WHERE id = (?)",[setDeadline,setId]);
 				},
@@ -83,10 +88,10 @@ define(function(require){
 
 				saveSet:function(name, icon, fn, gsp){
 					this.database.transaction(function(tx){
-						var args = [name,0.5,icon];
+						var args = [name,50,icon];
 						var sql = "INSERT INTO sets(name, difficulty, icon_id) VALUES (?,?,?)";
 						if(gsp == true){
-							args =  [name,0.5,icon,1];
+							args =  [name,50,icon,1];
 							sql = "INSERT INTO sets(name, difficulty, icon_id, gsp) VALUES (?,?,?,?)";
 						}
 						tx.executeSql(sql,args, 
@@ -265,7 +270,7 @@ define(function(require){
 					document.getElementById("MainMenuSetsButton").style.display='none';
 					document.getElementById("MainMenuBodyButton").style.display='none';
 					document.getElementById("MainMenuGSPButton").style.display='none';
-					document.getElementById("Uncombatibile").style.display='';
+					document.getElementById("Incompatible").style.display='';
 					window.App.toast("Niewspierana przeglądarka", 1000);
 				}
 			},

@@ -27,7 +27,8 @@ define(function(require) {
 					 size: ko.observable(0),
 					 name:ko.observable('Nowy zestaw'), 
 					 icon: ko.observable(window.App.icons[0].icon_value()),
-					 deadline: ko.observable('')
+					 deadline: ko.observable(''),
+					 difficulty: ko.observable(50)
 					});
 			}.bind(this));
 		},

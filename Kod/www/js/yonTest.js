@@ -133,21 +133,24 @@ define(function(require) {
 		},
 
 		calculateQuestionResults: function(result){
+			var set = null;
 			if(this.gsp){
-				var editingL = window.App.gspSetList.gspSets()
-					.filter(function(el){return el.set_id == this.setId; }.bind(this))[0].cards()
+				set = window.App.gspSetList.gspSets().filter(function(el){return el.set_id == this.setId; }.bind(this))[0];
+				var editingL = set.cards()
 					.filter(function(el){return el.card_id == this.currentTest().left.card_id;}.bind(this))[0];
-				var editingR = window.App.gspSetList.gspSets()
-					.filter(function(el){return el.set_id == this.setId; }.bind(this))[0].cards()
+				var editingR = set.cards()
 					.filter(function(el){return el.card_id == this.currentTest().right.card_id;}.bind(this))[0];
 			}else{
-				var editingL = window.App.setList.sets()
-						.filter(function(el){return el.set_id == this.setId; }.bind(this))[0].cards()
+				set = window.App.setList.sets().filter(function(el){return el.set_id == this.setId; }.bind(this))[0];
+				var editingL = set.cards()
 						.filter(function(el){return el.card_id == this.currentTest().left.card_id;}.bind(this))[0];
-				var editingR = window.App.setList.sets()
-						.filter(function(el){return el.set_id == this.setId; }.bind(this))[0].cards()
+				var editingR = set.cards()
 						.filter(function(el){return el.card_id == this.currentTest().right.card_id;}.bind(this))[0];
 			}
+			var setDifficulty = 0;
+			set.cards().forEach(function(card){setDifficulty += parseInt(card.difficulty());});
+			setDifficulty = (setDifficulty / set.cards().length).toFixed(0);
+			set.difficulty(setDifficulty);
 			if(result){
 				editingL.success++;
 				editingR.success++;
@@ -160,7 +163,7 @@ define(function(require) {
 				editingL.difficulty(  (diffL*100).toFixed(0) );
 			var diffR = (editingR.error / (editingR.success+editingR.error)).toFixed(2);
 				editingR.difficulty(  (diffR*100).toFixed(0));
-				
+			window.App.db.updateSetDifficulty(setDifficulty,set.set_id);
 			window.App.db.updateCardSuccess(result,this.currentTest().left.card_id);
 			window.App.db.updateCardSuccess(result,this.currentTest().right.card_id);
 			this.nextQuestion();

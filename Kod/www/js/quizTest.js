@@ -144,15 +144,19 @@ define(function(require) {
 		},
 
 		calculateQuestionResults: function(result){
+			var set = null;
+			if(this.gsp){
+				set = window.App.gspSetList.gspSets().filter(function(el){return el.set_id == this.setId; }.bind(this))[0]
+			}else{
+				set =  window.App.setList.sets().filter(function(el){return el.set_id == this.setId; }.bind(this))[0];
+			}
 			this.currentTest().answers.forEach(function(card){
 				if(this.gsp){
-					var editing = window.App.gspSetList.gspSets()
-						.filter(function(el){return el.set_id == this.setId; }.bind(this))[0].cards()
+					var editing = set.cards()
 						.filter(function(el){return el.card_id == card.card_id;})[0];
 				}
 				else{
-					var editing = window.App.setList.sets()
-					.filter(function(el){return el.set_id == this.setId; }.bind(this))[0].cards()
+					var editing = set.cards()
 					.filter(function(el){return el.card_id == card.card_id;})[0];
 				}
 				if(result){
@@ -165,7 +169,11 @@ define(function(require) {
 				editing.difficulty(  (diff*100).toFixed(0) );
 				window.App.db.updateCardSuccess(result,card.card_id);
 			}.bind(this));
-		
+			var setDifficulty = 0;
+			set.cards().forEach(function(card){setDifficulty += parseInt(card.difficulty());});
+			setDifficulty = (setDifficulty / set.cards().length).toFixed(0);
+			set.difficulty(setDifficulty);
+			window.App.db.updateSetDifficulty(setDifficulty,set.set_id);
 			this.nextQuestion();
 		},
 	};

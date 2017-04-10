@@ -32,7 +32,7 @@
                     <div class="Menubutton lightBlue" id="MainMenuSetsButton" data-bind="click: setList.initialize.bind(setList)">Fiszki</div>
                     <div class="Menubutton darkBlue" id="MainMenuBodyButton" data-bind="click: bodyList.initialize.bind(bodyList)">Ciało</div>
                     <div class="Menubutton blackBlue" id="MainMenuGSPButton" data-bind="click: gspSetList.initialize.bind(gspSetList)">GSP</div>
-                    <div style='display:none' id="Uncombatibile">Urządzenie niekompatybilne z aplikacją</div>
+                    <div style='display:none' id="Incompatible">Urządzenie niekompatybilne z aplikacją</div>
                 </div>
 
                 <div id="SetsMenuScreen" style="display:none">
@@ -44,6 +44,7 @@
                                     <td class="icon"><img width="32px" height="32px" data-bind="attr : {src: icon}" /></td>
                                     <td class="label" data-bind="text: name"></td>
                                     <td class="size" data-bind="text: size"></td>
+                                    <td data-bind="text: 100 - difficulty()+'%'"></td>
                                     <td class="edit" data-bind="click: $parent.gotoTestMenu"><i class="fa fa-graduation-cap" aria-hidden="true"></i></td>
                                     <td class="button" data-bind="click: $parent.removeSet"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></td>
                                 </tr>
