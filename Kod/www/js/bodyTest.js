@@ -53,7 +53,7 @@ define(function(require) {
 			this.bodyparts(null);
 			clearInterval(this.timer);
 			var endingResult = "";
-			if( timeout ){
+			if( timeout == true ){
 				endingResult = "Czas minął!";
 			}else{
 				var correct = 0;
