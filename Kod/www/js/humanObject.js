@@ -2,26 +2,17 @@ define(function(require) {
 	
 	var humanObject = {
 		human: ko.observable(),
-
-		humanBody: ko.observableArray([
-			{id: 0, color:"#231f20", text:ko.observable(''), image:'img/body_1.svg'},
-			{id: 1, color:"#231f20", text:ko.observable(''), image:'img/body_2.svg'},
-			{id: 2, color:"#231f20", text:ko.observable(''), image:'img/body_3.svg'},
-			{id: 3, color:"#231f20", text:ko.observable(''), image:'img/body_4.svg'},
-			{id: 4, color:"#231f20", text:ko.observable(''), image:'img/body_5.svg'},
-			{id: 5, color:"#231f20", text:ko.observable(''), image:'img/body_6.svg'}
-			]),
+		viewMode: ko.observable(false),
 		initialize: function( human ){
 			console.log(human);
 			this.human(human);
 			this.show();
 
-			for(var i = 0; i < this.humanBody().length; i++){
-				human.bodyparts[i].text() ? this.humanBody()[i].text(human.bodyparts[i].text()) : this.humanBody()[i].text('');
+			for(var i = 0; i < this.human().bodyparts.length; i++){
 				var svgholder = $('#part'+i).find("object")[0];
 				svgholder.number = i;
 				svgholder.onload = function( event ){ 
-					this.setColor(this.humanBody()[event.currentTarget.number], event.currentTarget.number, event.currentTarget);
+					this.setColor(this.human().bodyparts[event.currentTarget.number], event.currentTarget.number, event.currentTarget);
 				}.bind(this);
 
 
@@ -38,7 +29,6 @@ define(function(require) {
 		setColor: function(bodypart, index, svg){
 			var colorFilled = '#11718d';
 			var colorEmpty = '#d6eff4'
-			// if(bodypart.id)
 
 			if(bodypart.text().length){
 				svg.contentDocument.styleSheets[0].cssRules[0].style.fill=colorFilled;

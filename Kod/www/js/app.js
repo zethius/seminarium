@@ -20,7 +20,8 @@ define(function(require) {
             window.App.testMenu = require('testMenu');
             window.App.quizTest = require('quizTest');
             window.App.yonTest = require('yonTest');
-
+            window.App.bodyTest = require('bodyTest');
+           
             window.App.bodyList = require('humanList');
             window.App.humanObject = require('humanObject');
             window.App.wordList = require('wordList');
@@ -30,7 +31,13 @@ define(function(require) {
             this.appReady(true);
             this.bindAllEvents();            
         },
-        
+        getTimerColor: function(percent, start, end) {
+          var a = percent / 100,
+              b = (end - start) * a,
+              c = b + start;
+
+          return 'hsl('+c+', 65%, 50%)';
+        },
         placeCaretAtEnd: function(el) {
             el.focus();
             if (typeof window.getSelection != "undefined"

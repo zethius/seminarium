@@ -11,6 +11,8 @@
 
             <script src="lib/less.js" type="text/javascript"></script>
             <script src="lib/jquery.js" type="text/javascript"></script>
+            <script src="lib/jquery-ui.min.js" type="text/javascript"></script>
+            <script src="lib/jquery.ui.touch-punch.min.js"></script>
             <script src="lib/knockout.js" type="text/javascript"></script>
             <title>Art of Memory</title>
         </head>
@@ -151,9 +153,6 @@
                            <span data-bind="text: content()"></span>
                         </div>
                     </div>
-                    <div>
-                        
-                    </div>
                 </div>
 
                 <div id="YonScreen" style="display:none">
@@ -181,6 +180,15 @@
                     </div>            
                 </div>
 
+                <div id="BodyTestScreen" style="display:none">
+                    <div id='bodyTimer' class="timer"></div>
+                    <ol class="testBodyparts" data-bind="foreach: bodyparts">
+                        <li class="bodypart testBodypart" data-bind="text: text,  attr:{id: 'testBodypart'+id}"></li>
+                    </ol>
+                    <div class="Menubutton darkGreen" style="margin-top: 2em" data-bind="click: checkResult">Zatwierdź</div>
+                </div>
+                
+
                 <div id="HumanMenuScreen" style="display:none">
                     <h1>Ciała pamięci</h1>
                     <div id='helpBodies' class="help"><i class="fa fa-question" aria-hidden="true"></i></div>
@@ -188,6 +196,7 @@
                             <tbody data-bind="foreach: bodies">
                                 <tr class="setRow" data-bind="click: $parent.gotoBodyEdit">
                                     <td class="label" data-bind="text: name"></td>
+                                     <td class="edit" data-bind="click: $parent.goToTest"><i class="fa fa-graduation-cap" aria-hidden="true"></i></td>
                                     <td class="button" data-bind="click: $parent.removeBody"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></td>
                                 </tr>
                             </tbody>
@@ -200,12 +209,17 @@
                     <div data-bind="if: human()">
                         <h1 id="HumanName" data-bind=" text: human().name">__CZLOWIEK__</h1>
                         <i id="HumanNameEdit" class="fa fa-pencil fa-2x" aria-hidden="true"></i>
-                        <div class="humanBody" data-bind="foreach: humanBody">
-                            <!-- <img class="bodyPart" height="65" width="320px" data-bind="attr : {src: image, id: 'part'+id}, click: $parent.bodypartClicked"  /> -->
-                            <div  class="bodyPart" data-bind="click: $parent.bodypartClicked, attr:{id: 'part'+id}">
-                            <object  class="bodyPartSVG" width="320" height="65" type="image/svg+xml" data-bind="attr : {data: image}">    </object>
+                        <i data-bind="click: function(){ viewMode(!viewMode());}"class="fa fa-eye fa-2x" aria-hidden="true"></i>
+                        <div class="humanBody" data-bind="foreach: human().bodyparts">
+                            <div  class="bodyPart" data-bind="visible: !$parent.viewMode(), click: $parent.bodypartClicked, attr:{id: 'part'+id}">
+                            <object  class="bodyPartSVG" width="320" height="65" type="image/svg+xml" data-bind="attr : {data: image}"></object>
                             </div>
-                            <textarea class='bodyPartText' style='display:none' data-bind="value: text, attr:{id: 'partText'+id}, event: { blur: $parent.bodypartSave }"></textarea>      
+                            <textarea   class='bodyPartText' style='display:none' 
+                                        data-bind=" value: text,
+                                                    attr:  {id: 'partText'+id}, 
+                                                    event: { blur: $parent.bodypartSave.bind($parent) }">
+                            </textarea>   
+                            <div class="bodyPartInvisible" data-bind="visible: $parent.viewMode(), text: text"></div>
                         </div>
                     </div>
                     <div class="Menubutton darkBlue" id="HumanBodyBack"><i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i></div>

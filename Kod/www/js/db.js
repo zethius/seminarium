@@ -161,12 +161,13 @@ define(function(require){
 						{
 							var body = bodies.rows.item(i);
 							body.name = ko.observable(body.name);
-							body.bodyparts = [{id:0, text:  ko.observable(body.part0)},
-								{id:1, text:  ko.observable(body.part1)},
-								{id:2, text:  ko.observable(body.part2)},
-								{id:3, text:  ko.observable(body.part3)},
-								{id:4, text:  ko.observable(body.part4)},
-								{id:5, text:  ko.observable(body.part5)}
+							body.bodyparts =
+								[{id:0, color:"#231f20", image:'img/body_1.svg' ,text:  ko.observable(body.part0)},
+								{id:1, color:"#231f20", image:'img/body_2.svg' ,text:  ko.observable(body.part1)},
+								{id:2, color:"#231f20", image:'img/body_3.svg' ,text:  ko.observable(body.part2)},
+								{id:3, color:"#231f20", image:'img/body_4.svg' ,text:  ko.observable(body.part3)},
+								{id:4, color:"#231f20", image:'img/body_5.svg' ,text:  ko.observable(body.part4)},
+								{id:5, color:"#231f20", image:'img/body_6.svg' ,text:  ko.observable(body.part5)}
 								];
 							delete body.part0;
 							delete body.part1;

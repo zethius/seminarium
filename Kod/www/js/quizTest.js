@@ -122,10 +122,13 @@ define(function(require) {
 		},
 		questionTimer: function(){
 			var width = 25;
+			var percent = 0;
 			this.timer = setInterval(function(){
 				// if(width<74.9){
 				if(width<49.9){
 					width+=0.02; //przesuniecie o 20 to jedna sekunda
+					percent++;
+					$('#quizTimer').css('background-color',window.App.getTimerColor( percent/12.44, 120, 0 ));
 					document.getElementById("quizTimer").style.marginRight = width +'%';
 					document.getElementById("quizTimer").style.marginLeft = width +'%';
 				}

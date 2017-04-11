@@ -46,7 +46,6 @@ oraz zaprojektuje i zaimplementuje aplikację na system Android usprawniającą 
 
 TODO
 
--test do cial
 -import eksport zestawow
 -zmiana widoku listy fiszek: z listy na kafelki (fiszki- z przyciskiem do obrocenia na druga strone)
 -kalendarz

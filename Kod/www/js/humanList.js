@@ -25,12 +25,12 @@ define(function(require) {
 					{ id: insertId,
 					 name: ko.observable('Adam'),
 					 bodyparts: [
-					 				{id:0, text:  ko.observable('')},
-									{id:1, text:  ko.observable('')},
-									{id:2, text:  ko.observable('')},
-									{id:3, text:  ko.observable('')},
-									{id:4, text:  ko.observable('')},
-									{id:5, text:  ko.observable('')}
+					 				{id:0, color:"#231f20", image:'img/body_1.svg', text:  ko.observable('')},
+									{id:1, color:"#231f20", image:'img/body_2.svg', text:  ko.observable('')},
+									{id:2, color:"#231f20", image:'img/body_3.svg', text:  ko.observable('')},
+									{id:3, color:"#231f20", image:'img/body_4.svg', text:  ko.observable('')},
+									{id:4, color:"#231f20", image:'img/body_5.svg', text:  ko.observable('')},
+									{id:5, color:"#231f20", image:'img/body_6.svg', text:  ko.observable('')}
 								]
 					});
 			}.bind(this));
@@ -49,7 +49,10 @@ define(function(require) {
         gotoBodyEdit: function(el){
         	window.App.humanObject.initialize(el);
         },
-
+        goToTest: function(body){
+    		event.stopPropagation();
+    		window.App.bodyTest.initialize(body);
+        },
         onRemoveConfirm:function(buttonIndex){
 	    	if(buttonIndex==1){
 	    		console.log(this);
