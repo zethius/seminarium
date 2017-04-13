@@ -50,7 +50,6 @@ define(function(require) {
 		    return bodyparts;
 		},
 		checkResult: function( timeout ){
-			this.bodyparts(null);
 			clearInterval(this.timer);
 			var endingResult = "";
 			if( timeout == true ){
@@ -67,6 +66,7 @@ define(function(require) {
 		       	event.stopPropagation();
 			}
 
+			this.bodyparts(null);
 			document.getElementById('BodyTestScreen').style.display='none';
 	       	document.getElementById('HumanMenuScreen').style.display='block';
 			window.App.dialog(endingResult);
