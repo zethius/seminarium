@@ -13,6 +13,7 @@ define(function(require) {
             window.App.setList = require('setList');
             window.App.cardList = require('cardList');    
             window.App.cardObject = require('cardObject');
+            window.App.exporter = require('exporter');
 
             window.App.gspSetList = require('gspSetList');
             window.App.datesList = require('datesList');
@@ -29,7 +30,7 @@ define(function(require) {
 
             console.log("APP INIT");
             this.appReady(true);
-            this.bindAllEvents();            
+            this.bindAllEvents();
         },
         getTimerColor: function(percent, start, end) {
           var a = percent / 100,
@@ -66,28 +67,31 @@ define(function(require) {
             this.dialogElement.shown = true;
             window.App.dialogElement.el.children[0].innerHTML = content; 
         },
-
+        dialogClose: function(dialogElement){
+            if(dialogElement.shown || dialogElement.el.className == 'shown'){
+                dialogElement.el.className = 'closing';
+            }
+            setTimeout(function(){  dialogElement.el.className = dialogElement.el.className.replace("closing", "closed"); dialogElement.shown = false;  }, 400); 
+        },
+        dialogNode: function(DOM){
+            this.dialogElement.el.className='shown';
+            this.dialogElement.shown = true;
+            window.App.dialogElement.el.replaceChild(DOM, window.App.dialogElement.el.children[0]);
+        },
         toast: function( text ){
             var x = document.getElementById("snackbar")
             x.innerText = text;
             x.className = "show";
             setTimeout(function(){ x.className = x.className.replace("show", ""); }, 2000);
         },
-
+        deviceReadyBinding: function(){
+           document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
+        },
         bindAllEvents: function() {
-            document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
-
             $(window).click(function() {
-                if(event.target.id!='DialogContent' && (event.target.id!="GSPDialogContent" && (event.target.parentNode && event.target.parentNode.id!='GSPDialogContent')) ){
-                    if(window.App.dialogElement.shown || window.App.dialogElement.el.className == 'shown'){
-                        window.App.dialogElement.el.className = 'closing';
-                    }
-                    setTimeout(function(){  window.App.dialogElement.el.className = window.App.dialogElement.el.className.replace("closing", "closed"); window.App.dialogElement.shown = false;  }, 400); 
-                    if(window.App.gspdialogElement.shown || window.App.gspdialogElement.el.className == 'shown'){
-                        window.App.gspdialogElement.el.className = 'closing';
-                    }
-                    setTimeout(function(){  window.App.gspdialogElement.el.className = window.App.gspdialogElement.el.className.replace("closing", "closed"); window.App.gspdialogElement.shown = false;  }, 400); 
-             
+                if(event.target.parentElement && (event.target.parentElement.id!='Dialog' && event.target.parentElement.id!='GSPDialog' && event.target.parentElement.id!='DialogContent' && event.target.parentElement.id!='GSPDialogContent')){
+                    window.App.dialogClose(window.App.dialogElement);
+                    window.App.dialogClose(window.App.gspdialogElement);
                 }
             });
 
@@ -102,10 +106,11 @@ define(function(require) {
         },
 
         onDeviceReady: function() {
-            window.App.db.prepareDb.bind(window.App.db)();
-            window.App.fill();
+            this.initialize();
+            this.db.prepareDb.bind(this.db)();
+            this.fill();
         },
     };
-   ko.applyBindings(app, document.getElementById('MainMenuScreen'));
- return app;
+    ko.applyBindings(app, document.getElementById('MainMenuScreen'));
+    return app;
 });

@@ -29,22 +29,41 @@ define(function(require){
 		// window.openDatabase("mnemo", "2.0", "Mnemo DB", 1000000), //WEBSQL
 		// db: window.sqlitePlugin.openDatabase({name: "mnemo.db", location: 'default'}),
 		//FILL METHODS
-			getFullGSP: function(setsArray){
+			getFullGSP: function(setsArray, withCards){
 				this.getGSP(function(sets){
 					for(var i = 0; i < sets.rows.length; i++)
 					{
 						var set = sets.rows.item(i);
 						set.size = ko.observable(set.size);
 						set.name = ko.observable(set.name);
+						set.icon_id = set.icon;
 						set.icon = ko.observable(window.App.db.icons[set.icon-1].icon_value());
 						set.cards = ko.observableArray();
 						set.difficulty = ko.observable(set.difficulty);
 						set.deadline = ko.observable(set.deadline);
 						setsArray.push(set);
+						if(withCards == true){
+							window.App.db.getCards(set.set_id, function(cards){
+								var found = false;
+								var set = null;
+				                for(var j = 0; j < cards.rows.length; j++)
+				                    {
+				                        var card =  cards.rows.item(j);
+				                    	if(!found){
+											set = setsArray().filter(function(tmpset){return tmpset.set_id == card.set_id})[0];
+				                    		found = true;
+				                    	}
+				                        card.front = ko.observable(card.front);
+				                        card.back = ko.observable(card.back);
+				                        card.description = ko.observable(card.description);
+				                        set.cards.push(card);
+				                    }
+				            }.bind(this), true); 
+						}
 					}
 				});
 			},
-			getFullSets:function(setsArray){
+			getFullSets:function(setsArray, withCards){
 				this.getSets(function(sets){
 					for(var i = 0; i < sets.rows.length; i++)
 					{
@@ -52,38 +71,57 @@ define(function(require){
 						set.size = ko.observable(set.size);
 						set.name = ko.observable(set.name);
 						set.difficulty = ko.observable(set.difficulty);
+						set.icon_id = set.icon;
 						set.icon = ko.observable(window.App.db.icons[set.icon-1].icon_value());
 						set.cards = ko.observableArray();
 						set.deadline = ko.observable(set.deadline);
 						setsArray.push(set);
+						if(withCards == true){
+							window.App.db.getCards(set.set_id, function(cards){
+								var found = false;
+								var set = null;
+				                for(var j = 0; j < cards.rows.length; j++)
+				                    {
+				                        var card =  cards.rows.item(j);
+				                    	if(!found){
+											set = setsArray().filter(function(tmpset){return tmpset.set_id == card.set_id})[0];
+				                    		found = true;
+				                    	}
+				                        card.front = ko.observable(card.front);
+				                        card.back = ko.observable(card.back);
+				                        card.description = ko.observable(card.description);
+				                        set.cards.push(card);
+				                    }
+				            }.bind(this)); 
+						}
 					}
 				});
 			},
 		
 			//SET METHODS
 				getGSP: function(fn){
-					this.selectQuery("SELECT COUNT(c.id) as size, s.id as set_id, s.name, s.difficulty, s.deadline, s.icon_id AS icon FROM sets s LEFT JOIN cards c ON s.id = c.set_id WHERE s.gsp = 1 GROUP BY s.id",[],fn);
+					this.selectQuery("SELECT COUNT(c.id) as size, s.gsp, s.id as set_id, s.name, s.difficulty, s.deadline, s.icon_id AS icon FROM sets s LEFT JOIN cards c ON s.id = c.set_id WHERE s.gsp = 1 GROUP BY s.id",[],fn);
 				},
 				getSets:function(fn){
 					this.selectQuery("SELECT COUNT(c.id) as size, s.id as set_id, s.name, s.difficulty, s.deadline, s.icon_id AS icon FROM sets s LEFT JOIN cards c ON s.id = c.set_id WHERE s.gsp = 0 GROUP BY s.id",[],fn);
 				},
 
 				updateSetName: function(setName, setId){
-					this.execQuery("UPDATE sets SET name=(?) WHERE id = (?)",[setName,setId]);
+					this.selectQuery("UPDATE sets SET name=(?) WHERE id = (?)",[setName,setId]);
 				},
 				updateSetDifficulty: function(difficulty, setId){
-					this.execQuery("UPDATE sets SET difficulty=(?) WHERE id = (?)",[difficulty,setId]);
+					this.selectQuery("UPDATE sets SET difficulty=(?) WHERE id = (?)",[difficulty,setId]);
 				},
 				updateSetDeadline: function(setDeadline, setId){
-					this.execQuery("UPDATE sets SET deadline=(?) WHERE id = (?)",[setDeadline,setId]);
+					this.selectQuery("UPDATE sets SET deadline=(?) WHERE id = (?)",[setDeadline,setId]);
 				},
 				updateSetIcon: function(setIcon, setId){
 					console.log(setIcon);
-					this.execQuery("UPDATE sets SET icon_id=(?) WHERE id = (?)",[setIcon,setId]);
+					this.selectQuery("UPDATE sets SET icon_id=(?) WHERE id = (?)",[setIcon,setId]);
 				},
 
 				updateSet:function(setName, setIcon, setId){
-					this.execQuery("UPDATE sets SET name=(?), icon_id=(?) WHERE id = (?)",[setName,setIcon,setId]);
+					this.selectQuery("UPDATE sets SET name=(?), icon_id=(?) WHERE id = (?)",[setName,setIcon,setId]);
 				},
 
 				saveSet:function(name, icon, fn, gsp){
@@ -107,8 +145,8 @@ define(function(require){
 				},
 
 				deleteSet:function(setid){
-					this.execQuery("DELETE FROM sets WHERE id=(?)",[setid]);
-					this.execQuery("DELETE FROM cards WHERE set_id=(?)",[setid]);
+					this.selectQuery("DELETE FROM sets WHERE id=(?)",[setid]);
+					this.selectQuery("DELETE FROM cards WHERE set_id=(?)",[setid]);
 				},
 
 			//CARD METHODS
@@ -122,16 +160,16 @@ define(function(require){
 				},
 
 				deleteCard:function(cardid){
-					this.execQuery("DELETE FROM cards WHERE id=(?)",[cardid]);
+					this.selectQuery("DELETE FROM cards WHERE id=(?)",[cardid]);
 				},
 				updateCardFront: function(front, cardId){
-					this.execQuery("UPDATE cards SET front=(?) WHERE id = (?)",[front,cardId]);
+					this.selectQuery("UPDATE cards SET front=(?) WHERE id = (?)",[front,cardId]);
 				},
 				updateCardBack: function(back, cardId){
-					this.execQuery("UPDATE cards SET back=(?) WHERE id = (?)",[back,cardId]);
+					this.selectQuery("UPDATE cards SET back=(?) WHERE id = (?)",[back,cardId]);
 				},
 				updateCardColor: function(colorId, cardId){
-					this.execQuery("UPDATE cards SET color_id=(?) WHERE id = (?)",[colorId,cardId]);
+					this.selectQuery("UPDATE cards SET color_id=(?) WHERE id = (?)",[colorId,cardId]);
 				},
 				saveCard:function(front,back,color,set, fn, description){
 					//card difficulty = (card.error / (card.success + card.error)) * 100%
@@ -144,7 +182,9 @@ define(function(require){
 						}
 						tx.executeSql(sql,args, 
 							function(tx,res){
-								fn(res.insertId);
+								if(fn){
+									fn(res.insertId);
+								}
 							}
 					);
 					},function(err){
@@ -186,19 +226,25 @@ define(function(require){
 				updateBodyPart:function(bodypartId, value, bodyid){
 					var qr = "UPDATE bodies SET part"+bodypartId+"=(?) WHERE id = (?)";
 					// "UPDATE bodies SET (?)=(?) WHERE id = (?)"
-					this.execQuery(qr,[value,bodyid]);
+					this.selectQuery(qr,[value,bodyid]);
 				},
 				updateBodyName:function(bodyid,  name){
-					this.execQuery("UPDATE bodies SET name=(?) WHERE id = (?)",[name, bodyid]);
+					this.selectQuery("UPDATE bodies SET name=(?) WHERE id = (?)",[name, bodyid]);
 				},
 				deleteBody:function(bodyid){
-					this.execQuery("DELETE FROM bodies WHERE id=(?)",[bodyid]);
+					this.selectQuery("DELETE FROM bodies WHERE id=(?)",[bodyid]);
 				},
-				saveBody:function(name, fn){
+				saveBody:function(name, partsArray, fn){
 					this.database.transaction(function(tx){
-						tx.executeSql("INSERT INTO bodies(name) VALUES (?)",[name],
+						if(!partsArray){
+							partsArray = [{text:''},{text:''},{text:''}, {text:''},{text:''},{text:''}];
+						}
+						tx.executeSql("INSERT INTO bodies(name,part0,part1,part2,part3,part4,part5) VALUES (?,?,?,?,?,?,?)",
+							[name,partsArray[0].text,partsArray[1].text,partsArray[2].text,partsArray[3].text,partsArray[4].text,partsArray[5].text],
 							function(tx,res){
-								fn(res.insertId);
+								if(fn){
+									fn(res.insertId);
+								}
 							}
 						);
 					},function(err){
@@ -213,29 +259,15 @@ define(function(require){
 			updateCardSuccess: function(right, cardId){
 				console.log(right);
 				if(!right){
-					this.execQuery("UPDATE cards SET error = error+1 WHERE id = (?)",[cardId]);
+					this.selectQuery("UPDATE cards SET error = error+1 WHERE id = (?)",[cardId]);
 				}else{
-					this.execQuery("UPDATE cards SET success = success+1 WHERE id = (?)",[cardId]);
+					this.selectQuery("UPDATE cards SET success = success+1 WHERE id = (?)",[cardId]);
 				}
-				// this.execQuery("UPDATE cards SET difficulty = error/(error+success) WHERE id = (?)",[cardId]);
+				// this.selectQuery("UPDATE cards SET difficulty = error/(error+success) WHERE id = (?)",[cardId]);
 			},
 
 
 		//DB METHODS
-			execQuery: function(str,arr){
-				this.database.transaction(
-					function(tx){
-						tx.executeSql(str,arr,
-							function(tx){
-							}.bind(this));
-					}.bind(this),
-					function(err){
-						window.App.db.prepareDb(true);
-						window.App.toast("Nieaktualna baza danych - przywracanie domyślnej", 1000);
-						console.log(err.message);
-					}
-					);
-			},
 			selectQuery: function(str,arr,callback){
 				this.database.transaction(
 					function(tx){

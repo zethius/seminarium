@@ -20,7 +20,7 @@ define(function(require) {
 		},
 
 		newBody: function(){
-			window.App.db.saveBody("Adam",function(insertId){
+			window.App.db.saveBody("Adam", null, function(insertId){
 				this.bodies.push(
 					{ id: insertId,
 					 name: ko.observable('Adam'),

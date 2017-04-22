@@ -12,16 +12,16 @@ body {
     -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
     -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
     -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
-    background-color:#AFDDEA;
-    background-image:linear-gradient(bottom, #54B5D1 0%, #AFDDEA 51%);
-    background-image:-webkit-linear-gradient(bottom, #54B5D1 0%, #AFDDEA 51%);
-    background-image:-ms-linear-gradient(bottom, #54B5D1 0%, #AFDDEA 51%);
+    background-color:@gradientEnd;
+    background-image:linear-gradient(top, @gradientStart 0%, @gradientEnd 51%);
+    background-image:-webkit-linear-gradient(top, @gradientStart 0%, @gradientEnd 51%);
+    background-image:-ms-linear-gradient(top, @gradientStart 0%, @gradientEnd 51%);
     background-image:-webkit-gradient(
         linear,
-        left bottom,
         left top,
-        color-stop(0, #54B5D1),
-        color-stop(0.51, #AFDDEA)
+        left bottom,
+        color-stop(0, @gradientStart),
+        color-stop(0.51, @gradientEnd)
         );
      background-attachment:fixed;
      // font-family:'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
@@ -143,6 +143,9 @@ body {
     height: 2em;
     width: 2em;
     line-height: 2em;
+    &.export{
+      right:5em;
+    }
 }
 #GSPDialog, #Dialog {
   position: absolute;

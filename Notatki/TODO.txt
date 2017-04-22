@@ -24,6 +24,7 @@ oraz zaprojektuje i zaimplementuje aplikację na system Android usprawniającą 
 	3. przeglad aplikacji mobilnych
 		-pol strony na aplikacje (akapit + zrzut ekranu)
 	2/4. opis aplikacji:
+		- wykorzystane narzedzia
 		- jaki byl problem i jak go rozwiazano
 		- kazdy modul opisany jako osobny podrozdzial
 		- uzasadnienie dlaczego w konkretny sposob 
@@ -46,9 +47,9 @@ oraz zaprojektuje i zaimplementuje aplikację na system Android usprawniającą 
 
 TODO
 
--import eksport zestawow
 -zmiana widoku listy fiszek: z listy na kafelki (fiszki- z przyciskiem do obrocenia na druga strone)
 -kalendarz
+-personalizacja generowania dat
 
 
 
