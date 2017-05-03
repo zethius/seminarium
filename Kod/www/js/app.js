@@ -79,7 +79,7 @@ define(function(require) {
             window.App.dialogElement.el.replaceChild(DOM, window.App.dialogElement.el.children[0]);
         },
         toast: function( text ){
-            var x = document.getElementById("snackbar")
+            var x = document.getElementById("toast")
             x.innerText = text;
             x.className = "show";
             setTimeout(function(){ x.className = x.className.replace("show", ""); }, 2000);

@@ -84,13 +84,13 @@ define(function(require) {
 		shuffle: function(cards) {
 			var currentIndex = cards.length, temporaryValue, randomIndex;
 			cards = cards.sort(function(a,b){ return a.difficulty() - b.difficulty();});
+			console.log(ko.toJS(cards));
 		  	while (0 !== currentIndex) 
 		  	{
 			    randomIndex = Math.floor(Math.random() * currentIndex);
 			    currentIndex -= 1;
 			    var conditionToSort = Math.random() - Math.random()*cards[currentIndex].difficulty();
 		  		if( conditionToSort>0 ){ //uwzglednienie trudnosci karty - jak przebije warunek to nie tasujemy i zostaje z brzegu
-		  			console.log("Przebitka",conditionToSort);
 		  			continue;
 		  		}
 			    temporaryValue = cards[currentIndex];

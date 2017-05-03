@@ -62,7 +62,7 @@ define(function(require) {
 			for(var i=0; i<tests.length; i++){ //wymieszaj czy pytaniem jest front czy back
 				var showfront = Math.random();
 				tests[i].wrong = true;
-				if(showfront<0.5){ //pytanie malarz
+				if(showfront<0.5){ 
 					tests[i].question.content = ko.observable(tests[i].question.front());
 					for(var j=0; j<tests[i].answers.length; j++){
 						if(this.gsp){

@@ -91,7 +91,7 @@ body {
 
 
 //TOAST
-#snackbar {
+#toast {
     visibility: hidden; 
     min-width: 240px;
     background-color: #333;
@@ -101,12 +101,12 @@ body {
     padding: 6px;
     position: fixed;
     z-index: 1;
-    left: 30%;
-    right: 30%;
+    left: 10%;
+    right: 10%;
     bottom: 50px;
     font-size: 13px;
 }
-#snackbar.show {
+#toast.show {
     visibility: visible;
     -webkit-animation: fadein 0.5s, fadeout 0.5s 1.5s;
     animation: fadein 0.5s, fadeout 0.5s 1.5s;
@@ -160,7 +160,7 @@ body {
   #GSPDialogContent, #DialogContent {
      @media (max-width:480px){
         margin: 50% auto;
-        width: 50%;
+        width: 70%;
         #GSPDescription{
           width: 77% !important;
         }  

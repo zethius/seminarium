@@ -15,7 +15,7 @@ define(function(require) {
 			document.getElementById('helpGSP').addEventListener('click', 
                 function(){
                     event.stopPropagation();
-               		window.App.dialog('GSP');
+               		window.App.dialog('Główny System Pamięciowy jest mechanizmem, który z podanych dat generuje zdania według określonych zasad (szczegółowo opisanych pod ikoną <i class="fa fa-commenting-o" aria-hidden="true"></i>).');
             }.bind(this));
 		},
 

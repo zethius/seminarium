@@ -31,7 +31,7 @@ define(function(require) {
 			for(var i = 0; i < questions.length; i++){
 				var ans = this.allCards().slice(); //duplicate allcards
 					// ans = ans.filter(function(card){return card.card_id != questions[i].card_id }); //filter out answer
-				var getSameCard = Math.random()>0.7;
+				var getSameCard = Math.random()>0.5;
 				var right = null;
 				if(getSameCard){
 					console.log("same");
@@ -45,7 +45,7 @@ define(function(require) {
 								wrong:  true
 							};
 				var showfront = Math.random()<0.5;
-				if(showfront<0.5){ //pytanie malarz
+				if(showfront<0.5){
 					if(this.gsp){
 						tests[i].right.content = ko.observable(tests[i].right.description());
 					}else{

@@ -7,6 +7,7 @@ define(function(require) {
         set: ko.observable(null),
         description: ko.observable(''),
         newDateValue: ko.observable(new Date().toISOString().split('T')[0]),
+        guide: ko.observable(false),
         initialize: function(set, event) {
             console.log("DATES INITIALIZE");
             this.fillIconList(); 
@@ -22,7 +23,9 @@ define(function(require) {
             this.bindEvents();
             this.show();
         },
-
+        toggleGuide: function(){
+            this.guide(!this.guide());
+        },
         fillCards: function(set, fn){
               window.App.db.getCards(set.set_id, function(cards){
                 for(var j = 0; j < cards.rows.length; j++)
@@ -99,9 +102,7 @@ define(function(require) {
             setTimeout(function(){  window.App.gspdialogElement.el.className = window.App.gspdialogElement.el.className.replace("closing", "closed"); window.App.gspdialogElement.shown = false;  }, 400);    
         },
         save: function(){
-            console.log(this.newDateValue());
             if(this.newDateValue().length && this.description().length){
-                console.log('data');
                 var generated = this.newDateValue().split('-');
                 var year = generated[0].split('');
                 var month = parseInt(generated[1]);

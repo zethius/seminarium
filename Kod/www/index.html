@@ -18,7 +18,7 @@
     <body>
         <div class="app" id="APP">
         
-            <div id="snackbar">Some text some message..</div>
+            <div id="toast">_TOST_</div>
 
             <div id="Dialog" class='closed'>
                 <div id="DialogContent">
@@ -29,8 +29,12 @@
             <div id="MainMenuScreen"  data-bind="if: appReady()">
                 <h1>Art of Memory</h1> 
                 <i id='ApplicationStatus' class="fa fa-cog  fa-spin fa-3x fa-fw"></i>
-                <div id='helpIntro' class="help"><i class="fa fa-question" aria-hidden="true"></i></div>
-                <div id='helpExport' class="help export" data-bind="click: exporter.initialize.bind(exporter)"><i class="fa fa-exchange" aria-hidden="true"></i></div>
+                <div id='helpIntro' class="help">
+                    <i class="fa fa-question" aria-hidden="true"></i>
+                </div>
+                <div id='helpExport' class="help export" data-bind="click: exporter.initialize.bind(exporter)">
+                    <i class="fa fa-exchange" aria-hidden="true"></i>
+                </div>
                 <div class="Menubutton lightBlue" id="MainMenuSetsButton" data-bind="click: setList.initialize.bind(setList)">Fiszki</div>
                 <div class="Menubutton darkBlue" id="MainMenuBodyButton" data-bind="click: bodyList.initialize.bind(bodyList)">Ciało</div>
                 <div class="Menubutton blackBlue" id="MainMenuGSPButton" data-bind="click: gspSetList.initialize.bind(gspSetList)">GSP</div>
@@ -109,7 +113,7 @@
                 </div>
                 <i class="fa fa-hashtag" style="cursor:default"aria-hidden="true"></i><span id="CardCount" class='CardCount' data-bind="text: setSize"></span>
                 <table id="CardsTable" class="CardsTable" data-bind="if: set()">
-                      <tbody data-bind="foreach: set().cards">
+                        <tbody data-bind="foreach: set().cards">
                             <tr class="cardRow"
                             data-bind="click: $parent.goToCardEdit, attr: { 'id': 'TESTCARD'}, css:{ 'hardCard': difficulty()>80}, style:{ borderColor: color}">
                                 <td class="front"><div data-bind="text: front"></div></td>
@@ -266,6 +270,7 @@
             <div id="GSPMenuScreen" style="display:none">
                 <h1>Główny System Pamięciowy</h1>
                 <div id='helpGSP' class="help"><i class="fa fa-question" aria-hidden="true"></i></div>
+
                 <table id="gspTable" class="gspTable">
                         <tbody data-bind="foreach: gspSets">
                             <tr class="setRow" data-bind="click: $parent.gotoDatesList">
@@ -285,39 +290,45 @@
                 <div id="GSPDialogContent">
                     <p>Wprowadź datę</p>
                     <input type="date" id="GSPInput" data-bind="value: newDateValue"/>
-                     <textarea cols="2" rows="2" id="GSPDescription" data-bind="value: description"></textarea>                    
+                     <textarea cols="4" rows="4" id="GSPDescription" data-bind="value: description"></textarea>                    
                     <div class="Menubutton darkBlue saveButton" data-bind="click:  function(){save();}">Dodaj</div>
                 </div>
             </div>
            
             <div id="DatesMenuScreen" style="display:none">
                 <div id='helpDates' class="help"><i class="fa fa-question" aria-hidden="true"></i></div>
-                <div class="SetIconWrapper folded" id="GSPIcon">
-                    <img width="100%" height="100%" data-bind="attr : {src: setIcon}"  >
-                    <div class="fold down"></div>
+                <div class='help' data-bind="click: toggleGuide"><i class="fa fa-commenting-o" style='margin-bottom:5px' aria-hidden="true"></i></div>
+                <div  data-bind='visible: guide()' style='margin-bottom:15%; margin-top: 15%;margin-left: 2%;'>
+                    <object width="100%" type="image/svg+xml" data-bind="attr : {data: 'img/GSP.svg'}"></object>
                 </div>
-                <div id="GSPIconList" class='IconList' style="height:0px"></div>
-                <h1 id="GSPName" class='SetName' data-bind="text: setName">__FISZKI__</h1>
-                <i id="GSPNameEdit" class="fa fa-pencil fa-2x" aria-hidden="true"></i>
-                <div class="SetDeadline">
-                    <span id="GSPDeadlineSpan" data-bind="text: setDeadline"></span>
-                    <input type="date" id="GSPDeadlineInput" data-bind="value: setDeadline"/>
+                <div class='content' data-bind='visible: !guide()'>
+                    <div class="SetIconWrapper folded" id="GSPIcon">
+                        <img width="100%" height="100%" data-bind="attr : {src: setIcon}"  >
+                        <div class="fold down"></div>
+                    </div>
+                    <div id="GSPIconList" class='IconList' style="height:0px"></div>
+                    <h1 id="GSPName" class='SetName' data-bind="text: setName">__FISZKI__</h1>
+                    <i id="GSPNameEdit" class="fa fa-pencil fa-2x" aria-hidden="true"></i>
+                    <div class="SetDeadline">
+                        <span id="GSPDeadlineSpan" data-bind="text: setDeadline"></span>
+                        <input type="date" id="GSPDeadlineInput" data-bind="value: setDeadline"/>
+                    </div>
+                    <i class="fa fa-hashtag" style="cursor:default"aria-hidden="true"></i><span id="CardCount" class='CardCount' data-bind="text: setSize"></span>
+                    <table id="DatesTable" class="CardsTable" data-bind="if: set()">
+                          <tbody data-bind="foreach: set().cards">
+                                <tr class="cardRow"
+                                data-bind="click: $parent.showDate, attr: { 'id': 'TESTCARD'}, css:{ 'hardCard': difficulty()>80}, style:{ borderColor: color}">
+                                    <td class="date"><div data-bind="text: front"></div></td>
+                                    <td class="sentence"><div data-bind="text: back"></div></td>
+                                    <td class="difficulty"><span data-bind="text: difficulty()+'%' "></span></td>
+                                    <td class="button" data-bind="click: $parent.removeCard"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></td>
+                                </tr>
+                            </tbody>
+                    </table>
+                    <div class="Menubutton darkBlue" id="DatesMenuBack"><i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i></div>
+                    <div class="Menubutton darkGreen" id="AddNewDate" data-bind="click: function(){newDate();}">
+                    <i class="fa fa-plus-circle" aria-hidden="true"></i> data</div>
                 </div>
-                <i class="fa fa-hashtag" style="cursor:default"aria-hidden="true"></i><span id="CardCount" class='CardCount' data-bind="text: setSize"></span>
-                <table id="DatesTable" class="CardsTable" data-bind="if: set()">
-                      <tbody data-bind="foreach: set().cards">
-                            <tr class="cardRow"
-                            data-bind="click: $parent.showDate, attr: { 'id': 'TESTCARD'}, css:{ 'hardCard': difficulty()>80}, style:{ borderColor: color}">
-                                <td class="date"><div data-bind="text: front"></div></td>
-                                <td class="sentence"><div data-bind="text: back"></div></td>
-                                <td class="difficulty"><span data-bind="text: difficulty()+'%' "></span></td>
-                                <td class="button" data-bind="click: $parent.removeCard"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></td>
-                            </tr>
-                        </tbody>
-                </table>
-                <div class="Menubutton darkBlue" id="DatesMenuBack"><i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i></div>
-                <div class="Menubutton darkGreen" id="AddNewDate" data-bind="click: function(){newDate();}">
-                <i class="fa fa-plus-circle" aria-hidden="true"></i> data</div>
             </div>
 
        </div>
